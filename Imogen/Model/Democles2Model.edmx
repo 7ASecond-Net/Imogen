@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Damocles2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EUReported">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="Processed" Type="bit" Nullable="false" />
+          <Property Name="PageUrl" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PageUrlHash" Type="nchar" MaxLength="128" Nullable="false" />
+          <Property Name="SrcUrl" Type="nvarchar(max)" />
+          <Property Name="SrcUrlHash" Type="nchar" MaxLength="128" />
+          <Property Name="LinkUrl" Type="nvarchar(max)" />
+          <Property Name="LinkUrlHash" Type="nchar" MaxLength="128" />
+          <Property Name="UserId" Type="int" />
+        </EntityType>
+        <EntityType Name="Rank">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="RankNameEnglish" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="RankNotes" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RankNotes">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RankId" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="PreviousMessage" Type="int" Nullable="false" />
+          <Property Name="AddedBy" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserPassword" Type="nchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserDisplayName" Type="nchar" MaxLength="100" />
+          <Property Name="UserSex" Type="int" />
+          <Property Name="UserAge" Type="int" />
+          <Property Name="Jurisdiction" Type="int" />
+          <Property Name="Rank" Type="int" />
+          <Property Name="EmailAddress" Type="nchar" MaxLength="200" Nullable="false" />
+          <Property Name="Status" Type="int" />
+          <Property Name="FederalJurisdiction" Type="int" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="IsOnline" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsersSessions">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="LoggedOnAt" Type="datetime" Nullable="false" />
+          <Property Name="loggedOffAt" Type="datetime" />
+          <Property Name="SessionSeconds" Type="float" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_EUReported_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="EUReported" Type="Self.EUReported" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EUReported">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RankNotes_Rank">
+          <End Role="Rank" Type="Self.Rank" Multiplicity="1" />
+          <End Role="RankNotes" Type="Self.RankNotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rank">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="RankNotes">
+              <PropertyRef Name="RankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_RankNotes_Rank1' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_RankNotes_Rank1" />-->
+        <Association Name="FK_RankNotes_RankNotes">
+          <End Role="RankNotes" Type="Self.RankNotes" Multiplicity="1" />
+          <End Role="RankNotes1" Type="Self.RankNotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RankNotes">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="RankNotes1">
+              <PropertyRef Name="PreviousMessage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersSessions_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UsersSessions" Type="Self.UsersSessions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersSessions">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Damocles2ModelStoreContainer">
+          <EntitySet Name="EUReported" EntityType="Self.EUReported" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rank" EntityType="Self.Rank" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RankNotes" EntityType="Self.RankNotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersSessions" EntityType="Self.UsersSessions" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EUReported_Users" Association="Self.FK_EUReported_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="EUReported" EntitySet="EUReported" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RankNotes_Rank" Association="Self.FK_RankNotes_Rank">
+            <End Role="Rank" EntitySet="Rank" />
+            <End Role="RankNotes" EntitySet="RankNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RankNotes_RankNotes" Association="Self.FK_RankNotes_RankNotes">
+            <End Role="RankNotes" EntitySet="RankNotes" />
+            <End Role="RankNotes1" EntitySet="RankNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersSessions_Users" Association="Self.FK_UsersSessions_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersSessions" EntitySet="UsersSessions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Damocles2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EUReported">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Processed" Type="Boolean" Nullable="false" />
+          <Property Name="PageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PageUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="SrcUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SrcUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="LinkUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LinkUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK_EUReported_Users" FromRole="EUReported" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Rank">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="RankNameEnglish" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="RankNotes" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RankNotes1" Relationship="Self.FK_RankNotes_Rank" FromRole="Rank" ToRole="RankNotes" />
+        </EntityType>
+        <EntityType Name="RankNote">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RankId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PreviousMessage" Type="Int32" Nullable="false" />
+          <Property Name="AddedBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Rank" Relationship="Self.FK_RankNotes_Rank" FromRole="RankNotes" ToRole="Rank" />
+          <NavigationProperty Name="RankNotes1" Relationship="Self.FK_RankNotes_RankNotes" FromRole="RankNotes" ToRole="RankNotes1" />
+          <NavigationProperty Name="RankNote1" Relationship="Self.FK_RankNotes_RankNotes" FromRole="RankNotes1" ToRole="RankNotes" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="UserPassword" Type="String" MaxLength="128" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="UserDisplayName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="UserSex" Type="Int32" />
+          <Property Name="UserAge" Type="Int32" />
+          <Property Name="Jurisdiction" Type="Int32" />
+          <Property Name="Rank" Type="Int32" />
+          <Property Name="EmailAddress" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="FederalJurisdiction" Type="Int32" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsOnline" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EUReporteds" Relationship="Self.FK_EUReported_Users" FromRole="Users" ToRole="EUReported" />
+          <NavigationProperty Name="UsersSessions" Relationship="Damocles2Model.FK_UsersSessions_Users" FromRole="User" ToRole="UsersSession" />
+        </EntityType>
+        <Association Name="FK_EUReported_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="EUReported" Type="Self.EUReported" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EUReported">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RankNotes_Rank">
+          <End Role="Rank" Type="Self.Rank" Multiplicity="1" />
+          <End Role="RankNotes" Type="Self.RankNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rank">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="RankNotes">
+              <PropertyRef Name="RankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RankNotes_RankNotes">
+          <End Role="RankNotes" Type="Self.RankNote" Multiplicity="1" />
+          <End Role="RankNotes1" Type="Self.RankNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RankNotes">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="RankNotes1">
+              <PropertyRef Name="PreviousMessage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Damocles2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EUReporteds" EntityType="Self.EUReported" />
+          <EntitySet Name="Ranks" EntityType="Self.Rank" />
+          <EntitySet Name="RankNotes" EntityType="Self.RankNote" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_EUReported_Users" Association="Self.FK_EUReported_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="EUReported" EntitySet="EUReporteds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RankNotes_Rank" Association="Self.FK_RankNotes_Rank">
+            <End Role="Rank" EntitySet="Ranks" />
+            <End Role="RankNotes" EntitySet="RankNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RankNotes_RankNotes" Association="Self.FK_RankNotes_RankNotes">
+            <End Role="RankNotes" EntitySet="RankNotes" />
+            <End Role="RankNotes1" EntitySet="RankNotes" />
+          </AssociationSet>
+          <EntitySet Name="UsersSessions" EntityType="Damocles2Model.UsersSession" />
+          <AssociationSet Name="FK_UsersSessions_Users" Association="Damocles2Model.FK_UsersSessions_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UsersSession" EntitySet="UsersSessions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="UsersSession">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="LoggedOnAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="loggedOffAt" Type="DateTime" Precision="3" Nullable="true" />
+          <Property Name="SessionSeconds" Type="Double" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Damocles2Model.FK_UsersSessions_Users" FromRole="UsersSession" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_UsersSessions_Users">
+          <End Type="Damocles2Model.User" Role="User" Multiplicity="1" />
+          <End Type="Damocles2Model.UsersSession" Role="UsersSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersSession">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Damocles2ModelStoreContainer" CdmEntityContainer="Damocles2Entities">
+          <EntitySetMapping Name="EUReporteds">
+            <EntityTypeMapping TypeName="Damocles2Model.EUReported">
+              <MappingFragment StoreEntitySet="EUReported">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="Processed" ColumnName="Processed" />
+                <ScalarProperty Name="PageUrl" ColumnName="PageUrl" />
+                <ScalarProperty Name="PageUrlHash" ColumnName="PageUrlHash" />
+                <ScalarProperty Name="SrcUrl" ColumnName="SrcUrl" />
+                <ScalarProperty Name="SrcUrlHash" ColumnName="SrcUrlHash" />
+                <ScalarProperty Name="LinkUrl" ColumnName="LinkUrl" />
+                <ScalarProperty Name="LinkUrlHash" ColumnName="LinkUrlHash" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ranks">
+            <EntityTypeMapping TypeName="Damocles2Model.Rank">
+              <MappingFragment StoreEntitySet="Rank">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RankNameEnglish" ColumnName="RankNameEnglish" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RankNotes" ColumnName="RankNotes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RankNotes">
+            <EntityTypeMapping TypeName="Damocles2Model.RankNote">
+              <MappingFragment StoreEntitySet="RankNotes">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="RankId" ColumnName="RankId" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="PreviousMessage" ColumnName="PreviousMessage" />
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Damocles2Model.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserDisplayName" ColumnName="UserDisplayName" />
+                <ScalarProperty Name="UserSex" ColumnName="UserSex" />
+                <ScalarProperty Name="UserAge" ColumnName="UserAge" />
+                <ScalarProperty Name="Jurisdiction" ColumnName="Jurisdiction" />
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="FederalJurisdiction" ColumnName="FederalJurisdiction" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="IsOnline" ColumnName="IsOnline" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersSessions">
+            <EntityTypeMapping TypeName="Damocles2Model.UsersSession">
+              <MappingFragment StoreEntitySet="UsersSessions">
+                <ScalarProperty Name="SessionSeconds" ColumnName="SessionSeconds" />
+                <ScalarProperty Name="loggedOffAt" ColumnName="loggedOffAt" />
+                <ScalarProperty Name="LoggedOnAt" ColumnName="LoggedOnAt" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
