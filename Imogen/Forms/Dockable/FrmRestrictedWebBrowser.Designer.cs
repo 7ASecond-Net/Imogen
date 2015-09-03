@@ -37,6 +37,9 @@ namespace Imogen.Forms.Dockable
             this.lblStatusCode = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblStatusText = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.showLinkUrlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showSrcUrlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,7 +50,8 @@ namespace Imogen.Forms.Dockable
             this.toolStripStatusLabel1,
             this.lblStatusCode,
             this.toolStripStatusLabel3,
-            this.lblStatusText});
+            this.lblStatusText,
+            this.toolStripDropDownButton1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 464);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(796, 24);
@@ -83,8 +87,39 @@ namespace Imogen.Forms.Dockable
             // lblStatusText
             // 
             this.lblStatusText.Name = "lblStatusText";
-            this.lblStatusText.Size = new System.Drawing.Size(118, 19);
-            this.lblStatusText.Text = "toolStripStatusLabel4";
+            this.lblStatusText.Size = new System.Drawing.Size(451, 19);
+            this.lblStatusText.Spring = true;
+            this.lblStatusText.Text = "...";
+            this.lblStatusText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toolStripDropDownButton1
+            // 
+            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showLinkUrlToolStripMenuItem,
+            this.showSrcUrlToolStripMenuItem});
+            this.toolStripDropDownButton1.Image = global::Imogen.Properties.Resources.show_property_16;
+            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(29, 22);
+            this.toolStripDropDownButton1.Text = "toolStripDropDownButton1";
+            // 
+            // showLinkUrlToolStripMenuItem
+            // 
+            this.showLinkUrlToolStripMenuItem.Image = global::Imogen.Properties.Resources.link_4_16;
+            this.showLinkUrlToolStripMenuItem.Name = "showLinkUrlToolStripMenuItem";
+            this.showLinkUrlToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.showLinkUrlToolStripMenuItem.Text = "Show Link Url";
+            this.showLinkUrlToolStripMenuItem.Click += new System.EventHandler(this.showLinkUrlToolStripMenuItem_Click);
+            // 
+            // showSrcUrlToolStripMenuItem
+            // 
+            this.showSrcUrlToolStripMenuItem.Image = global::Imogen.Properties.Resources.check_mark_3_16;
+            this.showSrcUrlToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.showSrcUrlToolStripMenuItem.Name = "showSrcUrlToolStripMenuItem";
+            this.showSrcUrlToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.showSrcUrlToolStripMenuItem.Text = "Show Src Url";
+            this.showSrcUrlToolStripMenuItem.Click += new System.EventHandler(this.showSrcUrlToolStripMenuItem_Click);
             // 
             // FrmRestrictedWebBrowser
             // 
@@ -112,5 +147,8 @@ namespace Imogen.Forms.Dockable
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.ToolStripStatusLabel lblStatusText;
         private System.Windows.Forms.ToolStripProgressBar Progress;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripMenuItem showLinkUrlToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showSrcUrlToolStripMenuItem;
     }
 }

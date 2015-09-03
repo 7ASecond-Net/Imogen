@@ -84,22 +84,58 @@ namespace Imogen.Forms.Dockable
         {
             lblSrcUrlARCRating.ForeColor = Color.PaleGreen;
             lblSrcUrlARCRating.Text = "Universally Allowed in this Jurisdiction";
-            btnSubmit.Enabled = true;
+            btnSrcSubmit.Enabled = true;
         }
 
         private void btnRestricted_Click(object sender, EventArgs e)
         {
             //TODO: Who is this restricted to?
-            btnSubmit.Enabled = true;
+            btnSrcSubmit.Enabled = true;
             lblSrcUrlARCRating.ForeColor = Color.Orange;
             lblSrcUrlARCRating.Text = "Restricted in this Jurisdiction";
         }
 
         private void btnCriminal_Click(object sender, EventArgs e)
         {
-            btnSubmit.Enabled = true;
+            btnSrcSubmit.Enabled = true;
             lblSrcUrlARCRating.ForeColor = Color.OrangeRed;
             lblSrcUrlARCRating.Text = "Rated as Criminal Content in this Jurisdiction";
+        }
+
+        private void btnSrcUrlNoLongerAvailable_Click(object sender, EventArgs e)
+        {
+            btnSrcSubmit.Enabled = true;
+            lblSrcUrlARCRating.ForeColor = Color.Yellow;
+            lblSrcUrlARCRating.Text = "Source is no longer Available";
+        }
+
+        private void btnLinkUrlNoLongerAvailable_Click(object sender, EventArgs e)
+        {
+            lblLinkUrlARCRating.ForeColor = Color.Yellow;
+            lblLinkUrlARCRating.Text = "Link is no longer Available";
+            btnLinkSubmit.Enabled = true;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            lblLinkUrlARCRating.ForeColor = Color.PaleGreen;
+            lblLinkUrlARCRating.Text = "Universally Allowed in this Jurisdiction";
+            btnLinkSubmit.Enabled = true;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            //TODO: Who is this restricted to?
+            btnLinkSubmit.Enabled = true;
+            lblLinkUrlARCRating.ForeColor = Color.Orange;
+            lblLinkUrlARCRating.Text = "Restricted in this Jurisdiction";
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            btnLinkSubmit.Enabled = true;
+            lblLinkUrlARCRating.ForeColor = Color.OrangeRed;
+            lblLinkUrlARCRating.Text = "Rated as Criminal Content in this Jurisdiction";
         }
     }
 }

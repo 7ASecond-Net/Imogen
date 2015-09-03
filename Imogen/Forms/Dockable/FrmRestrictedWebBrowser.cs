@@ -18,6 +18,8 @@ namespace Imogen.Forms.Dockable
     public partial class FrmRestrictedWebBrowser : DockContent
     {
 
+        private static string currentSrcUrl { get; set; }
+
         public event EventHandler ConsoleMessageEvent;
 
         CefSharp.WinForms.ChromiumWebBrowser cwb = new ChromiumWebBrowser("");
@@ -25,7 +27,9 @@ namespace Imogen.Forms.Dockable
         public FrmRestrictedWebBrowser()
         {
             InitializeComponent();
-            //webBrowser.StatusTextChanged += WebBrowser_StatusTextChanged;
+            try
+            {
+  //webBrowser.StatusTextChanged += WebBrowser_StatusTextChanged;
             //webBrowser.ProgressChanged += WebBrowser_ProgressChanged;
             cwb.Dock = DockStyle.Fill;
             cwb.ContextMenu = null;
@@ -47,39 +51,116 @@ namespace Imogen.Forms.Dockable
             cs.IgnoreCertificateErrors = true;
             cs.UserAgent = Imogen.Properties.Settings.Default.RestrictedBrowserUserAgent;
             cwb.AllowDrop = false;
-            
+
             this.Controls.Add(cwb);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+          
 
         }
 
         private void Cwb_LoadError(object sender, CefSharp.LoadErrorEventArgs e)
         {
-            lblStatusCode.Text = e.ErrorCode.ToString();
+            try
+            {
+                lblStatusCode.Text = e.ErrorCode.ToString();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
         private void Cwb_NavStateChanged(object sender, CefSharp.NavStateChangedEventArgs e)
         {
-            if (e.IsLoading)
-                lblStatusText.Text = "Loading";
+            try
+            {
+                if (e.IsLoading)
+                    lblStatusText.Text = "Loading";
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
         private void Cwb_StatusMessage(object sender, CefSharp.StatusMessageEventArgs e)
         {
-            lblStatusText.Text = e.Value.ToString();
+            try
+            {
+                lblStatusText.Text = e.Value.ToString();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
         private void Cwb_ConsoleMessage(object sender, CefSharp.ConsoleMessageEventArgs e)
         {
+            try
+            {
+                if (ConsoleMessageEvent != null)
+                {
+                    //TODO: Need to fix this so we can send a string and not the ConsoleMessageEventArgs
+                    // ConsoleMessageEvent(this, e.Line + ": " + e.Source + ": " + e.Message.ToString() );
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             // Raise an Event for frmMain log
-            if (ConsoleMessageEvent != null)
-                ConsoleMessageEvent(this, e);
+
         }
 
         internal void ShowSrcUrl(string srcUrl)
         {
-            cwb.Load(srcUrl);
+            try
+            {
+                currentSrcUrl = srcUrl;
+                cwb.Load(srcUrl);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-    }    
+        internal void ShowLinkUrl(string linkUrl)
+        {
+            try
+            {
+                cwb.Load(linkUrl);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private void showSrcUrlToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Text = "Actual View of the Src Url";
+            ShowSrcUrl(currentSrcUrl);
+        }
+
+        private void showLinkUrlToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Text = "Actual View of the Link Url";
+            ShowLinkUrl(Properties.Settings.Default.ProfileLinkUrl);
+        }
+    }
 }
 

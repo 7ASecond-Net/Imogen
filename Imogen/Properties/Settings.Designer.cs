@@ -191,5 +191,7 @@ namespace Imogen.Properties {
                 this["SessionSecondsTotal"] = value;
             }
         }
+
+        public string ProfileLinkUrl { get; internal set; }
     }
 }

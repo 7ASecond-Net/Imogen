@@ -16,6 +16,7 @@ using Imogen.Model;
 using Imogen.Controllers.Downloader;
 using Imogen.Controllers.Utils;
 using Imogen.Forms.Dialog;
+using System.Runtime.CompilerServices;
 
 namespace Imogen
 {
@@ -147,21 +148,21 @@ namespace Imogen
             if (frmRWB != null)
             {
                 Log("Registering to Console Messaging event");
-                frmRWB.ConsoleMessageEvent += FrmRWB_ConsoleMessageEvent;
+                //   frmRWB.ConsoleMessageEvent += FrmRWB_ConsoleMessageEvent;
             }
 
             try
             {
- System.Threading.Thread.Sleep(2000);
-            ConnectToDatabase();
+                System.Threading.Thread.Sleep(2000);
+                ConnectToDatabase();
             }
             catch (Exception)
             {
 
                 throw;
             }
-           
-            //TODO: Quite often does not proceed from here
+
+            //TODO: Quite often does not proceed from here - Seems to now be working after frmOutput was given try catches, which are not thrown! ??
 
 
             //TODO: Don't Do this if the User is already working on a report.
@@ -195,6 +196,8 @@ namespace Imogen
             Log("Database Connection Completed");
         }
 
+        //TODO: Should probably be extracted to a separate class
+
         /// <summary>
         /// Process the first most important Unprocessed Report
         /// </summary>
@@ -208,6 +211,7 @@ namespace Imogen
             Properties.Settings.Default.ProfileUrlHash = eur.PageUrlHash;
             Properties.Settings.Default.ProfileSrcUrlHash = eur.SrcUrlHash;
             Properties.Settings.Default.ProfileLinkUrlHash = eur.LinkUrlHash;
+            Properties.Settings.Default.ProfileLinkUrl = eur.LinkUrl;
             Properties.Settings.Default.ProfileReportNumber = eur.id.ToString("N0");
             Properties.Settings.Default.ProfileReportedOn = eur.CreatedOn.ToString();
             Properties.Settings.Default.ProfilePossibleFileName1 = utils.GetPossibleFileName(eur.SrcUrl);
@@ -217,10 +221,13 @@ namespace Imogen
             Log("Displaying Image");
             frmProfileImage.ShowImage(imgPath);
             currentFilePath = imgPath;
+
+            // Shows the Src Image and Metadata
+            Log("Opening Restricted Web Browser for Src Url");
             try
             {
                 if (frmRWB == null)
-                    frmRWB.Show(dockPanel, DockState.DockRight);
+                    frmRWB.Show(dockPanel, DockState.Document);
                 frmRWB.ShowSrcUrl(eur.SrcUrl);
                 if (frmMetadata == null)
                     frmMetadata.Show(dockPanel, DockState.DockRight);
@@ -228,40 +235,37 @@ namespace Imogen
             }
             catch (Exception ex)
             {
-                string err = ex.Message;
-
+                Log(ex.Message, LogType.Error);
                 throw;
             }
-
-
         }
 
         #region Logging
 
-        private void Log(string v, LogType lt = LogType.Information)
+        private void Log(string v, LogType lt = LogType.Information, [CallerMemberName]string memberName = "")
         {
             switch (lt)
             {
                 case LogType.Information:
-                    frmOutput.SetInformationMessage(v);
+                    frmOutput.SetInformationMessage("[" + memberName + "]\t" + v);
                     break;
                 case LogType.Warning:
                     break;
                 case LogType.Error:
-                    frmOutput.SetErrorMessage(v);
+                    frmOutput.SetErrorMessage("[" + memberName + "]\t" + v);
                     break;
                 case LogType.Success:
-                    frmOutput.SetSuccessMessage(v);
+                    frmOutput.SetSuccessMessage("[" + memberName + "]\t" + v);
                     break;
                 default:
-                    frmOutput.SetInformationMessage(v);
+                    frmOutput.SetInformationMessage("[" + memberName + "]\t" + v);
                     break;
             }
         }
 
-        private void FrmRWB_ConsoleMessageEvent(object sender, EventArgs e)
+        private void FrmRWB_ConsoleMessageEvent(object sender, string msg)
         {
-            Log("From Restricted Browser: " + e.ToString());
+            Log(msg);
         }
         #endregion
 
@@ -365,7 +369,7 @@ namespace Imogen
             if (restrictedBrowserToolStripMenuItem.Checked)
             {
                 Log("Closing Restricted Browser");
-                frmRWB.ConsoleMessageEvent -= FrmRWB_ConsoleMessageEvent;
+                //frmRWB.ConsoleMessageEvent -= FrmRWB_ConsoleMessageEvent;
                 frmRWB.Close();
             }
             else
@@ -373,7 +377,7 @@ namespace Imogen
                 Log("Opening Restricted Browser");
                 if (frmRWB == null || frmRWB.IsDisposed) frmRWB = new FrmRestrictedWebBrowser();
                 frmRWB.Show(dockPanel);
-                frmRWB.ConsoleMessageEvent += FrmRWB_ConsoleMessageEvent;
+                //   frmRWB.ConsoleMessageEvent += FrmRWB_ConsoleMessageEvent;
             }
             restrictedBrowserToolStripMenuItem.Checked = !restrictedBrowserToolStripMenuItem.Checked; // Toggle the check state in the menu on click
         }

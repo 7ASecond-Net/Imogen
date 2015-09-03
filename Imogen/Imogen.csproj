@@ -90,6 +90,10 @@
       <HintPath>..\packages\FastColoredTextBox.1.0.0\lib\net40\FastColoredTextBox.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NTimeAgo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NTimeAgo.0.1.0\lib\net35\NTimeAgo.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -273,6 +277,13 @@
       <DependentUpon>Damocles2Model.edmx</DependentUpon>
       <LastGenOutput>Damocles2Model.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\full-trash-white.png" />
+    <None Include="Resources\full-trash-16.png" />
+    <None Include="Resources\cancel-black.png" />
+    <None Include="Resources\cancel-16.png" />
+    <None Include="Resources\check-mark-3-16.png" />
+    <None Include="Resources\link-4-16.png" />
+    <None Include="Resources\show-property-16.png" />
     <None Include="Resources\user-8-16.png" />
     <None Include="Resources\accept-database-16.png" />
     <None Include="Resources\delete-database-16.png" />

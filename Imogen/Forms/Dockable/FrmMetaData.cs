@@ -20,17 +20,26 @@ namespace Imogen.Forms.Dockable
         private delegate void UpdateGridViewDelegate(DataGridViewRow r);
         private void UpdateGridView(DataGridViewRow r)
         {
-            if (dataGridViewMetaData.InvokeRequired)
+            try
             {
-                // This is a worker thread so delegate the task.
-                dataGridViewMetaData.Invoke(new UpdateGridViewDelegate(this.UpdateGridView), r);
-            }
-            else
-            {
-                // This is the UI thread so perform the task.
+                if (dataGridViewMetaData.InvokeRequired)
+                {
+                    // This is a worker thread so delegate the task.
+                    dataGridViewMetaData.Invoke(new UpdateGridViewDelegate(this.UpdateGridView), r);
+                }
+                else
+                {
+                    // This is the UI thread so perform the task.
 
-                dataGridViewMetaData.Rows.Add(r);
+                    dataGridViewMetaData.Rows.Add(r);
+                }
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
         private Exif exif;
@@ -46,10 +55,19 @@ namespace Imogen.Forms.Dockable
 
         public FrmMetaData(string srcPath)
         {
-            InitializeComponent();
-            lastSrcFilePath = srcPath;
-            Task tStart = new Task(() => GetMetaData(srcPath));
-            tStart.Start();
+            try
+            {
+                InitializeComponent();
+                lastSrcFilePath = srcPath;
+                Task tStart = new Task(() => GetMetaData(srcPath));
+                tStart.Start();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
         internal void GetMetaData(string srcPath)
@@ -74,13 +92,22 @@ namespace Imogen.Forms.Dockable
                 string res = ex.Message;
                 throw;
             }
-            dataGridViewMetaData.Refresh();
+
         }
 
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(lastSrcFilePath))
-                GetMetaData(lastSrcFilePath);
+            try
+            {
+                if (!string.IsNullOrEmpty(lastSrcFilePath))
+                    GetMetaData(lastSrcFilePath);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
     }
 }

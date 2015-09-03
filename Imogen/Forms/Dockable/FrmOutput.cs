@@ -18,6 +18,33 @@ namespace Imogen.Forms.Dockable
 {
     public partial class FrmOutput : DockContent
     {
+
+        private delegate void UpdateConsoleDelegate(string msg, Style s);
+        private void UpdateConsole(string msg, Style s)
+        {
+            try
+            {
+                if (rtbConOut.InvokeRequired)
+                {
+                    // This is a worker thread so delegate the task.
+                    rtbConOut.Invoke(new UpdateConsoleDelegate(this.UpdateConsole),msg, s);
+                }
+                else
+                {
+                    // This is the UI thread so perform the task.
+                    msg = msg + Environment.NewLine;
+                    rtbConOut.InsertText(msg, s);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+
         #region Internal
         public FrmOutput()
         {
@@ -58,8 +85,8 @@ namespace Imogen.Forms.Dockable
         {
             try
             {
-                msg = msg + Environment.NewLine;
-                rtbConOut.InsertText(msg, InformationStyle);
+
+                UpdateConsole(msg, InformationStyle);
             }
             catch (Exception)
             {
@@ -73,8 +100,7 @@ namespace Imogen.Forms.Dockable
         {
             try
             {
-                msg = msg + Environment.NewLine;
-                rtbConOut.InsertText(msg, ErrorStyle);
+                UpdateConsole(msg, ErrorStyle);
             }
             catch (Exception)
             {
@@ -88,8 +114,7 @@ namespace Imogen.Forms.Dockable
         {
             try
             {
-                msg = msg + Environment.NewLine;
-                rtbConOut.InsertText(msg, SuccessStyle);
+                UpdateConsole(msg, SuccessStyle);
             }
             catch (Exception)
             {

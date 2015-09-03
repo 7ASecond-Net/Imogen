@@ -94,7 +94,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(425, 283);
+            this.panel1.Size = new System.Drawing.Size(436, 283);
             this.panel1.TabIndex = 0;
             // 
             // groupBox2
@@ -135,13 +135,12 @@
             this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Location = new System.Drawing.Point(10, 141);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(400, 129);
+            this.groupBox2.Size = new System.Drawing.Size(411, 129);
             this.groupBox2.TabIndex = 41;
             this.groupBox2.TabStop = false;
             // 
             // label25
             // 
-            this.label25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label25.AutoSize = true;
             this.label25.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label25.Location = new System.Drawing.Point(284, 107);
@@ -152,7 +151,6 @@
             // 
             // label26
             // 
-            this.label26.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label26.AutoSize = true;
             this.label26.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label26.Location = new System.Drawing.Point(227, 107);
@@ -163,7 +161,6 @@
             // 
             // label27
             // 
-            this.label27.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label27.AutoSize = true;
             this.label27.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label27.Location = new System.Drawing.Point(284, 94);
@@ -174,7 +171,6 @@
             // 
             // label28
             // 
-            this.label28.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label28.AutoSize = true;
             this.label28.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label28.Location = new System.Drawing.Point(227, 94);
@@ -185,7 +181,6 @@
             // 
             // label29
             // 
-            this.label29.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label29.AutoSize = true;
             this.label29.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label29.Location = new System.Drawing.Point(284, 81);
@@ -196,7 +191,6 @@
             // 
             // label30
             // 
-            this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label30.AutoSize = true;
             this.label30.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label30.Location = new System.Drawing.Point(227, 81);
@@ -207,7 +201,6 @@
             // 
             // label31
             // 
-            this.label31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label31.AutoSize = true;
             this.label31.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label31.Location = new System.Drawing.Point(284, 68);
@@ -218,7 +211,6 @@
             // 
             // label32
             // 
-            this.label32.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label32.AutoSize = true;
             this.label32.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label32.Location = new System.Drawing.Point(227, 68);
@@ -229,7 +221,6 @@
             // 
             // label33
             // 
-            this.label33.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label33.AutoSize = true;
             this.label33.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label33.Location = new System.Drawing.Point(284, 55);
@@ -240,7 +231,6 @@
             // 
             // label34
             // 
-            this.label34.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label34.AutoSize = true;
             this.label34.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label34.Location = new System.Drawing.Point(227, 55);
@@ -251,7 +241,6 @@
             // 
             // label35
             // 
-            this.label35.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label35.AutoSize = true;
             this.label35.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label35.Location = new System.Drawing.Point(284, 42);
@@ -262,7 +251,6 @@
             // 
             // label36
             // 
-            this.label36.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label36.AutoSize = true;
             this.label36.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label36.Location = new System.Drawing.Point(227, 42);
@@ -273,7 +261,6 @@
             // 
             // label37
             // 
-            this.label37.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label37.AutoSize = true;
             this.label37.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label37.Location = new System.Drawing.Point(284, 29);
@@ -284,7 +271,6 @@
             // 
             // label38
             // 
-            this.label38.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label38.AutoSize = true;
             this.label38.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label38.Location = new System.Drawing.Point(227, 29);
@@ -295,7 +281,6 @@
             // 
             // label39
             // 
-            this.label39.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label39.AutoSize = true;
             this.label39.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label39.Location = new System.Drawing.Point(284, 16);
@@ -306,7 +291,6 @@
             // 
             // label40
             // 
-            this.label40.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label40.AutoSize = true;
             this.label40.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label40.Location = new System.Drawing.Point(227, 16);
@@ -496,7 +480,7 @@
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox1.Location = new System.Drawing.Point(10, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(401, 132);
+            this.groupBox1.Size = new System.Drawing.Size(412, 132);
             this.groupBox1.TabIndex = 40;
             this.groupBox1.TabStop = false;
             // 
@@ -650,7 +634,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(425, 283);
+            this.ClientSize = new System.Drawing.Size(436, 283);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
