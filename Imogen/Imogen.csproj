@@ -165,35 +165,38 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\Democles2Model.Context.cs">
+    <Compile Include="Model\Damocles2Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Democles2Model.Context.tt</DependentUpon>
+      <DependentUpon>Damocles2Model.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Democles2Model.cs">
+    <Compile Include="Model\Damocles2Model.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Democles2Model.tt</DependentUpon>
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Democles2Model.Designer.cs">
+    <Compile Include="Model\Damocles2Model.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Democles2Model.edmx</DependentUpon>
+      <DependentUpon>Damocles2Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\EUReported.cs">
-      <DependentUpon>Democles2Model.tt</DependentUpon>
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Rank.cs">
-      <DependentUpon>Democles2Model.tt</DependentUpon>
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\RankNote.cs">
-      <DependentUpon>Democles2Model.tt</DependentUpon>
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\User.cs">
-      <DependentUpon>Democles2Model.tt</DependentUpon>
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\UserRank.cs">
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\UsersSession.cs">
-      <DependentUpon>Democles2Model.tt</DependentUpon>
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -232,12 +235,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EntityDeploy Include="Model\Democles2Model.edmx">
+    <EntityDeploy Include="Model\Damocles2Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Democles2Model.Designer.cs</LastGenOutput>
+      <LastGenOutput>Damocles2Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Model\Democles2Model.edmx.diagram">
-      <DependentUpon>Democles2Model.edmx</DependentUpon>
+    <None Include="Model\Damocles2Model.edmx.diagram">
+      <DependentUpon>Damocles2Model.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Imogen.Model.EUReported.datasource" />
@@ -260,16 +263,17 @@
     </Content>
     <Content Include="imogen-hassall.ico" />
     <Content Include="license.txt" />
-    <Content Include="Model\Democles2Model.Context.tt">
+    <Content Include="Model\Damocles2Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Democles2Model.edmx</DependentUpon>
-      <LastGenOutput>Democles2Model.Context.cs</LastGenOutput>
+      <DependentUpon>Damocles2Model.edmx</DependentUpon>
+      <LastGenOutput>Damocles2Model.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Model\Democles2Model.tt">
+    <Content Include="Model\Damocles2Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Democles2Model.edmx</DependentUpon>
-      <LastGenOutput>Democles2Model.cs</LastGenOutput>
+      <DependentUpon>Damocles2Model.edmx</DependentUpon>
+      <LastGenOutput>Damocles2Model.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\user-8-16.png" />
     <None Include="Resources\accept-database-16.png" />
     <None Include="Resources\delete-database-16.png" />
     <None Include="Resources\Windows-Run-icon.png" />

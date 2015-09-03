@@ -50,7 +50,6 @@ namespace Imogen.Forms.Dockable
             
             this.Controls.Add(cwb);
 
-
         }
 
         private void Cwb_LoadError(object sender, CefSharp.LoadErrorEventArgs e)
@@ -74,30 +73,11 @@ namespace Imogen.Forms.Dockable
             // Raise an Event for frmMain log
             if (ConsoleMessageEvent != null)
                 ConsoleMessageEvent(this, e);
-
         }
-
-
-
-        //private void WebBrowser_ProgressChanged(object sender, WebBrowserProgressChangedEventArgs e)
-        //{
-        //    Progress.Maximum = (int)e.MaximumProgress;
-        //    Progress.Value = (int)e.CurrentProgress;
-
-        //    if (Progress.Maximum == Progress.Value)
-        //        Progress.Value = 0;
-        //}
-
-        //private void WebBrowser_StatusTextChanged(object sender, EventArgs e)
-        //{
-        //    lblStatusText.Text = webBrowser.StatusText;
-
-        //}
 
         internal void ShowSrcUrl(string srcUrl)
         {
             cwb.Load(srcUrl);
-
         }
 
     }    

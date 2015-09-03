@@ -12,15 +12,13 @@ namespace Imogen.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class RankNote
+    public partial class UserRank
     {
         public int pid { get; set; }
         public int UserId { get; set; }
         public int RankId { get; set; }
-        public System.DateTime CreatedOn { get; set; }
-        public System.DateTime UpdatedOn { get; set; }
-        public int PreviousMessage { get; set; }
-        public int AddedBy { get; set; }
+        public Nullable<int> RankNotesId { get; set; }
+        public System.DateTime AwardedOn { get; set; }
     
         public virtual Rank Rank { get; set; }
         public virtual User User { get; set; }

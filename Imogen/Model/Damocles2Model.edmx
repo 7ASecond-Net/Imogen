@@ -23,26 +23,36 @@
         </EntityType>
         <EntityType Name="Rank">
           <Key>
-            <PropertyRef Name="pid" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RankCode" Type="int" Nullable="false" />
           <Property Name="RankNameEnglish" Type="nchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
-          <Property Name="RankNotes" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="RankNotes">
           <Key>
             <PropertyRef Name="pid" />
           </Key>
           <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="RankId" Type="int" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
           <Property Name="PreviousMessage" Type="int" Nullable="false" />
           <Property Name="AddedBy" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRanks">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RankId" Type="int" Nullable="false" />
+          <Property Name="RankNotesId" Type="int" />
+          <Property Name="AwardedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -90,25 +100,46 @@
           <End Role="RankNotes" Type="Self.RankNotes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Rank">
-              <PropertyRef Name="pid" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="RankNotes">
               <PropertyRef Name="RankId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_RankNotes_Rank1' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_RankNotes_Rank1" />-->
-        <Association Name="FK_RankNotes_RankNotes">
-          <End Role="RankNotes" Type="Self.RankNotes" Multiplicity="1" />
-          <End Role="RankNotes1" Type="Self.RankNotes" Multiplicity="*" />
+        <Association Name="FK_RankNotes_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="RankNotes" Type="Self.RankNotes" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="RankNotes">
-              <PropertyRef Name="pid" />
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="RankNotes1">
-              <PropertyRef Name="PreviousMessage" />
+            <Dependent Role="RankNotes">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRanks_Rank">
+          <End Role="Rank" Type="Self.Rank" Multiplicity="1" />
+          <End Role="UserRanks" Type="Self.UserRanks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rank">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRanks">
+              <PropertyRef Name="RankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRanks_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserRanks" Type="Self.UserRanks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRanks">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -128,6 +159,7 @@ warning 6035: The relationship 'FK_RankNotes_Rank1' has columns that are not par
           <EntitySet Name="EUReported" EntityType="Self.EUReported" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rank" EntityType="Self.Rank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RankNotes" EntityType="Self.RankNotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRanks" EntityType="Self.UserRanks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersSessions" EntityType="Self.UsersSessions" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_EUReported_Users" Association="Self.FK_EUReported_Users">
@@ -138,9 +170,17 @@ warning 6035: The relationship 'FK_RankNotes_Rank1' has columns that are not par
             <End Role="Rank" EntitySet="Rank" />
             <End Role="RankNotes" EntitySet="RankNotes" />
           </AssociationSet>
-          <AssociationSet Name="FK_RankNotes_RankNotes" Association="Self.FK_RankNotes_RankNotes">
+          <AssociationSet Name="FK_RankNotes_Users" Association="Self.FK_RankNotes_Users">
+            <End Role="Users" EntitySet="Users" />
             <End Role="RankNotes" EntitySet="RankNotes" />
-            <End Role="RankNotes1" EntitySet="RankNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRanks_Rank" Association="Self.FK_UserRanks_Rank">
+            <End Role="Rank" EntitySet="Rank" />
+            <End Role="UserRanks" EntitySet="UserRanks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRanks_Users" Association="Self.FK_UserRanks_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRanks" EntitySet="UserRanks" />
           </AssociationSet>
           <AssociationSet Name="FK_UsersSessions_Users" Association="Self.FK_UsersSessions_Users">
             <End Role="Users" EntitySet="Users" />
@@ -170,30 +210,42 @@ warning 6035: The relationship 'FK_RankNotes_Rank1' has columns that are not par
         </EntityType>
         <EntityType Name="Rank">
           <Key>
-            <PropertyRef Name="pid" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RankCode" Type="Int32" Nullable="false" />
           <Property Name="RankNameEnglish" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="RankNotes" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="RankNotes1" Relationship="Self.FK_RankNotes_Rank" FromRole="Rank" ToRole="RankNotes" />
+          <NavigationProperty Name="RankNotes" Relationship="Self.FK_RankNotes_Rank" FromRole="Rank" ToRole="RankNotes" />
+          <NavigationProperty Name="UserRanks" Relationship="Self.FK_UserRanks_Rank" FromRole="Rank" ToRole="UserRanks" />
         </EntityType>
         <EntityType Name="RankNote">
           <Key>
             <PropertyRef Name="pid" />
           </Key>
           <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="RankId" Type="Int32" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="PreviousMessage" Type="Int32" Nullable="false" />
           <Property Name="AddedBy" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Rank" Relationship="Self.FK_RankNotes_Rank" FromRole="RankNotes" ToRole="Rank" />
-          <NavigationProperty Name="RankNotes1" Relationship="Self.FK_RankNotes_RankNotes" FromRole="RankNotes" ToRole="RankNotes1" />
-          <NavigationProperty Name="RankNote1" Relationship="Self.FK_RankNotes_RankNotes" FromRole="RankNotes1" ToRole="RankNotes" />
+          <NavigationProperty Name="User" Relationship="Self.FK_RankNotes_Users" FromRole="RankNotes" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UserRank">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="RankId" Type="Int32" Nullable="false" />
+          <Property Name="RankNotesId" Type="Int32" />
+          <NavigationProperty Name="Rank" Relationship="Self.FK_UserRanks_Rank" FromRole="UserRanks" ToRole="Rank" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserRanks_Users" FromRole="UserRanks" ToRole="Users" />
+          <Property Name="AwardedOn" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -214,7 +266,20 @@ warning 6035: The relationship 'FK_RankNotes_Rank1' has columns that are not par
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsOnline" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="EUReporteds" Relationship="Self.FK_EUReported_Users" FromRole="Users" ToRole="EUReported" />
-          <NavigationProperty Name="UsersSessions" Relationship="Damocles2Model.FK_UsersSessions_Users" FromRole="User" ToRole="UsersSession" />
+          <NavigationProperty Name="RankNotes" Relationship="Self.FK_RankNotes_Users" FromRole="Users" ToRole="RankNotes" />
+          <NavigationProperty Name="UserRanks" Relationship="Self.FK_UserRanks_Users" FromRole="Users" ToRole="UserRanks" />
+          <NavigationProperty Name="UsersSessions" Relationship="Self.FK_UsersSessions_Users" FromRole="Users" ToRole="UsersSessions" />
+        </EntityType>
+        <EntityType Name="UsersSession">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="LoggedOnAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="loggedOffAt" Type="DateTime" Precision="3" />
+          <Property Name="SessionSeconds" Type="Double" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UsersSessions_Users" FromRole="UsersSessions" ToRole="Users" />
         </EntityType>
         <Association Name="FK_EUReported_Users">
           <End Role="Users" Type="Self.User" Multiplicity="0..1" />
@@ -233,22 +298,58 @@ warning 6035: The relationship 'FK_RankNotes_Rank1' has columns that are not par
           <End Role="RankNotes" Type="Self.RankNote" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Rank">
-              <PropertyRef Name="pid" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="RankNotes">
               <PropertyRef Name="RankId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RankNotes_RankNotes">
-          <End Role="RankNotes" Type="Self.RankNote" Multiplicity="1" />
-          <End Role="RankNotes1" Type="Self.RankNote" Multiplicity="*" />
+        <Association Name="FK_UserRanks_Rank">
+          <End Role="Rank" Type="Self.Rank" Multiplicity="1" />
+          <End Role="UserRanks" Type="Self.UserRank" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="RankNotes">
-              <PropertyRef Name="pid" />
+            <Principal Role="Rank">
+              <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="RankNotes1">
-              <PropertyRef Name="PreviousMessage" />
+            <Dependent Role="UserRanks">
+              <PropertyRef Name="RankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RankNotes_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="RankNotes" Type="Self.RankNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RankNotes">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRanks_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="UserRanks" Type="Self.UserRank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRanks">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersSessions_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="UsersSessions" Type="Self.UsersSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersSessions">
+              <PropertyRef Name="id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -256,7 +357,9 @@ warning 6035: The relationship 'FK_RankNotes_Rank1' has columns that are not par
           <EntitySet Name="EUReporteds" EntityType="Self.EUReported" />
           <EntitySet Name="Ranks" EntityType="Self.Rank" />
           <EntitySet Name="RankNotes" EntityType="Self.RankNote" />
+          <EntitySet Name="UserRanks" EntityType="Self.UserRank" />
           <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UsersSessions" EntityType="Self.UsersSession" />
           <AssociationSet Name="FK_EUReported_Users" Association="Self.FK_EUReported_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="EUReported" EntitySet="EUReporteds" />
@@ -265,39 +368,23 @@ warning 6035: The relationship 'FK_RankNotes_Rank1' has columns that are not par
             <End Role="Rank" EntitySet="Ranks" />
             <End Role="RankNotes" EntitySet="RankNotes" />
           </AssociationSet>
-          <AssociationSet Name="FK_RankNotes_RankNotes" Association="Self.FK_RankNotes_RankNotes">
-            <End Role="RankNotes" EntitySet="RankNotes" />
-            <End Role="RankNotes1" EntitySet="RankNotes" />
+          <AssociationSet Name="FK_UserRanks_Rank" Association="Self.FK_UserRanks_Rank">
+            <End Role="Rank" EntitySet="Ranks" />
+            <End Role="UserRanks" EntitySet="UserRanks" />
           </AssociationSet>
-          <EntitySet Name="UsersSessions" EntityType="Damocles2Model.UsersSession" />
-          <AssociationSet Name="FK_UsersSessions_Users" Association="Damocles2Model.FK_UsersSessions_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="UsersSession" EntitySet="UsersSessions" />
+          <AssociationSet Name="FK_RankNotes_Users" Association="Self.FK_RankNotes_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="RankNotes" EntitySet="RankNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRanks_Users" Association="Self.FK_UserRanks_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRanks" EntitySet="UserRanks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersSessions_Users" Association="Self.FK_UsersSessions_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersSessions" EntitySet="UsersSessions" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="UsersSession">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="LoggedOnAt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="loggedOffAt" Type="DateTime" Precision="3" Nullable="true" />
-          <Property Name="SessionSeconds" Type="Double" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="Damocles2Model.FK_UsersSessions_Users" FromRole="UsersSession" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_UsersSessions_Users">
-          <End Type="Damocles2Model.User" Role="User" Multiplicity="1" />
-          <End Type="Damocles2Model.UsersSession" Role="UsersSession" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UsersSession">
-              <PropertyRef Name="id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -324,13 +411,12 @@ warning 6035: The relationship 'FK_RankNotes_Rank1' has columns that are not par
           <EntitySetMapping Name="Ranks">
             <EntityTypeMapping TypeName="Damocles2Model.Rank">
               <MappingFragment StoreEntitySet="Rank">
-                <ScalarProperty Name="pid" ColumnName="pid" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RankCode" ColumnName="RankCode" />
                 <ScalarProperty Name="RankNameEnglish" ColumnName="RankNameEnglish" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="RankNotes" ColumnName="RankNotes" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -338,11 +424,23 @@ warning 6035: The relationship 'FK_RankNotes_Rank1' has columns that are not par
             <EntityTypeMapping TypeName="Damocles2Model.RankNote">
               <MappingFragment StoreEntitySet="RankNotes">
                 <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="RankId" ColumnName="RankId" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
                 <ScalarProperty Name="PreviousMessage" ColumnName="PreviousMessage" />
                 <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRanks">
+            <EntityTypeMapping TypeName="Damocles2Model.UserRank">
+              <MappingFragment StoreEntitySet="UserRanks">
+                <ScalarProperty Name="AwardedOn" ColumnName="AwardedOn" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RankId" ColumnName="RankId" />
+                <ScalarProperty Name="RankNotesId" ColumnName="RankNotesId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -369,11 +467,11 @@ warning 6035: The relationship 'FK_RankNotes_Rank1' has columns that are not par
           <EntitySetMapping Name="UsersSessions">
             <EntityTypeMapping TypeName="Damocles2Model.UsersSession">
               <MappingFragment StoreEntitySet="UsersSessions">
-                <ScalarProperty Name="SessionSeconds" ColumnName="SessionSeconds" />
-                <ScalarProperty Name="loggedOffAt" ColumnName="loggedOffAt" />
-                <ScalarProperty Name="LoggedOnAt" ColumnName="LoggedOnAt" />
-                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="LoggedOnAt" ColumnName="LoggedOnAt" />
+                <ScalarProperty Name="loggedOffAt" ColumnName="loggedOffAt" />
+                <ScalarProperty Name="SessionSeconds" ColumnName="SessionSeconds" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

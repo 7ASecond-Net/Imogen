@@ -82,8 +82,8 @@ namespace Imogen.Forms.Dockable
 
         private void btnAllowed_Click(object sender, EventArgs e)
         {
-            lblARCRating.ForeColor = Color.PaleGreen;
-            lblARCRating.Text = "Universally Allowed in this Jurisdiction";
+            lblSrcUrlARCRating.ForeColor = Color.PaleGreen;
+            lblSrcUrlARCRating.Text = "Universally Allowed in this Jurisdiction";
             btnSubmit.Enabled = true;
         }
 
@@ -91,15 +91,15 @@ namespace Imogen.Forms.Dockable
         {
             //TODO: Who is this restricted to?
             btnSubmit.Enabled = true;
-            lblARCRating.ForeColor = Color.Orange;
-            lblARCRating.Text = "Restricted in this Jurisdiction";
+            lblSrcUrlARCRating.ForeColor = Color.Orange;
+            lblSrcUrlARCRating.Text = "Restricted in this Jurisdiction";
         }
 
         private void btnCriminal_Click(object sender, EventArgs e)
         {
             btnSubmit.Enabled = true;
-            lblARCRating.ForeColor = Color.OrangeRed;
-            lblARCRating.Text = "Rated as Criminal Content in this Jurisdiction";
+            lblSrcUrlARCRating.ForeColor = Color.OrangeRed;
+            lblSrcUrlARCRating.Text = "Rated as Criminal Content in this Jurisdiction";
         }
     }
 }

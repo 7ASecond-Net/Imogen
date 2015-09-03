@@ -18,6 +18,8 @@ namespace Imogen.Model
         public User()
         {
             this.EUReporteds = new HashSet<EUReported>();
+            this.RankNotes = new HashSet<RankNote>();
+            this.UserRanks = new HashSet<UserRank>();
             this.UsersSessions = new HashSet<UsersSession>();
         }
     
@@ -38,6 +40,10 @@ namespace Imogen.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EUReported> EUReporteds { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RankNote> RankNotes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserRank> UserRanks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsersSession> UsersSessions { get; set; }
     }

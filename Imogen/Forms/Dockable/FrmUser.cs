@@ -28,6 +28,8 @@ namespace Imogen.Forms.Dockable
         public void UpdateUserSessionTime()
         {
             TotalSecondsPassed += dbHelper.GetUserLifetimeSessionTime();
+            lblTotalSessions.Text = DBHelper.TotalSessions.ToString("N0");
+            lblRank.Text = DBHelper.UserRank;
         }
 
         //TODO: NOT WORKING

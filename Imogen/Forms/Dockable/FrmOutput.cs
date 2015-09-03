@@ -56,20 +56,48 @@ namespace Imogen.Forms.Dockable
         /// </remarks>
         public void SetInformationMessage(string msg)
         {
-            msg = msg + Environment.NewLine;
-            rtbConOut.InsertText(msg, InformationStyle);            
+            try
+            {
+                msg = msg + Environment.NewLine;
+                rtbConOut.InsertText(msg, InformationStyle);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
         internal void SetErrorMessage(string msg)
         {
-            msg = msg + Environment.NewLine;
-            rtbConOut.InsertText(msg, ErrorStyle);
+            try
+            {
+                msg = msg + Environment.NewLine;
+                rtbConOut.InsertText(msg, ErrorStyle);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
         internal void SetSuccessMessage(string msg)
         {
-            msg = msg + Environment.NewLine;
-            rtbConOut.InsertText(msg, SuccessStyle);
+            try
+            {
+                msg = msg + Environment.NewLine;
+                rtbConOut.InsertText(msg, SuccessStyle);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
         }
 
 

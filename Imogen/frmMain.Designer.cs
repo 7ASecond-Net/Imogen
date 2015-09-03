@@ -78,6 +78,12 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.timerDBConnect = new System.Windows.Forms.Timer(this.components);
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblPendingReports = new System.Windows.Forms.ToolStripStatusLabel();
+            this.timerFiveMinuteUpdate = new System.Windows.Forms.Timer(this.components);
+            this.lblUsersOnline = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.dbStatusIcon = new System.Windows.Forms.ToolStripStatusLabel();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,7 +93,6 @@
             this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.timerDBConnect = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -374,10 +379,14 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.lblStatus,
+            this.toolStripStatusLabel4,
+            this.lblUsersOnline,
+            this.toolStripStatusLabel2,
+            this.lblPendingReports,
             this.dbStatusIcon});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 568);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 565);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(788, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(788, 25);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
@@ -385,22 +394,65 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(39, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(39, 20);
             this.toolStripStatusLabel1.Text = "Status";
             // 
             // lblStatus
             // 
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(718, 17);
+            this.lblStatus.Size = new System.Drawing.Size(550, 20);
             this.lblStatus.Spring = true;
             this.lblStatus.Text = "...";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // timerDBConnect
+            // 
+            this.timerDBConnect.Enabled = true;
+            this.timerDBConnect.Interval = 10000;
+            this.timerDBConnect.Tick += new System.EventHandler(this.timerDBConnect_Tick);
+            // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(98, 20);
+            this.toolStripStatusLabel2.Text = "Pending Reports";
+            // 
+            // lblPendingReports
+            // 
+            this.lblPendingReports.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.lblPendingReports.ForeColor = System.Drawing.Color.Maroon;
+            this.lblPendingReports.Name = "lblPendingReports";
+            this.lblPendingReports.Size = new System.Drawing.Size(17, 20);
+            this.lblPendingReports.Text = "0";
+            // 
+            // timerFiveMinuteUpdate
+            // 
+            this.timerFiveMinuteUpdate.Enabled = true;
+            this.timerFiveMinuteUpdate.Interval = 60000;
+            this.timerFiveMinuteUpdate.Tick += new System.EventHandler(this.timerFiveMinuteUpdate_Tick);
+            // 
+            // lblUsersOnline
+            // 
+            this.lblUsersOnline.Name = "lblUsersOnline";
+            this.lblUsersOnline.Size = new System.Drawing.Size(13, 20);
+            this.lblUsersOnline.Text = "0";
+            // 
+            // toolStripStatusLabel4
+            // 
+            this.toolStripStatusLabel4.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.toolStripStatusLabel4.Image = global::Imogen.Properties.Resources.user_8_16;
+            this.toolStripStatusLabel4.Margin = new System.Windows.Forms.Padding(10, 3, 0, 2);
+            this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
+            this.toolStripStatusLabel4.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(25, 20);
+            // 
             // dbStatusIcon
             // 
             this.dbStatusIcon.Image = global::Imogen.Properties.Resources.delete_database_16;
+            this.dbStatusIcon.Margin = new System.Windows.Forms.Padding(5, 3, 0, 2);
             this.dbStatusIcon.Name = "dbStatusIcon";
-            this.dbStatusIcon.Size = new System.Drawing.Size(16, 17);
+            this.dbStatusIcon.Size = new System.Drawing.Size(16, 20);
             // 
             // newToolStripMenuItem
             // 
@@ -474,12 +526,6 @@
             this.pasteToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.pasteToolStripMenuItem.Text = "&Paste";
             // 
-            // timerDBConnect
-            // 
-            this.timerDBConnect.Enabled = true;
-            this.timerDBConnect.Interval = 10000;
-            this.timerDBConnect.Tick += new System.EventHandler(this.timerDBConnect_Tick);
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -550,6 +596,11 @@
         private System.Windows.Forms.ToolStripMenuItem metaDataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem yourAccountToolStripMenuItem;
         private System.Windows.Forms.Timer timerDBConnect;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.ToolStripStatusLabel lblPendingReports;
+        private System.Windows.Forms.Timer timerFiveMinuteUpdate;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
+        private System.Windows.Forms.ToolStripStatusLabel lblUsersOnline;
     }
 }
 

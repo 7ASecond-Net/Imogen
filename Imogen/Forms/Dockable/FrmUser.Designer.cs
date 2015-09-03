@@ -69,13 +69,13 @@
             this.label42 = new System.Windows.Forms.Label();
             this.lblSessionTime = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
-            this.label45 = new System.Windows.Forms.Label();
+            this.lblTotalSessions = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblRank = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lblUserName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -94,7 +94,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(425, 224);
+            this.panel1.Size = new System.Drawing.Size(425, 283);
             this.panel1.TabIndex = 0;
             // 
             // groupBox2
@@ -133,7 +133,7 @@
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.label15);
             this.groupBox2.Controls.Add(this.label16);
-            this.groupBox2.Location = new System.Drawing.Point(11, 85);
+            this.groupBox2.Location = new System.Drawing.Point(10, 141);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(400, 129);
             this.groupBox2.TabIndex = 41;
@@ -483,29 +483,28 @@
             this.groupBox1.Controls.Add(this.label42);
             this.groupBox1.Controls.Add(this.lblSessionTime);
             this.groupBox1.Controls.Add(this.label44);
-            this.groupBox1.Controls.Add(this.label45);
+            this.groupBox1.Controls.Add(this.lblTotalSessions);
             this.groupBox1.Controls.Add(this.label46);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.lblRank);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.lblUserName);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox1.Location = new System.Drawing.Point(10, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(401, 76);
+            this.groupBox1.Size = new System.Drawing.Size(401, 132);
             this.groupBox1.TabIndex = 40;
             this.groupBox1.TabStop = false;
             // 
             // lblTotalWorkTime
             // 
-            this.lblTotalWorkTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTotalWorkTime.AutoSize = true;
             this.lblTotalWorkTime.ForeColor = System.Drawing.Color.PaleGreen;
-            this.lblTotalWorkTime.Location = new System.Drawing.Point(286, 42);
+            this.lblTotalWorkTime.Location = new System.Drawing.Point(99, 105);
             this.lblTotalWorkTime.Name = "lblTotalWorkTime";
             this.lblTotalWorkTime.Size = new System.Drawing.Size(16, 13);
             this.lblTotalWorkTime.TabIndex = 59;
@@ -513,10 +512,9 @@
             // 
             // label42
             // 
-            this.label42.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label42.AutoSize = true;
             this.label42.ForeColor = System.Drawing.Color.PaleGreen;
-            this.label42.Location = new System.Drawing.Point(193, 42);
+            this.label42.Location = new System.Drawing.Point(6, 105);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(86, 13);
             this.label42.TabIndex = 58;
@@ -524,10 +522,9 @@
             // 
             // lblSessionTime
             // 
-            this.lblSessionTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSessionTime.AutoSize = true;
             this.lblSessionTime.ForeColor = System.Drawing.Color.PaleGreen;
-            this.lblSessionTime.Location = new System.Drawing.Point(286, 29);
+            this.lblSessionTime.Location = new System.Drawing.Point(99, 92);
             this.lblSessionTime.Name = "lblSessionTime";
             this.lblSessionTime.Size = new System.Drawing.Size(16, 13);
             this.lblSessionTime.TabIndex = 57;
@@ -535,32 +532,29 @@
             // 
             // label44
             // 
-            this.label44.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label44.AutoSize = true;
             this.label44.ForeColor = System.Drawing.Color.PaleGreen;
-            this.label44.Location = new System.Drawing.Point(220, 29);
+            this.label44.Location = new System.Drawing.Point(33, 92);
             this.label44.Name = "label44";
             this.label44.Size = new System.Drawing.Size(59, 13);
             this.label44.TabIndex = 56;
             this.label44.Text = "Work Time";
             // 
-            // label45
+            // lblTotalSessions
             // 
-            this.label45.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label45.AutoSize = true;
-            this.label45.ForeColor = System.Drawing.Color.PaleGreen;
-            this.label45.Location = new System.Drawing.Point(286, 16);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(16, 13);
-            this.label45.TabIndex = 55;
-            this.label45.Text = "...";
+            this.lblTotalSessions.AutoSize = true;
+            this.lblTotalSessions.ForeColor = System.Drawing.Color.PaleGreen;
+            this.lblTotalSessions.Location = new System.Drawing.Point(99, 79);
+            this.lblTotalSessions.Name = "lblTotalSessions";
+            this.lblTotalSessions.Size = new System.Drawing.Size(16, 13);
+            this.lblTotalSessions.TabIndex = 55;
+            this.lblTotalSessions.Text = "...";
             // 
             // label46
             // 
-            this.label46.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label46.AutoSize = true;
             this.label46.ForeColor = System.Drawing.Color.PaleGreen;
-            this.label46.Location = new System.Drawing.Point(203, 16);
+            this.label46.Location = new System.Drawing.Point(16, 79);
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(76, 13);
             this.label46.TabIndex = 54;
@@ -570,7 +564,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.ForeColor = System.Drawing.Color.PaleGreen;
-            this.label7.Location = new System.Drawing.Point(92, 55);
+            this.label7.Location = new System.Drawing.Point(99, 55);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(16, 13);
             this.label7.TabIndex = 53;
@@ -580,7 +574,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.ForeColor = System.Drawing.Color.PaleGreen;
-            this.label8.Location = new System.Drawing.Point(25, 55);
+            this.label8.Location = new System.Drawing.Point(33, 55);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(59, 13);
             this.label8.TabIndex = 52;
@@ -590,7 +584,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.Color.PaleGreen;
-            this.label5.Location = new System.Drawing.Point(92, 42);
+            this.label5.Location = new System.Drawing.Point(99, 42);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(16, 13);
             this.label5.TabIndex = 51;
@@ -600,27 +594,27 @@
             // 
             this.label6.AutoSize = true;
             this.label6.ForeColor = System.Drawing.Color.PaleGreen;
-            this.label6.Location = new System.Drawing.Point(26, 42);
+            this.label6.Location = new System.Drawing.Point(34, 42);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(58, 13);
             this.label6.TabIndex = 50;
             this.label6.Text = "ID Number";
             // 
-            // label3
+            // lblRank
             // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.Color.PaleGreen;
-            this.label3.Location = new System.Drawing.Point(92, 29);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(16, 13);
-            this.label3.TabIndex = 49;
-            this.label3.Text = "...";
+            this.lblRank.AutoSize = true;
+            this.lblRank.ForeColor = System.Drawing.Color.PaleGreen;
+            this.lblRank.Location = new System.Drawing.Point(99, 29);
+            this.lblRank.Name = "lblRank";
+            this.lblRank.Size = new System.Drawing.Size(16, 13);
+            this.lblRank.TabIndex = 49;
+            this.lblRank.Text = "...";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.Color.PaleGreen;
-            this.label4.Location = new System.Drawing.Point(51, 29);
+            this.label4.Location = new System.Drawing.Point(59, 29);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(33, 13);
             this.label4.TabIndex = 48;
@@ -630,7 +624,7 @@
             // 
             this.lblUserName.AutoSize = true;
             this.lblUserName.ForeColor = System.Drawing.Color.PaleGreen;
-            this.lblUserName.Location = new System.Drawing.Point(92, 16);
+            this.lblUserName.Location = new System.Drawing.Point(99, 16);
             this.lblUserName.Name = "lblUserName";
             this.lblUserName.Size = new System.Drawing.Size(16, 13);
             this.lblUserName.TabIndex = 47;
@@ -640,7 +634,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.PaleGreen;
-            this.label1.Location = new System.Drawing.Point(49, 16);
+            this.label1.Location = new System.Drawing.Point(57, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 46;
@@ -656,7 +650,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(425, 224);
+            this.ClientSize = new System.Drawing.Size(425, 283);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -713,13 +707,13 @@
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.Label lblSessionTime;
         private System.Windows.Forms.Label label44;
-        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.Label lblTotalSessions;
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblRank;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblUserName;
         private System.Windows.Forms.Label label1;

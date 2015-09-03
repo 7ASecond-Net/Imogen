@@ -28,6 +28,7 @@ namespace Imogen.Model
         public virtual DbSet<EUReported> EUReporteds { get; set; }
         public virtual DbSet<Rank> Ranks { get; set; }
         public virtual DbSet<RankNote> RankNotes { get; set; }
+        public virtual DbSet<UserRank> UserRanks { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UsersSession> UsersSessions { get; set; }
     }

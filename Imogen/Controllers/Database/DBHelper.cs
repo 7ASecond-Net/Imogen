@@ -13,9 +13,11 @@ namespace Imogen.Controllers.Database
         private Damocles2Entities de = new Damocles2Entities();
 
         private Utils.Utils utils = new Utils.Utils();
+        public static double TotalSessions;
+        internal static string UserRank;
 
-        private string userName { get; set; }
-        private string userPasswordHash { get; set; }
+        private static string userName { get; set; }
+        private static string userPasswordHash { get; set; }
 
         public DBHelper()
         {
@@ -81,9 +83,12 @@ namespace Imogen.Controllers.Database
             User user = de.Users.Where(u => u.Username == username && u.UserPassword == passwordHash).FirstOrDefault();
             if (user == null)
                 return false;
+            
+            //TODO: This is not functioning correctly - simply want the User's current rank.
+            UserRank ur = de.UserRanks.Where(usr => usr.UserId == user.Id).FirstOrDefault();
 
             user.IsOnline = true;
-
+            UserRank = ur.Rank.RankNameEnglish;
             var aus = de.UsersSessions.Where(auss => auss.id == user.Id);
             
             foreach(UsersSession userS in aus)
@@ -168,11 +173,26 @@ namespace Imogen.Controllers.Database
             double t = 0;
             foreach (UsersSession userS in aus)
             {
+                TotalSessions++;
                 Properties.Settings.Default.SessionSecondsTotal += userS.SessionSeconds;
                 t += userS.SessionSeconds;
             }
 
             return t;
+        }
+
+        internal static string GetPendingReportCount()
+        {
+            Damocles2Entities de = new Damocles2Entities();
+            var eur = de.EUReporteds.Where(p => p.Processed == false);
+            return eur.Count().ToString("N0");
+        }
+
+        internal static string GetUsersOnlineCount()
+        {
+            Damocles2Entities de = new Damocles2Entities();
+            var ur = de.Users.Where(p => p.IsOnline == true);
+            return ur.Count().ToString("N0");
         }
     }
 }

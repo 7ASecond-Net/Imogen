@@ -128,6 +128,8 @@ namespace Imogen
                 if (File.Exists(configFile))
                     dockPanel.LoadFromXml(configFile, m_deserializeDockContent);
 
+                lblPendingReports.Text = DBHelper.GetPendingReportCount();
+                lblUsersOnline.Text = DBHelper.GetUsersOnlineCount();
 
                 Task tStart = new Task(() => Start());
                 tStart.Start();
@@ -138,11 +140,29 @@ namespace Imogen
 
         private void Start()
         {
-            if (frmRWB != null)
-                frmRWB.ConsoleMessageEvent += FrmRWB_ConsoleMessageEvent;
-            ConnectToDatabase();
 
-            
+            System.Threading.Thread.Sleep(2000);
+            Log("Spinning Up");
+
+            if (frmRWB != null)
+            {
+                Log("Registering to Console Messaging event");
+                frmRWB.ConsoleMessageEvent += FrmRWB_ConsoleMessageEvent;
+            }
+
+            try
+            {
+ System.Threading.Thread.Sleep(2000);
+            ConnectToDatabase();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
+            //TODO: Quite often does not proceed from here
+
 
             //TODO: Don't Do this if the User is already working on a report.
             // Get Unprocessed Reported Content
@@ -152,21 +172,27 @@ namespace Imogen
 
         private void ConnectToDatabase()
         {
+            Log("Connecting To Damocles 2");
             // Connect to Database 
             //TODO: Change login settings so that it uses the actual user's account details and not a generic one
             if (dbHelper == null)
+            {
+                Log("Creating New Database Helper");
                 dbHelper = new DBHelper();
+            }
+
             if (dbHelper.DBConnected)
             {
                 Log("Connected to Damocles", LogType.Success);
                 dbStatusIcon.Image = Properties.Resources.accept_database_16;
-             
+                lblPendingReports.Text = DBHelper.GetPendingReportCount();
             }
             else
             {
                 dbStatusIcon.Image = Properties.Resources.delete_database_16;
                 Log("Failed to connect to Damocles!", LogType.Error);
             }
+            Log("Database Connection Completed");
         }
 
         /// <summary>
@@ -210,6 +236,8 @@ namespace Imogen
 
         }
 
+        #region Logging
+
         private void Log(string v, LogType lt = LogType.Information)
         {
             switch (lt)
@@ -231,41 +259,23 @@ namespace Imogen
             }
         }
 
-        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            dbHelper.LogOff();
-            Properties.Settings.Default.Save();
-            string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
-            if (bSaveLayout)
-                dockPanel.SaveAsXml(configFile);
-            else if (File.Exists(configFile))
-                File.Delete(configFile);
-            
-        }
-
-        private void restrictedBrowserToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (restrictedBrowserToolStripMenuItem.Checked)
-            {
-                Log("Closing Restricted Browser");
-                frmRWB.ConsoleMessageEvent -= FrmRWB_ConsoleMessageEvent;
-                frmRWB.Close();
-            }
-            else
-            {
-                Log("Opening Restricted Browser");
-                if (frmRWB == null || frmRWB.IsDisposed) frmRWB = new FrmRestrictedWebBrowser();
-                frmRWB.Show(dockPanel);
-                frmRWB.ConsoleMessageEvent += FrmRWB_ConsoleMessageEvent;
-            }
-            restrictedBrowserToolStripMenuItem.Checked = !restrictedBrowserToolStripMenuItem.Checked; // Toggle the check state in the menu on click
-        }
-
         private void FrmRWB_ConsoleMessageEvent(object sender, EventArgs e)
         {
             Log("From Restricted Browser: " + e.ToString());
         }
+        #endregion
 
+        #region Menu
+
+        #region Reports
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Log("Getting Unprocessed Report");
+            ProcessUnReported(upc.GetUnProcessedContent());
+        }
+        #endregion
+
+        #region Windows
         private void profileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (profileToolStripMenuItem.Checked)
@@ -315,7 +325,7 @@ namespace Imogen
                 }
 
             }
-           else
+            else
             {
                 Log("Opening Metadata Window");
                 if (frmMetadata == null || frmMetadata.IsDisposed) frmMetadata = new FrmMetaData(currentFilePath);
@@ -350,6 +360,39 @@ namespace Imogen
             yourAccountToolStripMenuItem.Checked = !yourAccountToolStripMenuItem.Checked; // Toggle the check state in 
         }
 
+        private void restrictedBrowserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (restrictedBrowserToolStripMenuItem.Checked)
+            {
+                Log("Closing Restricted Browser");
+                frmRWB.ConsoleMessageEvent -= FrmRWB_ConsoleMessageEvent;
+                frmRWB.Close();
+            }
+            else
+            {
+                Log("Opening Restricted Browser");
+                if (frmRWB == null || frmRWB.IsDisposed) frmRWB = new FrmRestrictedWebBrowser();
+                frmRWB.Show(dockPanel);
+                frmRWB.ConsoleMessageEvent += FrmRWB_ConsoleMessageEvent;
+            }
+            restrictedBrowserToolStripMenuItem.Checked = !restrictedBrowserToolStripMenuItem.Checked; // Toggle the check state in the menu on click
+        }
+        #endregion
+
+        #endregion
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            dbHelper.LogOff();
+            Properties.Settings.Default.Save();
+            string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
+            if (bSaveLayout)
+                dockPanel.SaveAsXml(configFile);
+            else if (File.Exists(configFile))
+                File.Delete(configFile);
+
+        }
+
         private void timerDBConnect_Tick(object sender, EventArgs e)
         {
             if (lblStatus.Text == "Connecting to Database") lblStatus.Text = string.Empty;
@@ -358,15 +401,16 @@ namespace Imogen
                 dbStatusIcon.Image = Properties.Resources.delete_database_16;
                 lblStatus.Text = "Connecting to Database";
                 dbHelper.Connect();
+                timerDBConnect.Enabled = false;
             }
             else
                 dbStatusIcon.Image = Properties.Resources.accept_database_16;
         }
 
-        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        private void timerFiveMinuteUpdate_Tick(object sender, EventArgs e)
         {
-            Log("Getting Unprocessed Report");
-            ProcessUnReported(upc.GetUnProcessedContent());
+            lblPendingReports.Text = DBHelper.GetPendingReportCount();
+            lblUsersOnline.Text = DBHelper.GetUsersOnlineCount();
         }
     }
 }

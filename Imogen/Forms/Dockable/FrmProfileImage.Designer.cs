@@ -42,8 +42,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.lblARCRating = new System.Windows.Forms.Label();
-            this.pbOriginal = new System.Windows.Forms.PictureBox();
+            this.lblSrcUrlARCRating = new System.Windows.Forms.Label();
             this.lblPossibleFileName2 = new System.Windows.Forms.Label();
             this.lblPossibleFileName1 = new System.Windows.Forms.Label();
             this.lblReportedon = new System.Windows.Forms.Label();
@@ -51,6 +50,14 @@
             this.lblLinkUrlHash = new System.Windows.Forms.Label();
             this.lblSrcUrlHash = new System.Windows.Forms.Label();
             this.lblUrlHash = new System.Windows.Forms.Label();
+            this.pbOriginal = new System.Windows.Forms.PictureBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.lblLinkUrlArcRating = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbOriginal)).BeginInit();
             this.SuspendLayout();
@@ -59,6 +66,11 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.DimGray;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.button3);
+            this.panel1.Controls.Add(this.label10);
+            this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.btnSubmit);
             this.panel1.Controls.Add(this.btnCriminal);
             this.panel1.Controls.Add(this.btnRestricted);
@@ -73,9 +85,9 @@
             // 
             // btnSubmit
             // 
-            this.btnSubmit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSubmit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSubmit.Enabled = false;
-            this.btnSubmit.Location = new System.Drawing.Point(233, 266);
+            this.btnSubmit.Location = new System.Drawing.Point(232, 233);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(75, 24);
             this.btnSubmit.TabIndex = 22;
@@ -87,7 +99,7 @@
             this.btnCriminal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCriminal.BackColor = System.Drawing.Color.OrangeRed;
             this.btnCriminal.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnCriminal.Location = new System.Drawing.Point(178, 266);
+            this.btnCriminal.Location = new System.Drawing.Point(203, 233);
             this.btnCriminal.Name = "btnCriminal";
             this.btnCriminal.Size = new System.Drawing.Size(16, 23);
             this.btnCriminal.TabIndex = 21;
@@ -100,7 +112,7 @@
             this.btnRestricted.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnRestricted.BackColor = System.Drawing.Color.Orange;
             this.btnRestricted.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnRestricted.Location = new System.Drawing.Point(137, 266);
+            this.btnRestricted.Location = new System.Drawing.Point(174, 233);
             this.btnRestricted.Name = "btnRestricted";
             this.btnRestricted.Size = new System.Drawing.Size(16, 23);
             this.btnRestricted.TabIndex = 20;
@@ -113,18 +125,18 @@
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.Color.NavajoWhite;
-            this.label4.Location = new System.Drawing.Point(16, 270);
+            this.label4.Location = new System.Drawing.Point(16, 237);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(74, 15);
+            this.label4.Size = new System.Drawing.Size(119, 15);
             this.label4.TabIndex = 19;
-            this.label4.Text = "ARC Rating";
+            this.label4.Text = "Src Url ARC Rating";
             // 
             // btnAllowed
             // 
             this.btnAllowed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAllowed.BackColor = System.Drawing.Color.PaleGreen;
             this.btnAllowed.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnAllowed.Location = new System.Drawing.Point(96, 266);
+            this.btnAllowed.Location = new System.Drawing.Point(145, 233);
             this.btnAllowed.Name = "btnAllowed";
             this.btnAllowed.Size = new System.Drawing.Size(16, 23);
             this.btnAllowed.TabIndex = 18;
@@ -199,35 +211,22 @@
             // 
             this.label8.AutoSize = true;
             this.label8.ForeColor = System.Drawing.Color.NavajoWhite;
-            this.label8.Location = new System.Drawing.Point(400, 102);
+            this.label8.Location = new System.Drawing.Point(355, 102);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(74, 15);
+            this.label8.Size = new System.Drawing.Size(119, 15);
             this.label8.TabIndex = 22;
-            this.label8.Text = "ARC Rating";
+            this.label8.Text = "Src Url ARC Rating";
             // 
-            // lblARCRating
+            // lblSrcUrlARCRating
             // 
-            this.lblARCRating.AutoSize = true;
-            this.lblARCRating.Font = new System.Drawing.Font("Arial Unicode MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblARCRating.ForeColor = System.Drawing.Color.NavajoWhite;
-            this.lblARCRating.Location = new System.Drawing.Point(475, 102);
-            this.lblARCRating.Name = "lblARCRating";
-            this.lblARCRating.Size = new System.Drawing.Size(19, 15);
-            this.lblARCRating.TabIndex = 23;
-            this.lblARCRating.Text = "...";
-            // 
-            // pbOriginal
-            // 
-            this.pbOriginal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbOriginal.BackColor = System.Drawing.Color.Black;
-            this.pbOriginal.Location = new System.Drawing.Point(19, 12);
-            this.pbOriginal.Name = "pbOriginal";
-            this.pbOriginal.Size = new System.Drawing.Size(289, 248);
-            this.pbOriginal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbOriginal.TabIndex = 0;
-            this.pbOriginal.TabStop = false;
+            this.lblSrcUrlARCRating.AutoSize = true;
+            this.lblSrcUrlARCRating.Font = new System.Drawing.Font("Arial Unicode MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSrcUrlARCRating.ForeColor = System.Drawing.Color.NavajoWhite;
+            this.lblSrcUrlARCRating.Location = new System.Drawing.Point(475, 102);
+            this.lblSrcUrlARCRating.Name = "lblSrcUrlARCRating";
+            this.lblSrcUrlARCRating.Size = new System.Drawing.Size(19, 15);
+            this.lblSrcUrlARCRating.TabIndex = 23;
+            this.lblSrcUrlARCRating.Text = "...";
             // 
             // lblPossibleFileName2
             // 
@@ -316,13 +315,107 @@
             this.lblUrlHash.TabIndex = 2;
             this.lblUrlHash.Text = global::Imogen.Properties.Settings.Default.ProfileUrlHash;
             // 
+            // pbOriginal
+            // 
+            this.pbOriginal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbOriginal.BackColor = System.Drawing.Color.Black;
+            this.pbOriginal.Location = new System.Drawing.Point(19, 12);
+            this.pbOriginal.Name = "pbOriginal";
+            this.pbOriginal.Size = new System.Drawing.Size(289, 215);
+            this.pbOriginal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbOriginal.TabIndex = 0;
+            this.pbOriginal.TabStop = false;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.ForeColor = System.Drawing.Color.NavajoWhite;
+            this.label9.Location = new System.Drawing.Point(351, 117);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(123, 15);
+            this.label9.TabIndex = 24;
+            this.label9.Text = "Link Url ARC Rating";
+            // 
+            // lblLinkUrlArcRating
+            // 
+            this.lblLinkUrlArcRating.AutoSize = true;
+            this.lblLinkUrlArcRating.Font = new System.Drawing.Font("Arial Unicode MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLinkUrlArcRating.ForeColor = System.Drawing.Color.NavajoWhite;
+            this.lblLinkUrlArcRating.Location = new System.Drawing.Point(475, 117);
+            this.lblLinkUrlArcRating.Name = "lblLinkUrlArcRating";
+            this.lblLinkUrlArcRating.Size = new System.Drawing.Size(19, 15);
+            this.lblLinkUrlArcRating.TabIndex = 25;
+            this.lblLinkUrlArcRating.Text = "...";
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point(233, 263);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 24);
+            this.button1.TabIndex = 27;
+            this.button1.Text = "Submit";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button2.BackColor = System.Drawing.Color.OrangeRed;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button2.Location = new System.Drawing.Point(204, 263);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(16, 23);
+            this.button2.TabIndex = 26;
+            this.button2.Text = "C";
+            this.button2.UseVisualStyleBackColor = false;
+            // 
+            // button3
+            // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button3.BackColor = System.Drawing.Color.Orange;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button3.Location = new System.Drawing.Point(175, 263);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(16, 23);
+            this.button3.TabIndex = 25;
+            this.button3.Text = "R";
+            this.button3.UseVisualStyleBackColor = false;
+            // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label10.AutoSize = true;
+            this.label10.ForeColor = System.Drawing.Color.NavajoWhite;
+            this.label10.Location = new System.Drawing.Point(17, 267);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(123, 15);
+            this.label10.TabIndex = 24;
+            this.label10.Text = "Link Url ARC Rating";
+            // 
+            // button4
+            // 
+            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button4.BackColor = System.Drawing.Color.PaleGreen;
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button4.Location = new System.Drawing.Point(146, 263);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(16, 23);
+            this.button4.TabIndex = 23;
+            this.button4.Text = "A";
+            this.button4.UseVisualStyleBackColor = false;
+            // 
             // FrmProfileImage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MidnightBlue;
             this.ClientSize = new System.Drawing.Size(1511, 301);
-            this.Controls.Add(this.lblARCRating);
+            this.Controls.Add(this.lblLinkUrlArcRating);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.lblSrcUrlARCRating);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.lblPossibleFileName2);
             this.Controls.Add(this.lblPossibleFileName1);
@@ -373,7 +466,14 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnAllowed;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label lblARCRating;
+        private System.Windows.Forms.Label lblSrcUrlARCRating;
         private System.Windows.Forms.Button btnSubmit;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblLinkUrlArcRating;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button button4;
     }
 }

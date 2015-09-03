@@ -17,18 +17,20 @@ namespace Imogen.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Rank()
         {
-            this.RankNotes1 = new HashSet<RankNote>();
+            this.RankNotes = new HashSet<RankNote>();
+            this.UserRanks = new HashSet<UserRank>();
         }
     
-        public int pid { get; set; }
         public int Id { get; set; }
+        public int RankCode { get; set; }
         public string RankNameEnglish { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime UpdatedOn { get; set; }
         public int CreatedBy { get; set; }
-        public int RankNotes { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RankNote> RankNotes1 { get; set; }
+        public virtual ICollection<RankNote> RankNotes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserRank> UserRanks { get; set; }
     }
 }
