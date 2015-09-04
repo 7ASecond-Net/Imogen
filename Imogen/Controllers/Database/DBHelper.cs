@@ -1,4 +1,5 @@
-﻿using Imogen.Model;
+﻿using Imogen.Controllers.Utils;
+using Imogen.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,10 @@ namespace Imogen.Controllers.Database
         private Damocles2Entities de = new Damocles2Entities();
 
         private Utils.Utils utils = new Utils.Utils();
+        private HashingHelper hh = new HashingHelper();
         public static double TotalSessions;
         internal static string UserRank;
+        internal static string UJurisdiction;
 
         private static string userName { get; set; }
         private static string userPasswordHash { get; set; }
@@ -25,6 +28,10 @@ namespace Imogen.Controllers.Database
             de.Database.Connection.StateChange += Connection_StateChange;
             SetConnectionStatus();
         }
+
+
+
+        #region Connections
 
         private void Connection_StateChange(object sender, System.Data.StateChangeEventArgs e)
         {
@@ -60,10 +67,21 @@ namespace Imogen.Controllers.Database
             }
         }
 
+        private void ConnectToDamocles()
+        {
+            de.Database.Connection.Open();
+        }
 
+        internal void Connect()
+        {
+            ConnectToDamocles();
+        }
+
+        #endregion
 
         #region 
         //TODO: This should be retrieved from a Queue via API or Messaging.
+        //TODO: Convert the EUReported class to an internal class called - CurrentReport.
         internal static EUReported GetNextUnprocessedRecord()
         {
             Damocles2Entities de = new Damocles2Entities();
@@ -75,7 +93,7 @@ namespace Imogen.Controllers.Database
 
         #region Users
         internal bool Login(string username, string password)
-        {            
+        {
             string passwordHash = utils.HashPassword(password);
             userName = username;
             userPasswordHash = passwordHash;
@@ -83,15 +101,27 @@ namespace Imogen.Controllers.Database
             User user = de.Users.Where(u => u.Username == username && u.UserPassword == passwordHash).FirstOrDefault();
             if (user == null)
                 return false;
-            
+
             //TODO: This is not functioning correctly - simply want the User's current rank.
             UserRank ur = de.UserRanks.Where(usr => usr.UserId == user.Id).FirstOrDefault();
-
             user.IsOnline = true;
             UserRank = ur.Rank.RankNameEnglish;
+
+            UserJurisdiction uj = de.UserJurisdictions.Where(usrj => usrj.UserId == user.Id).FirstOrDefault();
+            if (uj != null)
+            {
+                if (uj.Jurisidction.Country == uj.Jurisidction.State)
+                    UJurisdiction = uj.Jurisidction.Country;
+                else
+                    UJurisdiction = uj.Jurisidction.State.Trim() + " in " + uj.Jurisidction.Country.Trim();
+            }
+            else
+                UJurisdiction = "Unknown";
+
+
             var aus = de.UsersSessions.Where(auss => auss.id == user.Id);
-            
-            foreach(UsersSession userS in aus)
+
+            foreach (UsersSession userS in aus)
             {
                 Properties.Settings.Default.SessionSecondsTotal += userS.SessionSeconds;
             }
@@ -100,9 +130,9 @@ namespace Imogen.Controllers.Database
             us.LoggedOnAt = DateTime.UtcNow;
             us.id = user.Id;
             de.UsersSessions.Add(us);
-                
+
             de.SaveChanges();
-                return true;
+            return true;
         }
 
         internal bool RegisterUser(string username, string password, string email, string displayName)
@@ -130,19 +160,6 @@ namespace Imogen.Controllers.Database
             }
         }
 
-        #endregion
-
-
-        private void ConnectToDamocles()
-        {
-            de.Database.Connection.Open();
-        }
-
-        internal void Connect()
-        {
-            ConnectToDamocles();
-        }
-
         internal void LogOff()
         {
             Damocles2Entities de = new Damocles2Entities();
@@ -159,11 +176,11 @@ namespace Imogen.Controllers.Database
 
         //TODO: NOT WORKING - user class is always null;
         internal double GetUserLifetimeSessionTime()
-        {            
+        {
             Damocles2Entities de = new Damocles2Entities();
             if (de.Database.Connection.State == System.Data.ConnectionState.Closed)
                 de.Database.Connection.Open();
-       
+
             User user = de.Users.Where(u => u.Username == userName && u.UserPassword == userPasswordHash).FirstOrDefault();
             if (user == null)
                 return 0;
@@ -181,6 +198,73 @@ namespace Imogen.Controllers.Database
             return t;
         }
 
+        #endregion
+
+        
+        internal void SetSrcToGoneButNotForgotten(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void SetSrcToAllowed(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void SetSrcToRestricted(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void SetSrcToCriminal(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void SetLinkToRestricted(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void SetLinkToCriminal(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void SetLinkToAllowed(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        // This is a 404 or some other error - do a check for a month to see if it returns
+        // This can be done within Imogen as Background House keeping
+        internal void SetLinkToGoneButNotForgotten(string url)
+        {
+            Damocles2Entities de = new Damocles2Entities();
+
+            string pHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
+            User usr = de.Users.Where(u => u.Username == Properties.Settings.Default.UserUsername && u.UserPassword == pHash).FirstOrDefault();
+
+            EUReported eu = de.EUReporteds.Where(l => l.LinkUrl == url).FirstOrDefault();
+            eu.UpdatedOn = DateTime.UtcNow;
+
+            GoneButNotForgottenLink gb = new GoneButNotForgottenLink();
+            gb.CreatedOn = DateTime.UtcNow;
+            gb.Id = eu.id;
+            gb.LastCheckedOn = DateTime.UtcNow;
+            gb.LinkUrlHash = eu.LinkUrlHash;
+            gb.ReportedBy = usr.Id;
+            de.GoneButNotForgottenLinks.Add(gb);
+            de.SaveChanges();
+
+            de.Dispose();
+            gb = null;
+            eu = null;
+            usr = null;
+
+        }
+
+        #region Statistics
         internal static string GetPendingReportCount()
         {
             Damocles2Entities de = new Damocles2Entities();
@@ -194,5 +278,7 @@ namespace Imogen.Controllers.Database
             var ur = de.Users.Where(p => p.IsOnline == true);
             return ur.Count().ToString("N0");
         }
+        #endregion
+
     }
 }

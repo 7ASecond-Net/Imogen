@@ -6,8 +6,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="752f9754216f43acabf030a17d9d3491" Name="Diagram1">
         <EntityTypeShape EntityType="Damocles2Model.EUReported" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.JurisdictionNote" Width="1.5" PointX="4" PointY="13.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.Jurisidction" Width="1.5" PointX="6.25" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.JurisdictionNote" Width="1.5" PointX="4" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.Jurisidction" Width="1.5" PointX="6.125" PointY="14.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.Rank" Width="1.5" PointX="6.125" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.RankNote" Width="1.5" PointX="6.125" PointY="10.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.Status" Width="1.5" PointX="8.75" PointY="5.125" IsExpanded="true" />
@@ -17,8 +17,8 @@
         <EntityTypeShape EntityType="Damocles2Model.User" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.UserSex" Width="1.5" PointX="5.75" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.UserSexNote" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.UsersSession" Width="1.5" PointX="2.125" PointY="19.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.UserJurisdiction" Width="1.5" PointX="3.875" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.UsersSession" Width="1.5" PointX="0.5" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.UserJurisdiction" Width="1.5" PointX="3.875" PointY="14.875" IsExpanded="true" />
         <AssociationConnector Association="Damocles2Model.FK_EUReported_Users" ManuallyRouted="false" />
         <AssociationConnector Association="Damocles2Model.FK_JurisdictionNotes_Jurisidctions1" ManuallyRouted="false" />
         <AssociationConnector Association="Damocles2Model.FK_JurisdictionNotes_Users" ManuallyRouted="false" />

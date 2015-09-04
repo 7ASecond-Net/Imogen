@@ -52,7 +52,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>imogen-hassall.ico</ApplicationIcon>
+    <ApplicationIcon>edit-image-256.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -187,16 +187,43 @@
     <Compile Include="Model\EUReported.cs">
       <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\GoneButNotForgottenLink.cs">
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\JurisdictionNote.cs">
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Jurisidction.cs">
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Rank.cs">
       <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\RankNote.cs">
       <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Status.cs">
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\StatusNote.cs">
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\User.cs">
       <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\UserJurisdiction.cs">
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\UserNote.cs">
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\UserRank.cs">
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\UserSex.cs">
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\UserSexNote.cs">
       <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\UsersSession.cs">
@@ -265,6 +292,7 @@
     <Content Include="binn\ExifTool\et.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="edit-image-256.ico" />
     <Content Include="imogen-hassall.ico" />
     <Content Include="license.txt" />
     <Content Include="Model\Damocles2Model.Context.tt">

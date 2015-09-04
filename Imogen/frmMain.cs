@@ -207,11 +207,13 @@ namespace Imogen
         private void ProcessUnReported(EUReported eur)
         {
             DownloadImage di = new DownloadImage();
-            Log("Processing of New Report Begins");
+            Log("Processing of New Report Begins"); // This could be a partial report so check the other tables as well !!
             Properties.Settings.Default.ProfileUrlHash = eur.PageUrlHash;
             Properties.Settings.Default.ProfileUrl = eur.PageUrl;
             Properties.Settings.Default.ProfileSrcUrlHash = eur.SrcUrlHash;
             Properties.Settings.Default.ProfileSrcUrl = eur.SrcUrl;
+
+
             Properties.Settings.Default.ProfileLinkUrlHash = eur.LinkUrlHash;
             Properties.Settings.Default.ProfileLinkUrl = eur.LinkUrl;
             Properties.Settings.Default.ProfileReportNumber = eur.id.ToString("N0");
