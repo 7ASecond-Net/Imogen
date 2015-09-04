@@ -21,6 +21,28 @@
           <Property Name="LinkUrlHash" Type="nchar" MaxLength="128" />
           <Property Name="UserId" Type="int" />
         </EntityType>
+        <EntityType Name="JurisdictionNotes">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="PreviousMessage" Type="int" />
+          <Property Name="AddedBy" Type="int" Nullable="false" />
+          <Property Name="JurisdictionId" Type="int" />
+        </EntityType>
+        <EntityType Name="Jurisidctions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Country" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="State" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Rank">
           <Key>
             <PropertyRef Name="Id" />
@@ -43,6 +65,21 @@
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
           <Property Name="PreviousMessage" Type="int" Nullable="false" />
           <Property Name="AddedBy" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="UserJurisdictions">
+          <Key>
+            <PropertyRef Name="pid" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="JurisdictionID" />
+            <PropertyRef Name="AwardedOn" />
+          </Key>
+          <Property Name="pid" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="JurisdictionID" Type="int" Nullable="false" />
+          <Property Name="JurisdictionNotesId" Type="int" />
+          <Property Name="AwardedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="UserRanks">
           <Key>
@@ -68,7 +105,6 @@
           <Property Name="Rank" Type="int" />
           <Property Name="EmailAddress" Type="nchar" MaxLength="200" Nullable="false" />
           <Property Name="Status" Type="int" />
-          <Property Name="FederalJurisdiction" Type="int" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
           <Property Name="IsOnline" Type="bit" Nullable="false" />
@@ -95,6 +131,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_JurisdictionNotes_Jurisidctions1">
+          <End Role="Jurisidctions" Type="Self.Jurisidctions" Multiplicity="0..1" />
+          <End Role="JurisdictionNotes" Type="Self.JurisdictionNotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jurisidctions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JurisdictionNotes">
+              <PropertyRef Name="JurisdictionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JurisdictionNotes_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="JurisdictionNotes" Type="Self.JurisdictionNotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JurisdictionNotes">
+              <PropertyRef Name="AddedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RankNotes_Rank">
           <End Role="Rank" Type="Self.Rank" Multiplicity="1" />
           <End Role="RankNotes" Type="Self.RankNotes" Multiplicity="*" />
@@ -115,6 +175,30 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="RankNotes">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserJurisdictions_Jurisidctions1">
+          <End Role="Jurisidctions" Type="Self.Jurisidctions" Multiplicity="1" />
+          <End Role="UserJurisdictions" Type="Self.UserJurisdictions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jurisidctions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserJurisdictions">
+              <PropertyRef Name="JurisdictionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserJurisdictions_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserJurisdictions" Type="Self.UserJurisdictions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserJurisdictions">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -157,14 +241,33 @@
         </Association>
         <EntityContainer Name="Damocles2ModelStoreContainer">
           <EntitySet Name="EUReported" EntityType="Self.EUReported" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JurisdictionNotes" EntityType="Self.JurisdictionNotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Jurisidctions" EntityType="Self.Jurisidctions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rank" EntityType="Self.Rank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RankNotes" EntityType="Self.RankNotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRanks" EntityType="Self.UserRanks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersSessions" EntityType="Self.UsersSessions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserJurisdictions" EntityType="Self.UserJurisdictions" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UserJurisdictions].[pid] AS [pid], 
+    [UserJurisdictions].[UserId] AS [UserId], 
+    [UserJurisdictions].[JurisdictionID] AS [JurisdictionID], 
+    [UserJurisdictions].[JurisdictionNotesId] AS [JurisdictionNotesId], 
+    [UserJurisdictions].[AwardedOn] AS [AwardedOn]
+    FROM [dbo].[UserJurisdictions] AS [UserJurisdictions]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_EUReported_Users" Association="Self.FK_EUReported_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="EUReported" EntitySet="EUReported" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JurisdictionNotes_Jurisidctions1" Association="Self.FK_JurisdictionNotes_Jurisidctions1">
+            <End Role="Jurisidctions" EntitySet="Jurisidctions" />
+            <End Role="JurisdictionNotes" EntitySet="JurisdictionNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JurisdictionNotes_Users" Association="Self.FK_JurisdictionNotes_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="JurisdictionNotes" EntitySet="JurisdictionNotes" />
           </AssociationSet>
           <AssociationSet Name="FK_RankNotes_Rank" Association="Self.FK_RankNotes_Rank">
             <End Role="Rank" EntitySet="Rank" />
@@ -173,6 +276,14 @@
           <AssociationSet Name="FK_RankNotes_Users" Association="Self.FK_RankNotes_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="RankNotes" EntitySet="RankNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserJurisdictions_Jurisidctions1" Association="Self.FK_UserJurisdictions_Jurisidctions1">
+            <End Role="Jurisidctions" EntitySet="Jurisidctions" />
+            <End Role="UserJurisdictions" EntitySet="UserJurisdictions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserJurisdictions_Users" Association="Self.FK_UserJurisdictions_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserJurisdictions" EntitySet="UserJurisdictions" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRanks_Rank" Association="Self.FK_UserRanks_Rank">
             <End Role="Rank" EntitySet="Rank" />
@@ -269,6 +380,8 @@
           <NavigationProperty Name="RankNotes" Relationship="Self.FK_RankNotes_Users" FromRole="Users" ToRole="RankNotes" />
           <NavigationProperty Name="UserRanks" Relationship="Self.FK_UserRanks_Users" FromRole="Users" ToRole="UserRanks" />
           <NavigationProperty Name="UsersSessions" Relationship="Self.FK_UsersSessions_Users" FromRole="Users" ToRole="UsersSessions" />
+          <NavigationProperty Name="JurisdictionNotes" Relationship="Damocles2Model.FK_JurisdictionNotes_Users" FromRole="User" ToRole="JurisdictionNote" />
+          <NavigationProperty Name="UserJurisdictions" Relationship="Damocles2Model.FK_UserJurisdictions_Users" FromRole="User" ToRole="UserJurisdiction" />
         </EntityType>
         <EntityType Name="UsersSession">
           <Key>
@@ -384,7 +497,115 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UsersSessions" EntitySet="UsersSessions" />
           </AssociationSet>
+          <EntitySet Name="JurisdictionNotes" EntityType="Damocles2Model.JurisdictionNote" />
+          <EntitySet Name="Jurisidctions" EntityType="Damocles2Model.Jurisidction" />
+          <EntitySet Name="UserJurisdictions" EntityType="Damocles2Model.UserJurisdiction" />
+          <AssociationSet Name="FK_JurisdictionNotes_Jurisidctions1" Association="Damocles2Model.FK_JurisdictionNotes_Jurisidctions1">
+            <End Role="Jurisidction" EntitySet="Jurisidctions" />
+            <End Role="JurisdictionNote" EntitySet="JurisdictionNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JurisdictionNotes_Users" Association="Damocles2Model.FK_JurisdictionNotes_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="JurisdictionNote" EntitySet="JurisdictionNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserJurisdictions_Jurisidctions1" Association="Damocles2Model.FK_UserJurisdictions_Jurisidctions1">
+            <End Role="Jurisidction" EntitySet="Jurisidctions" />
+            <End Role="UserJurisdiction" EntitySet="UserJurisdictions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserJurisdictions_Users" Association="Damocles2Model.FK_UserJurisdictions_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserJurisdiction" EntitySet="UserJurisdictions" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="JurisdictionNote">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PreviousMessage" Type="Int32" />
+          <Property Name="AddedBy" Type="Int32" Nullable="false" />
+          <Property Name="JurisdictionId" Type="Int32" />
+          <NavigationProperty Name="Jurisidction" Relationship="Damocles2Model.FK_JurisdictionNotes_Jurisidctions1" FromRole="JurisdictionNote" ToRole="Jurisidction" />
+          <NavigationProperty Name="User" Relationship="Damocles2Model.FK_JurisdictionNotes_Users" FromRole="JurisdictionNote" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Jurisidction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="JurisdictionNotes" Relationship="Damocles2Model.FK_JurisdictionNotes_Jurisidctions1" FromRole="Jurisidction" ToRole="JurisdictionNote" />
+          <NavigationProperty Name="UserJurisdictions" Relationship="Damocles2Model.FK_UserJurisdictions_Jurisidctions1" FromRole="Jurisidction" ToRole="UserJurisdiction" />
+        </EntityType>
+        <EntityType Name="UserJurisdiction">
+          <Key>
+            <PropertyRef Name="pid" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="JurisdictionID" />
+            <PropertyRef Name="AwardedOn" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="JurisdictionID" Type="Int32" Nullable="false" />
+          <Property Name="JurisdictionNotesId" Type="Int32" />
+          <Property Name="AwardedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Jurisidction" Relationship="Damocles2Model.FK_UserJurisdictions_Jurisidctions1" FromRole="UserJurisdiction" ToRole="Jurisidction" />
+          <NavigationProperty Name="User" Relationship="Damocles2Model.FK_UserJurisdictions_Users" FromRole="UserJurisdiction" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_JurisdictionNotes_Jurisidctions1">
+          <End Type="Damocles2Model.Jurisidction" Role="Jurisidction" Multiplicity="0..1" />
+          <End Type="Damocles2Model.JurisdictionNote" Role="JurisdictionNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jurisidction">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JurisdictionNote">
+              <PropertyRef Name="JurisdictionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JurisdictionNotes_Users">
+          <End Type="Damocles2Model.User" Role="User" Multiplicity="1" />
+          <End Type="Damocles2Model.JurisdictionNote" Role="JurisdictionNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JurisdictionNote">
+              <PropertyRef Name="AddedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserJurisdictions_Jurisidctions1">
+          <End Type="Damocles2Model.Jurisidction" Role="Jurisidction" Multiplicity="1" />
+          <End Type="Damocles2Model.UserJurisdiction" Role="UserJurisdiction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jurisidction">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserJurisdiction">
+              <PropertyRef Name="JurisdictionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserJurisdictions_Users">
+          <End Type="Damocles2Model.User" Role="User" Multiplicity="1" />
+          <End Type="Damocles2Model.UserJurisdiction" Role="UserJurisdiction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserJurisdiction">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -457,7 +678,6 @@
                 <ScalarProperty Name="Rank" ColumnName="Rank" />
                 <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="FederalJurisdiction" ColumnName="FederalJurisdiction" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
                 <ScalarProperty Name="IsOnline" ColumnName="IsOnline" />
@@ -472,6 +692,41 @@
                 <ScalarProperty Name="LoggedOnAt" ColumnName="LoggedOnAt" />
                 <ScalarProperty Name="loggedOffAt" ColumnName="loggedOffAt" />
                 <ScalarProperty Name="SessionSeconds" ColumnName="SessionSeconds" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JurisdictionNotes">
+            <EntityTypeMapping TypeName="Damocles2Model.JurisdictionNote">
+              <MappingFragment StoreEntitySet="JurisdictionNotes">
+                <ScalarProperty Name="JurisdictionId" ColumnName="JurisdictionId" />
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+                <ScalarProperty Name="PreviousMessage" ColumnName="PreviousMessage" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jurisidctions">
+            <EntityTypeMapping TypeName="Damocles2Model.Jurisidction">
+              <MappingFragment StoreEntitySet="Jurisidctions">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserJurisdictions">
+            <EntityTypeMapping TypeName="Damocles2Model.UserJurisdiction">
+              <MappingFragment StoreEntitySet="UserJurisdictions">
+                <ScalarProperty Name="AwardedOn" ColumnName="AwardedOn" />
+                <ScalarProperty Name="JurisdictionNotesId" ColumnName="JurisdictionNotesId" />
+                <ScalarProperty Name="JurisdictionID" ColumnName="JurisdictionID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

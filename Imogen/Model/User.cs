@@ -21,6 +21,8 @@ namespace Imogen.Model
             this.RankNotes = new HashSet<RankNote>();
             this.UserRanks = new HashSet<UserRank>();
             this.UsersSessions = new HashSet<UsersSession>();
+            this.JurisdictionNotes = new HashSet<JurisdictionNote>();
+            this.UserJurisdictions = new HashSet<UserJurisdiction>();
         }
     
         public int Id { get; set; }
@@ -46,5 +48,9 @@ namespace Imogen.Model
         public virtual ICollection<UserRank> UserRanks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsersSession> UsersSessions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JurisdictionNote> JurisdictionNotes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserJurisdiction> UserJurisdictions { get; set; }
     }
 }
