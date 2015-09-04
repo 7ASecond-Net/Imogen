@@ -9,11 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using WeifenLuo.WinFormsUI.Docking;
+using NTimeAgo;
+using Imogen.Controllers.Database;
 
 namespace Imogen.Forms.Dockable
 {
     public partial class FrmProfileImage : DockContent
     {
+        
 
         private delegate void UpdateLabelTextDelegate(Label lbl, string txt);
         private void UpdateLabelText(Label lbl, string txt)
@@ -61,7 +64,12 @@ namespace Imogen.Forms.Dockable
             else if (e.PropertyName == "ProfileLinkUrlHash")
                 UpdateLabelText(lblLinkUrlHash, Properties.Settings.Default.ProfileLinkUrlHash);
             else if (e.PropertyName == "ProfileReportedOn")
-                UpdateLabelText(lblReportedon, Properties.Settings.Default.ProfileReportedOn);
+            {
+                //TODO: Not providing a very accurate result
+                DateTime dtn = Convert.ToDateTime(Properties.Settings.Default.ProfileReportedOn);
+                TimeSpan ts = new TimeSpan(dtn.Ticks / (1000 * 360));
+                UpdateLabelText(lblReportedon, Properties.Settings.Default.ProfileReportedOn + " ~(" + ts.InWordsAgo() + ")");
+            }
             else if (e.PropertyName == "ProfileReportNumber")
                 UpdateLabelText(lblReportNumber, Properties.Settings.Default.ProfileReportNumber);
             else if (e.PropertyName == "ProfilePossibleFileName1")
@@ -85,12 +93,14 @@ namespace Imogen.Forms.Dockable
             lblSrcUrlARCRating.ForeColor = Color.PaleGreen;
             lblSrcUrlARCRating.Text = "Universally Allowed in this Jurisdiction";
             btnSrcSubmit.Enabled = true;
+            btnSrcSubmit.Tag = "A";
         }
 
         private void btnRestricted_Click(object sender, EventArgs e)
         {
             //TODO: Who is this restricted to?
             btnSrcSubmit.Enabled = true;
+            btnSrcSubmit.Tag = "R";
             lblSrcUrlARCRating.ForeColor = Color.Orange;
             lblSrcUrlARCRating.Text = "Restricted in this Jurisdiction";
         }
@@ -98,12 +108,14 @@ namespace Imogen.Forms.Dockable
         private void btnCriminal_Click(object sender, EventArgs e)
         {
             btnSrcSubmit.Enabled = true;
+            btnSrcSubmit.Tag = "C";
             lblSrcUrlARCRating.ForeColor = Color.OrangeRed;
             lblSrcUrlARCRating.Text = "Rated as Criminal Content in this Jurisdiction";
         }
 
         private void btnSrcUrlNoLongerAvailable_Click(object sender, EventArgs e)
         {
+            btnSrcSubmit.Tag = "404";
             btnSrcSubmit.Enabled = true;
             lblSrcUrlARCRating.ForeColor = Color.Yellow;
             lblSrcUrlARCRating.Text = "Source is no longer Available";
@@ -114,6 +126,7 @@ namespace Imogen.Forms.Dockable
             lblLinkUrlARCRating.ForeColor = Color.Yellow;
             lblLinkUrlARCRating.Text = "Link is no longer Available";
             btnLinkSubmit.Enabled = true;
+            btnLinkSubmit.Tag = "404";
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -121,6 +134,7 @@ namespace Imogen.Forms.Dockable
             lblLinkUrlARCRating.ForeColor = Color.PaleGreen;
             lblLinkUrlARCRating.Text = "Universally Allowed in this Jurisdiction";
             btnLinkSubmit.Enabled = true;
+            btnLinkSubmit.Tag = "A";
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -129,13 +143,65 @@ namespace Imogen.Forms.Dockable
             btnLinkSubmit.Enabled = true;
             lblLinkUrlARCRating.ForeColor = Color.Orange;
             lblLinkUrlARCRating.Text = "Restricted in this Jurisdiction";
+            btnLinkSubmit.Tag = "R";
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             btnLinkSubmit.Enabled = true;
+            btnLinkSubmit.Tag = "C";
             lblLinkUrlARCRating.ForeColor = Color.OrangeRed;
             lblLinkUrlARCRating.Text = "Rated as Criminal Content in this Jurisdiction";
+        }
+
+        private void btnSrcSubmit_Click(object sender, EventArgs e)
+        {
+            DBHelper dbHelper = new DBHelper();
+            switch ((string)btnLinkSubmit.Tag)
+            {
+                case "404":
+                    dbHelper.SetSrcToGoneButNotForgotten();
+                    break;
+                case "A":
+                    dbHelper.SetSrcToAllowed();
+                    break;
+                case "R":
+                    dbHelper.SetSrcToRestricted();
+                    break;
+                case "C":
+                    dbHelper.SetSrcToCriminal();
+                    break;
+                default:
+                    break;
+            }
+            
+            //TODO: Make Disposable?
+            dbHelper = null;
+        }
+
+        private void btnLinkSubmit_Click(object sender, EventArgs e)
+        {
+            DBHelper dbHelper = new DBHelper();
+            switch ((string)btnLinkSubmit.Tag)
+            {
+                case "404":
+                    dbHelper.SetLinkToGoneButNotForgotten();
+                    break;
+                case "A":
+                    dbHelper.SetLinkToAllowed();
+                    break;
+                case "R":
+                    dbHelper.SetLinkToRestricted();
+                    break;
+                case "C":
+                    dbHelper.SetLinkToCriminal();
+                    break;
+                default:
+                    break;
+            }
+
+            //TODO: Make Disposable?
+            dbHelper = null;
         }
     }
 }
