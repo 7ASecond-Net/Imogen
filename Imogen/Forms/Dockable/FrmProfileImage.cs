@@ -160,16 +160,16 @@ namespace Imogen.Forms.Dockable
             switch ((string)btnSrcSubmit.Tag)
             {
                 case "404":
-                    dbHelper.SetSrcToGoneButNotForgotten((string)btnSrcSubmit.Tag);
+                    dbHelper.SetSrcToGoneButNotForgotten(Properties.Settings.Default.ProfileSrcUrl);
                     break;
                 case "A":
-                    dbHelper.SetSrcToAllowed((string)btnSrcSubmit.Tag);
+                    dbHelper.SetSrcToAllowed(Properties.Settings.Default.ProfileSrcUrl);
                     break;
                 case "R":
-                    dbHelper.SetSrcToRestricted((string)btnSrcSubmit.Tag);
+                    dbHelper.SetSrcToRestricted(Properties.Settings.Default.ProfileSrcUrl);
                     break;
                 case "C":
-                    dbHelper.SetSrcToCriminal((string)btnSrcSubmit.Tag);
+                    dbHelper.SetSrcToCriminal(Properties.Settings.Default.ProfileSrcUrl);
                     break;
                 default:
                     break;
@@ -185,16 +185,16 @@ namespace Imogen.Forms.Dockable
             switch ((string)btnLinkSubmit.Tag)
             {
                 case "404":
-                    dbHelper.SetLinkToGoneButNotForgotten((string)btnLinkSubmit.Tag);
+                    dbHelper.SetLinkToGoneButNotForgotten(Properties.Settings.Default.ProfileLinkUrl);
                     break;
                 case "A":
-                    dbHelper.SetLinkToAllowed((string)btnLinkSubmit.Tag);
+                    dbHelper.SetLinkToAllowed(Properties.Settings.Default.ProfileLinkUrl);
                     break;
                 case "R":
-                    dbHelper.SetLinkToRestricted((string)btnLinkSubmit.Tag);
+                    dbHelper.SetLinkToRestricted(Properties.Settings.Default.ProfileLinkUrl);
                     break;
                 case "C":
-                    dbHelper.SetLinkToCriminal((string)btnLinkSubmit.Tag);
+                    dbHelper.SetLinkToCriminal(Properties.Settings.Default.ProfileLinkUrl);
                     break;
                 default:
                     break;
