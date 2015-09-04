@@ -71,7 +71,7 @@
             this.label44 = new System.Windows.Forms.Label();
             this.lblTotalSessions = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblJurisdiction = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -469,7 +469,7 @@
             this.groupBox1.Controls.Add(this.label44);
             this.groupBox1.Controls.Add(this.lblTotalSessions);
             this.groupBox1.Controls.Add(this.label46);
-            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.lblJurisdiction);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label6);
@@ -544,15 +544,15 @@
             this.label46.TabIndex = 54;
             this.label46.Text = "Total Sessions";
             // 
-            // label7
+            // lblJurisdiction
             // 
-            this.label7.AutoSize = true;
-            this.label7.ForeColor = System.Drawing.Color.PaleGreen;
-            this.label7.Location = new System.Drawing.Point(99, 55);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(16, 13);
-            this.label7.TabIndex = 53;
-            this.label7.Text = "...";
+            this.lblJurisdiction.AutoSize = true;
+            this.lblJurisdiction.ForeColor = System.Drawing.Color.PaleGreen;
+            this.lblJurisdiction.Location = new System.Drawing.Point(99, 55);
+            this.lblJurisdiction.Name = "lblJurisdiction";
+            this.lblJurisdiction.Size = new System.Drawing.Size(16, 13);
+            this.lblJurisdiction.TabIndex = 53;
+            this.lblJurisdiction.Text = "...";
             // 
             // label8
             // 
@@ -693,7 +693,7 @@
         private System.Windows.Forms.Label label44;
         private System.Windows.Forms.Label lblTotalSessions;
         private System.Windows.Forms.Label label46;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblJurisdiction;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;

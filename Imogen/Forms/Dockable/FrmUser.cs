@@ -30,6 +30,7 @@ namespace Imogen.Forms.Dockable
             TotalSecondsPassed += dbHelper.GetUserLifetimeSessionTime();
             lblTotalSessions.Text = DBHelper.TotalSessions.ToString("N0");
             lblRank.Text = DBHelper.UserRank;
+            lblJurisdiction.Text = DBHelper.UJurisdiction;
         }
 
         //TODO: NOT WORKING
