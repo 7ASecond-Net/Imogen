@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="752f9754216f43acabf030a17d9d3491" Name="Diagram1">
         <EntityTypeShape EntityType="Damocles2Model.EUReported" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.JurisdictionNote" Width="1.5" PointX="6.25" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.JurisdictionNote" Width="1.5" PointX="4" PointY="13.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.Jurisidction" Width="1.5" PointX="6.25" PointY="16.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.Rank" Width="1.5" PointX="6.125" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.RankNote" Width="1.5" PointX="6.125" PointY="10.25" IsExpanded="true" />
@@ -34,6 +34,9 @@
         <AssociationConnector Association="Damocles2Model.FK_UsersSessions_Users" ManuallyRouted="false" />
         <AssociationConnector Association="Damocles2Model.FK_UserSexNotes_UserSex" ManuallyRouted="false" />
         <AssociationConnector Association="Damocles2Model.FK_UserSexNotes_UserSexNotes" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Damocles2Model.GoneButNotForgottenLink" Width="1.5" PointX="4" PointY="3.875" />
+        <AssociationConnector Association="Damocles2Model.FK_GoneButNotForgottenLinks_EUReported" />
+        <AssociationConnector Association="Damocles2Model.FK_GoneButNotForgottenLinks_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

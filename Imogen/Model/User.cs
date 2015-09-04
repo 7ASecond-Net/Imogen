@@ -23,6 +23,7 @@ namespace Imogen.Model
             this.UserRanks = new HashSet<UserRank>();
             this.UserJurisdictions = new HashSet<UserJurisdiction>();
             this.UsersSessions = new HashSet<UsersSession>();
+            this.GoneButNotForgottenLinks = new HashSet<GoneButNotForgottenLink>();
         }
     
         public int Id { get; set; }
@@ -51,5 +52,7 @@ namespace Imogen.Model
         public virtual ICollection<UserJurisdiction> UserJurisdictions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsersSession> UsersSessions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoneButNotForgottenLink> GoneButNotForgottenLinks { get; set; }
     }
 }

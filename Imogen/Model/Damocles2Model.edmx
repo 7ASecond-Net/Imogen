@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Damocles2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Damocles2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="EUReported">
           <Key>
             <PropertyRef Name="id" />
@@ -20,6 +20,18 @@
           <Property Name="LinkUrl" Type="nvarchar(max)" />
           <Property Name="LinkUrlHash" Type="nchar" MaxLength="128" />
           <Property Name="UserId" Type="int" />
+        </EntityType>
+        <EntityType Name="GoneButNotForgottenLinks">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="LastCheckedOn" Type="datetime" Nullable="false" />
+          <Property Name="ReportedBy" Type="int" Nullable="false" />
+          <Property Name="SrcUrlHash" Type="nchar" MaxLength="128" />
+          <Property Name="LinkUrlHash" Type="nchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="JurisdictionNotes">
           <Key>
@@ -88,13 +100,11 @@
           <Property Name="PreviousMessage" Type="int" Nullable="false" />
           <Property Name="AddedBy" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="UserJurisdictions">
           <Key>
             <PropertyRef Name="pid" />
           </Key>
-          <Property Name="pid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="JurisdictionID" Type="int" Nullable="false" />
           <Property Name="JurisdictionNotesId" Type="int" />
@@ -179,6 +189,30 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
             </Principal>
             <Dependent Role="EUReported">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoneButNotForgottenLinks_EUReported">
+          <End Role="EUReported" Type="Self.EUReported" Multiplicity="1" />
+          <End Role="GoneButNotForgottenLinks" Type="Self.GoneButNotForgottenLinks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EUReported">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="GoneButNotForgottenLinks">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoneButNotForgottenLinks_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="GoneButNotForgottenLinks" Type="Self.GoneButNotForgottenLinks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GoneButNotForgottenLinks">
+              <PropertyRef Name="ReportedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -352,30 +386,31 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
         </Association>
         <EntityContainer Name="Damocles2ModelStoreContainer">
           <EntitySet Name="EUReported" EntityType="Self.EUReported" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GoneButNotForgottenLinks" EntityType="Self.GoneButNotForgottenLinks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JurisdictionNotes" EntityType="Self.JurisdictionNotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Jurisidctions" EntityType="Self.Jurisidctions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rank" EntityType="Self.Rank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RankNotes" EntityType="Self.RankNotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StatusNotes" EntityType="Self.StatusNotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserJurisdictions" EntityType="Self.UserJurisdictions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserNotes" EntityType="Self.UserNotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRanks" EntityType="Self.UserRanks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserSex" EntityType="Self.UserSex" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserSexNotes" EntityType="Self.UserSexNotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersSessions" EntityType="Self.UsersSessions" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserJurisdictions" EntityType="Self.UserJurisdictions" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserJurisdictions].[pid] AS [pid], 
-    [UserJurisdictions].[UserId] AS [UserId], 
-    [UserJurisdictions].[JurisdictionID] AS [JurisdictionID], 
-    [UserJurisdictions].[JurisdictionNotesId] AS [JurisdictionNotesId], 
-    [UserJurisdictions].[AwardedOn] AS [AwardedOn]
-    FROM [dbo].[UserJurisdictions] AS [UserJurisdictions]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_EUReported_Users" Association="Self.FK_EUReported_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="EUReported" EntitySet="EUReported" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoneButNotForgottenLinks_EUReported" Association="Self.FK_GoneButNotForgottenLinks_EUReported">
+            <End Role="EUReported" EntitySet="EUReported" />
+            <End Role="GoneButNotForgottenLinks" EntitySet="GoneButNotForgottenLinks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoneButNotForgottenLinks_Users" Association="Self.FK_GoneButNotForgottenLinks_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="GoneButNotForgottenLinks" EntitySet="GoneButNotForgottenLinks" />
           </AssociationSet>
           <AssociationSet Name="FK_JurisdictionNotes_Jurisidctions1" Association="Self.FK_JurisdictionNotes_Jurisidctions1">
             <End Role="Jurisidctions" EntitySet="Jurisidctions" />
@@ -434,8 +469,7 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
             <End Role="UsersSessions" EntitySet="UsersSessions" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Damocles2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -455,6 +489,7 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
           <Property Name="LinkUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
           <Property Name="UserId" Type="Int32" />
           <NavigationProperty Name="User" Relationship="Self.FK_EUReported_Users" FromRole="EUReported" ToRole="Users" />
+          <NavigationProperty Name="GoneButNotForgottenLinks" Relationship="Damocles2Model.FK_GoneButNotForgottenLinks_EUReported" FromRole="EUReported" ToRole="GoneButNotForgottenLink" />
         </EntityType>
         <EntityType Name="JurisdictionNote">
           <Key>
@@ -583,6 +618,7 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
           <NavigationProperty Name="UserRanks" Relationship="Self.FK_UserRanks_Users" FromRole="Users" ToRole="UserRanks" />
           <NavigationProperty Name="UserJurisdictions" Relationship="Self.FK_UserJurisdictions_Users" FromRole="Users" ToRole="UserJurisdictions" />
           <NavigationProperty Name="UsersSessions" Relationship="Self.FK_UsersSessions_Users" FromRole="Users" ToRole="UsersSessions" />
+          <NavigationProperty Name="GoneButNotForgottenLinks" Relationship="Damocles2Model.FK_GoneButNotForgottenLinks_Users" FromRole="User" ToRole="GoneButNotForgottenLink" />
         </EntityType>
         <EntityType Name="UserSex">
           <Key>
@@ -887,7 +923,54 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
             <End Role="UserSexNotes" EntitySet="UserSexNotes" />
             <End Role="UserSexNotes1" EntitySet="UserSexNotes" />
           </AssociationSet>
+          <EntitySet Name="GoneButNotForgottenLinks" EntityType="Damocles2Model.GoneButNotForgottenLink" />
+          <AssociationSet Name="FK_GoneButNotForgottenLinks_EUReported" Association="Damocles2Model.FK_GoneButNotForgottenLinks_EUReported">
+            <End Role="EUReported" EntitySet="EUReporteds" />
+            <End Role="GoneButNotForgottenLink" EntitySet="GoneButNotForgottenLinks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoneButNotForgottenLinks_Users" Association="Damocles2Model.FK_GoneButNotForgottenLinks_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="GoneButNotForgottenLink" EntitySet="GoneButNotForgottenLinks" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="GoneButNotForgottenLink">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastCheckedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ReportedBy" Type="Int32" Nullable="false" />
+          <Property Name="SrcUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="LinkUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="EUReported" Relationship="Damocles2Model.FK_GoneButNotForgottenLinks_EUReported" FromRole="GoneButNotForgottenLink" ToRole="EUReported" />
+          <NavigationProperty Name="User" Relationship="Damocles2Model.FK_GoneButNotForgottenLinks_Users" FromRole="GoneButNotForgottenLink" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_GoneButNotForgottenLinks_EUReported">
+          <End Type="Damocles2Model.EUReported" Role="EUReported" Multiplicity="1" />
+          <End Type="Damocles2Model.GoneButNotForgottenLink" Role="GoneButNotForgottenLink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EUReported">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="GoneButNotForgottenLink">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoneButNotForgottenLinks_Users">
+          <End Type="Damocles2Model.User" Role="User" Multiplicity="1" />
+          <End Type="Damocles2Model.GoneButNotForgottenLink" Role="GoneButNotForgottenLink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GoneButNotForgottenLink">
+              <PropertyRef Name="ReportedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1068,6 +1151,19 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
                 <ScalarProperty Name="JurisdictionID" ColumnName="JurisdictionID" />
                 <ScalarProperty Name="JurisdictionNotesId" ColumnName="JurisdictionNotesId" />
                 <ScalarProperty Name="AwardedOn" ColumnName="AwardedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GoneButNotForgottenLinks">
+            <EntityTypeMapping TypeName="Damocles2Model.GoneButNotForgottenLink">
+              <MappingFragment StoreEntitySet="GoneButNotForgottenLinks">
+                <ScalarProperty Name="LinkUrlHash" ColumnName="LinkUrlHash" />
+                <ScalarProperty Name="SrcUrlHash" ColumnName="SrcUrlHash" />
+                <ScalarProperty Name="ReportedBy" ColumnName="ReportedBy" />
+                <ScalarProperty Name="LastCheckedOn" ColumnName="LastCheckedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

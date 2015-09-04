@@ -39,5 +39,6 @@ namespace Imogen.Model
         public virtual DbSet<UserSexNote> UserSexNotes { get; set; }
         public virtual DbSet<UsersSession> UsersSessions { get; set; }
         public virtual DbSet<UserJurisdiction> UserJurisdictions { get; set; }
+        public virtual DbSet<GoneButNotForgottenLink> GoneButNotForgottenLinks { get; set; }
     }
 }
