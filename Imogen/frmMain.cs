@@ -148,7 +148,7 @@ namespace Imogen
             if (frmRWB != null)
             {
                 Log("Registering to Console Messaging event");
-                //   frmRWB.ConsoleMessageEvent += FrmRWB_ConsoleMessageEvent;
+                   frmRWB.ConsoleMessageEvent += FrmRWB_ConsoleMessageEvent;
             }
 
             try
@@ -209,7 +209,9 @@ namespace Imogen
             DownloadImage di = new DownloadImage();
             Log("Processing of New Report Begins");
             Properties.Settings.Default.ProfileUrlHash = eur.PageUrlHash;
+            Properties.Settings.Default.ProfileUrl = eur.PageUrl;
             Properties.Settings.Default.ProfileSrcUrlHash = eur.SrcUrlHash;
+            Properties.Settings.Default.ProfileSrcUrl = eur.SrcUrl;
             Properties.Settings.Default.ProfileLinkUrlHash = eur.LinkUrlHash;
             Properties.Settings.Default.ProfileLinkUrl = eur.LinkUrl;
             Properties.Settings.Default.ProfileReportNumber = eur.id.ToString("N0");
@@ -263,9 +265,10 @@ namespace Imogen
             }
         }
 
-        private void FrmRWB_ConsoleMessageEvent(object sender, string msg)
+        private void FrmRWB_ConsoleMessageEvent(object sender, EventArgs e)
         {
-            Log(msg);
+            CefSharp.ConsoleMessageEventArgs t = e as CefSharp.ConsoleMessageEventArgs;
+            Log(t.Line + ": " + t.Source + ": " + t.Message);
         }
         #endregion
 
@@ -369,7 +372,7 @@ namespace Imogen
             if (restrictedBrowserToolStripMenuItem.Checked)
             {
                 Log("Closing Restricted Browser");
-                //frmRWB.ConsoleMessageEvent -= FrmRWB_ConsoleMessageEvent;
+                frmRWB.ConsoleMessageEvent -= FrmRWB_ConsoleMessageEvent;
                 frmRWB.Close();
             }
             else
@@ -377,7 +380,7 @@ namespace Imogen
                 Log("Opening Restricted Browser");
                 if (frmRWB == null || frmRWB.IsDisposed) frmRWB = new FrmRestrictedWebBrowser();
                 frmRWB.Show(dockPanel);
-                //   frmRWB.ConsoleMessageEvent += FrmRWB_ConsoleMessageEvent;
+                frmRWB.ConsoleMessageEvent += FrmRWB_ConsoleMessageEvent;
             }
             restrictedBrowserToolStripMenuItem.Checked = !restrictedBrowserToolStripMenuItem.Checked; // Toggle the check state in the menu on click
         }
