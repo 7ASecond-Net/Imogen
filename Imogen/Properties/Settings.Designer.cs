@@ -191,7 +191,41 @@ namespace Imogen.Properties {
                 this["SessionSecondsTotal"] = value;
             }
         }
-
-        public string ProfileLinkUrl { get; internal set; }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("...")]
+        public string ProfileLinkUrl {
+            get {
+                return ((string)(this["ProfileLinkUrl"]));
+            }
+            set {
+                this["ProfileLinkUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("...")]
+        public string ProfileSrcUrl {
+            get {
+                return ((string)(this["ProfileSrcUrl"]));
+            }
+            set {
+                this["ProfileSrcUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("...")]
+        public string ProfileUrl {
+            get {
+                return ((string)(this["ProfileUrl"]));
+            }
+            set {
+                this["ProfileUrl"] = value;
+            }
+        }
     }
 }
