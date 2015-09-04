@@ -113,7 +113,7 @@ namespace Imogen.Forms.Dockable
                 if (ConsoleMessageEvent != null)
                 {
                     //TODO: Need to fix this so we can send a string and not the ConsoleMessageEventArgs
-                    // ConsoleMessageEvent(this, e.Line + ": " + e.Source + ": " + e.Message.ToString() );
+                     ConsoleMessageEvent(this, e );
                 }
             }
             catch (Exception)
@@ -134,8 +134,10 @@ namespace Imogen.Forms.Dockable
             }
             catch (Exception)
             {
+
                 throw;
             }
+
         }
 
         internal void ShowLinkUrl(string linkUrl)
@@ -146,8 +148,10 @@ namespace Imogen.Forms.Dockable
             }
             catch (Exception)
             {
+
                 throw;
             }
+
         }
 
         private void showSrcUrlToolStripMenuItem_Click(object sender, EventArgs e)
