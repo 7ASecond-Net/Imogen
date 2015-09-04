@@ -157,19 +157,19 @@ namespace Imogen.Forms.Dockable
         private void btnSrcSubmit_Click(object sender, EventArgs e)
         {
             DBHelper dbHelper = new DBHelper();
-            switch ((string)btnLinkSubmit.Tag)
+            switch ((string)btnSrcSubmit.Tag)
             {
                 case "404":
-                    dbHelper.SetSrcToGoneButNotForgotten();
+                    dbHelper.SetSrcToGoneButNotForgotten((string)btnSrcSubmit.Tag);
                     break;
                 case "A":
-                    dbHelper.SetSrcToAllowed();
+                    dbHelper.SetSrcToAllowed((string)btnSrcSubmit.Tag);
                     break;
                 case "R":
-                    dbHelper.SetSrcToRestricted();
+                    dbHelper.SetSrcToRestricted((string)btnSrcSubmit.Tag);
                     break;
                 case "C":
-                    dbHelper.SetSrcToCriminal();
+                    dbHelper.SetSrcToCriminal((string)btnSrcSubmit.Tag);
                     break;
                 default:
                     break;
@@ -185,16 +185,16 @@ namespace Imogen.Forms.Dockable
             switch ((string)btnLinkSubmit.Tag)
             {
                 case "404":
-                    dbHelper.SetLinkToGoneButNotForgotten();
+                    dbHelper.SetLinkToGoneButNotForgotten((string)btnLinkSubmit.Tag);
                     break;
                 case "A":
-                    dbHelper.SetLinkToAllowed();
+                    dbHelper.SetLinkToAllowed((string)btnLinkSubmit.Tag);
                     break;
                 case "R":
-                    dbHelper.SetLinkToRestricted();
+                    dbHelper.SetLinkToRestricted((string)btnLinkSubmit.Tag);
                     break;
                 case "C":
-                    dbHelper.SetLinkToCriminal();
+                    dbHelper.SetLinkToCriminal((string)btnLinkSubmit.Tag);
                     break;
                 default:
                     break;
