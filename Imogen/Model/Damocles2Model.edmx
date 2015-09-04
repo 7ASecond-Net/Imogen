@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Damocles2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Damocles2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="EUReported">
           <Key>
             <PropertyRef Name="id" />
@@ -66,20 +66,50 @@
           <Property Name="PreviousMessage" Type="int" Nullable="false" />
           <Property Name="AddedBy" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="StatusEnglishName" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StatusNotes">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="PreviousMessage" Type="int" Nullable="false" />
+          <Property Name="AddedBy" Type="int" Nullable="false" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="UserJurisdictions">
           <Key>
             <PropertyRef Name="pid" />
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="JurisdictionID" />
-            <PropertyRef Name="AwardedOn" />
           </Key>
-          <Property Name="pid" Type="int" Nullable="false" />
+          <Property Name="pid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="JurisdictionID" Type="int" Nullable="false" />
           <Property Name="JurisdictionNotesId" Type="int" />
           <Property Name="AwardedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserNotes">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="PreviousMessage" Type="int" Nullable="false" />
+          <Property Name="AddedBy" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UserRanks">
           <Key>
@@ -108,6 +138,27 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
           <Property Name="IsOnline" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserSex">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Sex" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserSexNotes">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="PreviousMessage" Type="int" Nullable="false" />
+          <Property Name="AddedBy" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UsersSessions">
           <Key>
@@ -179,6 +230,30 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StatusNotes_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="StatusNotes" Type="Self.StatusNotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="StatusNotes">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatusNotes_StatusNotes">
+          <End Role="StatusNotes" Type="Self.StatusNotes" Multiplicity="1" />
+          <End Role="StatusNotes1" Type="Self.StatusNotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusNotes">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="StatusNotes1">
+              <PropertyRef Name="PreviousMessage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserJurisdictions_Jurisidctions1">
           <End Role="Jurisidctions" Type="Self.Jurisidctions" Multiplicity="1" />
           <End Role="UserJurisdictions" Type="Self.UserJurisdictions" Multiplicity="*" />
@@ -200,6 +275,18 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
             </Principal>
             <Dependent Role="UserJurisdictions">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserNotes_UserNotes1">
+          <End Role="UserNotes" Type="Self.UserNotes" Multiplicity="1" />
+          <End Role="UserNotes1" Type="Self.UserNotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserNotes">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="UserNotes1">
+              <PropertyRef Name="PreviousMessage" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -227,6 +314,30 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserSexNotes_UserSex">
+          <End Role="UserSex" Type="Self.UserSex" Multiplicity="1" />
+          <End Role="UserSexNotes" Type="Self.UserSexNotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserSex">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserSexNotes">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSexNotes_UserSexNotes">
+          <End Role="UserSexNotes" Type="Self.UserSexNotes" Multiplicity="1" />
+          <End Role="UserSexNotes1" Type="Self.UserSexNotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserSexNotes">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="UserSexNotes1">
+              <PropertyRef Name="PreviousMessage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UsersSessions_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="UsersSessions" Type="Self.UsersSessions" Multiplicity="*" />
@@ -245,8 +356,13 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
           <EntitySet Name="Jurisidctions" EntityType="Self.Jurisidctions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rank" EntityType="Self.Rank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RankNotes" EntityType="Self.RankNotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusNotes" EntityType="Self.StatusNotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserNotes" EntityType="Self.UserNotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRanks" EntityType="Self.UserRanks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserSex" EntityType="Self.UserSex" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserSexNotes" EntityType="Self.UserSexNotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersSessions" EntityType="Self.UsersSessions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserJurisdictions" EntityType="Self.UserJurisdictions" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -277,6 +393,14 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
             <End Role="Users" EntitySet="Users" />
             <End Role="RankNotes" EntitySet="RankNotes" />
           </AssociationSet>
+          <AssociationSet Name="FK_StatusNotes_Status" Association="Self.FK_StatusNotes_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="StatusNotes" EntitySet="StatusNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatusNotes_StatusNotes" Association="Self.FK_StatusNotes_StatusNotes">
+            <End Role="StatusNotes" EntitySet="StatusNotes" />
+            <End Role="StatusNotes1" EntitySet="StatusNotes" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserJurisdictions_Jurisidctions1" Association="Self.FK_UserJurisdictions_Jurisidctions1">
             <End Role="Jurisidctions" EntitySet="Jurisidctions" />
             <End Role="UserJurisdictions" EntitySet="UserJurisdictions" />
@@ -284,6 +408,10 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
           <AssociationSet Name="FK_UserJurisdictions_Users" Association="Self.FK_UserJurisdictions_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserJurisdictions" EntitySet="UserJurisdictions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserNotes_UserNotes1" Association="Self.FK_UserNotes_UserNotes1">
+            <End Role="UserNotes" EntitySet="UserNotes" />
+            <End Role="UserNotes1" EntitySet="UserNotes" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRanks_Rank" Association="Self.FK_UserRanks_Rank">
             <End Role="Rank" EntitySet="Rank" />
@@ -293,12 +421,21 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
             <End Role="Users" EntitySet="Users" />
             <End Role="UserRanks" EntitySet="UserRanks" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserSexNotes_UserSex" Association="Self.FK_UserSexNotes_UserSex">
+            <End Role="UserSex" EntitySet="UserSex" />
+            <End Role="UserSexNotes" EntitySet="UserSexNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSexNotes_UserSexNotes" Association="Self.FK_UserSexNotes_UserSexNotes">
+            <End Role="UserSexNotes" EntitySet="UserSexNotes" />
+            <End Role="UserSexNotes1" EntitySet="UserSexNotes" />
+          </AssociationSet>
           <AssociationSet Name="FK_UsersSessions_Users" Association="Self.FK_UsersSessions_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="UsersSessions" EntitySet="UsersSessions" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Damocles2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -318,6 +455,32 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
           <Property Name="LinkUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
           <Property Name="UserId" Type="Int32" />
           <NavigationProperty Name="User" Relationship="Self.FK_EUReported_Users" FromRole="EUReported" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="JurisdictionNote">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PreviousMessage" Type="Int32" />
+          <Property Name="AddedBy" Type="Int32" Nullable="false" />
+          <Property Name="JurisdictionId" Type="Int32" />
+          <NavigationProperty Name="Jurisidction" Relationship="Self.FK_JurisdictionNotes_Jurisidctions1" FromRole="JurisdictionNotes" ToRole="Jurisidctions" />
+          <NavigationProperty Name="User" Relationship="Self.FK_JurisdictionNotes_Users" FromRole="JurisdictionNotes" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Jurisidction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Country" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="State" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="JurisdictionNotes" Relationship="Self.FK_JurisdictionNotes_Jurisidctions1" FromRole="Jurisidctions" ToRole="JurisdictionNotes" />
+          <NavigationProperty Name="UserJurisdictions" Relationship="Self.FK_UserJurisdictions_Jurisidctions1" FromRole="Jurisidctions" ToRole="UserJurisdictions" />
         </EntityType>
         <EntityType Name="Rank">
           <Key>
@@ -346,6 +509,45 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
           <NavigationProperty Name="Rank" Relationship="Self.FK_RankNotes_Rank" FromRole="RankNotes" ToRole="Rank" />
           <NavigationProperty Name="User" Relationship="Self.FK_RankNotes_Users" FromRole="RankNotes" ToRole="Users" />
         </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="StatusEnglishName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="StatusNotes" Relationship="Self.FK_StatusNotes_Status" FromRole="Status" ToRole="StatusNotes" />
+        </EntityType>
+        <EntityType Name="StatusNote">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PreviousMessage" Type="Int32" Nullable="false" />
+          <Property Name="AddedBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_StatusNotes_Status" FromRole="StatusNotes" ToRole="Status" />
+          <NavigationProperty Name="StatusNotes1" Relationship="Self.FK_StatusNotes_StatusNotes" FromRole="StatusNotes" ToRole="StatusNotes1" />
+          <NavigationProperty Name="StatusNote1" Relationship="Self.FK_StatusNotes_StatusNotes" FromRole="StatusNotes1" ToRole="StatusNotes" />
+        </EntityType>
+        <EntityType Name="UserNote">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PreviousMessage" Type="Int32" Nullable="false" />
+          <Property Name="AddedBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserNotes1" Relationship="Self.FK_UserNotes_UserNotes1" FromRole="UserNotes" ToRole="UserNotes1" />
+          <NavigationProperty Name="UserNote1" Relationship="Self.FK_UserNotes_UserNotes1" FromRole="UserNotes1" ToRole="UserNotes" />
+        </EntityType>
         <EntityType Name="UserRank">
           <Key>
             <PropertyRef Name="pid" />
@@ -354,9 +556,9 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="RankId" Type="Int32" Nullable="false" />
           <Property Name="RankNotesId" Type="Int32" />
+          <Property Name="AwardedOn" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Rank" Relationship="Self.FK_UserRanks_Rank" FromRole="UserRanks" ToRole="Rank" />
           <NavigationProperty Name="User" Relationship="Self.FK_UserRanks_Users" FromRole="UserRanks" ToRole="Users" />
-          <Property Name="AwardedOn" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -372,16 +574,40 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
           <Property Name="Rank" Type="Int32" />
           <Property Name="EmailAddress" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Status" Type="Int32" />
-          <Property Name="FederalJurisdiction" Type="Int32" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsOnline" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="EUReporteds" Relationship="Self.FK_EUReported_Users" FromRole="Users" ToRole="EUReported" />
+          <NavigationProperty Name="JurisdictionNotes" Relationship="Self.FK_JurisdictionNotes_Users" FromRole="Users" ToRole="JurisdictionNotes" />
           <NavigationProperty Name="RankNotes" Relationship="Self.FK_RankNotes_Users" FromRole="Users" ToRole="RankNotes" />
           <NavigationProperty Name="UserRanks" Relationship="Self.FK_UserRanks_Users" FromRole="Users" ToRole="UserRanks" />
+          <NavigationProperty Name="UserJurisdictions" Relationship="Self.FK_UserJurisdictions_Users" FromRole="Users" ToRole="UserJurisdictions" />
           <NavigationProperty Name="UsersSessions" Relationship="Self.FK_UsersSessions_Users" FromRole="Users" ToRole="UsersSessions" />
-          <NavigationProperty Name="JurisdictionNotes" Relationship="Damocles2Model.FK_JurisdictionNotes_Users" FromRole="User" ToRole="JurisdictionNote" />
-          <NavigationProperty Name="UserJurisdictions" Relationship="Damocles2Model.FK_UserJurisdictions_Users" FromRole="User" ToRole="UserJurisdiction" />
+        </EntityType>
+        <EntityType Name="UserSex">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Sex" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserSexNotes" Relationship="Self.FK_UserSexNotes_UserSex" FromRole="UserSex" ToRole="UserSexNotes" />
+        </EntityType>
+        <EntityType Name="UserSexNote">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PreviousMessage" Type="Int32" Nullable="false" />
+          <Property Name="AddedBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserSex" Relationship="Self.FK_UserSexNotes_UserSex" FromRole="UserSexNotes" ToRole="UserSex" />
+          <NavigationProperty Name="UserSexNotes1" Relationship="Self.FK_UserSexNotes_UserSexNotes" FromRole="UserSexNotes" ToRole="UserSexNotes1" />
+          <NavigationProperty Name="UserSexNote1" Relationship="Self.FK_UserSexNotes_UserSexNotes" FromRole="UserSexNotes1" ToRole="UserSexNotes" />
         </EntityType>
         <EntityType Name="UsersSession">
           <Key>
@@ -394,6 +620,18 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
           <Property Name="SessionSeconds" Type="Double" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_UsersSessions_Users" FromRole="UsersSessions" ToRole="Users" />
         </EntityType>
+        <EntityType Name="UserJurisdiction">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="JurisdictionID" Type="Int32" Nullable="false" />
+          <Property Name="JurisdictionNotesId" Type="Int32" />
+          <Property Name="AwardedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Jurisidction" Relationship="Self.FK_UserJurisdictions_Jurisidctions1" FromRole="UserJurisdictions" ToRole="Jurisidctions" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserJurisdictions_Users" FromRole="UserJurisdictions" ToRole="Users" />
+        </EntityType>
         <Association Name="FK_EUReported_Users">
           <End Role="Users" Type="Self.User" Multiplicity="0..1" />
           <End Role="EUReported" Type="Self.EUReported" Multiplicity="*" />
@@ -403,6 +641,42 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
             </Principal>
             <Dependent Role="EUReported">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JurisdictionNotes_Jurisidctions1">
+          <End Role="Jurisidctions" Type="Self.Jurisidction" Multiplicity="0..1" />
+          <End Role="JurisdictionNotes" Type="Self.JurisdictionNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jurisidctions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JurisdictionNotes">
+              <PropertyRef Name="JurisdictionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JurisdictionNotes_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="JurisdictionNotes" Type="Self.JurisdictionNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JurisdictionNotes">
+              <PropertyRef Name="AddedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserJurisdictions_Jurisidctions1">
+          <End Role="Jurisidctions" Type="Self.Jurisidction" Multiplicity="1" />
+          <End Role="UserJurisdictions" Type="Self.UserJurisdiction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jurisidctions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserJurisdictions">
+              <PropertyRef Name="JurisdictionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -442,6 +716,42 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StatusNotes_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="StatusNotes" Type="Self.StatusNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="StatusNotes">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatusNotes_StatusNotes">
+          <End Role="StatusNotes" Type="Self.StatusNote" Multiplicity="1" />
+          <End Role="StatusNotes1" Type="Self.StatusNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusNotes">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="StatusNotes1">
+              <PropertyRef Name="PreviousMessage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserNotes_UserNotes1">
+          <End Role="UserNotes" Type="Self.UserNote" Multiplicity="1" />
+          <End Role="UserNotes1" Type="Self.UserNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserNotes">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="UserNotes1">
+              <PropertyRef Name="PreviousMessage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserRanks_Users">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="UserRanks" Type="Self.UserRank" Multiplicity="*" />
@@ -450,6 +760,18 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="UserRanks">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserJurisdictions_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="UserJurisdictions" Type="Self.UserJurisdiction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserJurisdictions">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -466,16 +788,60 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserSexNotes_UserSex">
+          <End Role="UserSex" Type="Self.UserSex" Multiplicity="1" />
+          <End Role="UserSexNotes" Type="Self.UserSexNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserSex">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserSexNotes">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSexNotes_UserSexNotes">
+          <End Role="UserSexNotes" Type="Self.UserSexNote" Multiplicity="1" />
+          <End Role="UserSexNotes1" Type="Self.UserSexNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserSexNotes">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="UserSexNotes1">
+              <PropertyRef Name="PreviousMessage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Damocles2Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="EUReporteds" EntityType="Self.EUReported" />
+          <EntitySet Name="JurisdictionNotes" EntityType="Self.JurisdictionNote" />
+          <EntitySet Name="Jurisidctions" EntityType="Self.Jurisidction" />
           <EntitySet Name="Ranks" EntityType="Self.Rank" />
           <EntitySet Name="RankNotes" EntityType="Self.RankNote" />
+          <EntitySet Name="Status" EntityType="Self.Status" />
+          <EntitySet Name="StatusNotes" EntityType="Self.StatusNote" />
+          <EntitySet Name="UserNotes" EntityType="Self.UserNote" />
           <EntitySet Name="UserRanks" EntityType="Self.UserRank" />
           <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserSexes" EntityType="Self.UserSex" />
+          <EntitySet Name="UserSexNotes" EntityType="Self.UserSexNote" />
           <EntitySet Name="UsersSessions" EntityType="Self.UsersSession" />
+          <EntitySet Name="UserJurisdictions" EntityType="Self.UserJurisdiction" />
           <AssociationSet Name="FK_EUReported_Users" Association="Self.FK_EUReported_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="EUReported" EntitySet="EUReporteds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JurisdictionNotes_Jurisidctions1" Association="Self.FK_JurisdictionNotes_Jurisidctions1">
+            <End Role="Jurisidctions" EntitySet="Jurisidctions" />
+            <End Role="JurisdictionNotes" EntitySet="JurisdictionNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JurisdictionNotes_Users" Association="Self.FK_JurisdictionNotes_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="JurisdictionNotes" EntitySet="JurisdictionNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserJurisdictions_Jurisidctions1" Association="Self.FK_UserJurisdictions_Jurisidctions1">
+            <End Role="Jurisidctions" EntitySet="Jurisidctions" />
+            <End Role="UserJurisdictions" EntitySet="UserJurisdictions" />
           </AssociationSet>
           <AssociationSet Name="FK_RankNotes_Rank" Association="Self.FK_RankNotes_Rank">
             <End Role="Rank" EntitySet="Ranks" />
@@ -489,123 +855,39 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
             <End Role="Users" EntitySet="Users" />
             <End Role="RankNotes" EntitySet="RankNotes" />
           </AssociationSet>
+          <AssociationSet Name="FK_StatusNotes_Status" Association="Self.FK_StatusNotes_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="StatusNotes" EntitySet="StatusNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatusNotes_StatusNotes" Association="Self.FK_StatusNotes_StatusNotes">
+            <End Role="StatusNotes" EntitySet="StatusNotes" />
+            <End Role="StatusNotes1" EntitySet="StatusNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserNotes_UserNotes1" Association="Self.FK_UserNotes_UserNotes1">
+            <End Role="UserNotes" EntitySet="UserNotes" />
+            <End Role="UserNotes1" EntitySet="UserNotes" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserRanks_Users" Association="Self.FK_UserRanks_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserRanks" EntitySet="UserRanks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserJurisdictions_Users" Association="Self.FK_UserJurisdictions_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserJurisdictions" EntitySet="UserJurisdictions" />
           </AssociationSet>
           <AssociationSet Name="FK_UsersSessions_Users" Association="Self.FK_UsersSessions_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="UsersSessions" EntitySet="UsersSessions" />
           </AssociationSet>
-          <EntitySet Name="JurisdictionNotes" EntityType="Damocles2Model.JurisdictionNote" />
-          <EntitySet Name="Jurisidctions" EntityType="Damocles2Model.Jurisidction" />
-          <EntitySet Name="UserJurisdictions" EntityType="Damocles2Model.UserJurisdiction" />
-          <AssociationSet Name="FK_JurisdictionNotes_Jurisidctions1" Association="Damocles2Model.FK_JurisdictionNotes_Jurisidctions1">
-            <End Role="Jurisidction" EntitySet="Jurisidctions" />
-            <End Role="JurisdictionNote" EntitySet="JurisdictionNotes" />
+          <AssociationSet Name="FK_UserSexNotes_UserSex" Association="Self.FK_UserSexNotes_UserSex">
+            <End Role="UserSex" EntitySet="UserSexes" />
+            <End Role="UserSexNotes" EntitySet="UserSexNotes" />
           </AssociationSet>
-          <AssociationSet Name="FK_JurisdictionNotes_Users" Association="Damocles2Model.FK_JurisdictionNotes_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="JurisdictionNote" EntitySet="JurisdictionNotes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserJurisdictions_Jurisidctions1" Association="Damocles2Model.FK_UserJurisdictions_Jurisidctions1">
-            <End Role="Jurisidction" EntitySet="Jurisidctions" />
-            <End Role="UserJurisdiction" EntitySet="UserJurisdictions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserJurisdictions_Users" Association="Damocles2Model.FK_UserJurisdictions_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="UserJurisdiction" EntitySet="UserJurisdictions" />
+          <AssociationSet Name="FK_UserSexNotes_UserSexNotes" Association="Self.FK_UserSexNotes_UserSexNotes">
+            <End Role="UserSexNotes" EntitySet="UserSexNotes" />
+            <End Role="UserSexNotes1" EntitySet="UserSexNotes" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="JurisdictionNote">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="PreviousMessage" Type="Int32" />
-          <Property Name="AddedBy" Type="Int32" Nullable="false" />
-          <Property Name="JurisdictionId" Type="Int32" />
-          <NavigationProperty Name="Jurisidction" Relationship="Damocles2Model.FK_JurisdictionNotes_Jurisidctions1" FromRole="JurisdictionNote" ToRole="Jurisidction" />
-          <NavigationProperty Name="User" Relationship="Damocles2Model.FK_JurisdictionNotes_Users" FromRole="JurisdictionNote" ToRole="User" />
-        </EntityType>
-        <EntityType Name="Jurisidction">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Country" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="State" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="JurisdictionNotes" Relationship="Damocles2Model.FK_JurisdictionNotes_Jurisidctions1" FromRole="Jurisidction" ToRole="JurisdictionNote" />
-          <NavigationProperty Name="UserJurisdictions" Relationship="Damocles2Model.FK_UserJurisdictions_Jurisidctions1" FromRole="Jurisidction" ToRole="UserJurisdiction" />
-        </EntityType>
-        <EntityType Name="UserJurisdiction">
-          <Key>
-            <PropertyRef Name="pid" />
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="JurisdictionID" />
-            <PropertyRef Name="AwardedOn" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="JurisdictionID" Type="Int32" Nullable="false" />
-          <Property Name="JurisdictionNotesId" Type="Int32" />
-          <Property Name="AwardedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Jurisidction" Relationship="Damocles2Model.FK_UserJurisdictions_Jurisidctions1" FromRole="UserJurisdiction" ToRole="Jurisidction" />
-          <NavigationProperty Name="User" Relationship="Damocles2Model.FK_UserJurisdictions_Users" FromRole="UserJurisdiction" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_JurisdictionNotes_Jurisidctions1">
-          <End Type="Damocles2Model.Jurisidction" Role="Jurisidction" Multiplicity="0..1" />
-          <End Type="Damocles2Model.JurisdictionNote" Role="JurisdictionNote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Jurisidction">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="JurisdictionNote">
-              <PropertyRef Name="JurisdictionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_JurisdictionNotes_Users">
-          <End Type="Damocles2Model.User" Role="User" Multiplicity="1" />
-          <End Type="Damocles2Model.JurisdictionNote" Role="JurisdictionNote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="JurisdictionNote">
-              <PropertyRef Name="AddedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserJurisdictions_Jurisidctions1">
-          <End Type="Damocles2Model.Jurisidction" Role="Jurisidction" Multiplicity="1" />
-          <End Type="Damocles2Model.UserJurisdiction" Role="UserJurisdiction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Jurisidction">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserJurisdiction">
-              <PropertyRef Name="JurisdictionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserJurisdictions_Users">
-          <End Type="Damocles2Model.User" Role="User" Multiplicity="1" />
-          <End Type="Damocles2Model.UserJurisdiction" Role="UserJurisdiction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserJurisdiction">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -626,6 +908,30 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
                 <ScalarProperty Name="LinkUrl" ColumnName="LinkUrl" />
                 <ScalarProperty Name="LinkUrlHash" ColumnName="LinkUrlHash" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JurisdictionNotes">
+            <EntityTypeMapping TypeName="Damocles2Model.JurisdictionNote">
+              <MappingFragment StoreEntitySet="JurisdictionNotes">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="PreviousMessage" ColumnName="PreviousMessage" />
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+                <ScalarProperty Name="JurisdictionId" ColumnName="JurisdictionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jurisidctions">
+            <EntityTypeMapping TypeName="Damocles2Model.Jurisidction">
+              <MappingFragment StoreEntitySet="Jurisidctions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -654,14 +960,50 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="Damocles2Model.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="StatusEnglishName" ColumnName="StatusEnglishName" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusNotes">
+            <EntityTypeMapping TypeName="Damocles2Model.StatusNote">
+              <MappingFragment StoreEntitySet="StatusNotes">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="PreviousMessage" ColumnName="PreviousMessage" />
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserNotes">
+            <EntityTypeMapping TypeName="Damocles2Model.UserNote">
+              <MappingFragment StoreEntitySet="UserNotes">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="PreviousMessage" ColumnName="PreviousMessage" />
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="UserRanks">
             <EntityTypeMapping TypeName="Damocles2Model.UserRank">
               <MappingFragment StoreEntitySet="UserRanks">
-                <ScalarProperty Name="AwardedOn" ColumnName="AwardedOn" />
                 <ScalarProperty Name="pid" ColumnName="pid" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="RankId" ColumnName="RankId" />
                 <ScalarProperty Name="RankNotesId" ColumnName="RankNotesId" />
+                <ScalarProperty Name="AwardedOn" ColumnName="AwardedOn" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -684,6 +1026,29 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="UserSexes">
+            <EntityTypeMapping TypeName="Damocles2Model.UserSex">
+              <MappingFragment StoreEntitySet="UserSex">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserSexNotes">
+            <EntityTypeMapping TypeName="Damocles2Model.UserSexNote">
+              <MappingFragment StoreEntitySet="UserSexNotes">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="PreviousMessage" ColumnName="PreviousMessage" />
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="UsersSessions">
             <EntityTypeMapping TypeName="Damocles2Model.UsersSession">
               <MappingFragment StoreEntitySet="UsersSessions">
@@ -695,38 +1060,14 @@ warning 6002: The table/view 'Damocles2.dbo.UserJurisdictions' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="JurisdictionNotes">
-            <EntityTypeMapping TypeName="Damocles2Model.JurisdictionNote">
-              <MappingFragment StoreEntitySet="JurisdictionNotes">
-                <ScalarProperty Name="JurisdictionId" ColumnName="JurisdictionId" />
-                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
-                <ScalarProperty Name="PreviousMessage" ColumnName="PreviousMessage" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="pid" ColumnName="pid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Jurisidctions">
-            <EntityTypeMapping TypeName="Damocles2Model.Jurisidction">
-              <MappingFragment StoreEntitySet="Jurisidctions">
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UserJurisdictions">
             <EntityTypeMapping TypeName="Damocles2Model.UserJurisdiction">
               <MappingFragment StoreEntitySet="UserJurisdictions">
-                <ScalarProperty Name="AwardedOn" ColumnName="AwardedOn" />
-                <ScalarProperty Name="JurisdictionNotesId" ColumnName="JurisdictionNotesId" />
-                <ScalarProperty Name="JurisdictionID" ColumnName="JurisdictionID" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="JurisdictionID" ColumnName="JurisdictionID" />
+                <ScalarProperty Name="JurisdictionNotesId" ColumnName="JurisdictionNotesId" />
+                <ScalarProperty Name="AwardedOn" ColumnName="AwardedOn" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

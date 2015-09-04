@@ -18,11 +18,11 @@ namespace Imogen.Model
         public User()
         {
             this.EUReporteds = new HashSet<EUReported>();
+            this.JurisdictionNotes = new HashSet<JurisdictionNote>();
             this.RankNotes = new HashSet<RankNote>();
             this.UserRanks = new HashSet<UserRank>();
-            this.UsersSessions = new HashSet<UsersSession>();
-            this.JurisdictionNotes = new HashSet<JurisdictionNote>();
             this.UserJurisdictions = new HashSet<UserJurisdiction>();
+            this.UsersSessions = new HashSet<UsersSession>();
         }
     
         public int Id { get; set; }
@@ -35,7 +35,6 @@ namespace Imogen.Model
         public Nullable<int> Rank { get; set; }
         public string EmailAddress { get; set; }
         public Nullable<int> Status { get; set; }
-        public Nullable<int> FederalJurisdiction { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime UpdatedOn { get; set; }
         public bool IsOnline { get; set; }
@@ -43,14 +42,14 @@ namespace Imogen.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EUReported> EUReporteds { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JurisdictionNote> JurisdictionNotes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RankNote> RankNotes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRank> UserRanks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsersSession> UsersSessions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<JurisdictionNote> JurisdictionNotes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserJurisdiction> UserJurisdictions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UsersSession> UsersSessions { get; set; }
     }
 }

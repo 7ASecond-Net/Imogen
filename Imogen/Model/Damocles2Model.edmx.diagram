@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="752f9754216f43acabf030a17d9d3491" Name="Diagram1">
+        <EntityTypeShape EntityType="Damocles2Model.EUReported" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.JurisdictionNote" Width="1.5" PointX="6.25" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.Jurisidction" Width="1.5" PointX="6.25" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.Rank" Width="1.5" PointX="6.125" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.RankNote" Width="1.5" PointX="6.125" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.Status" Width="1.5" PointX="8.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.StatusNote" Width="1.5" PointX="11" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.UserNote" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.UserRank" Width="1.5" PointX="4.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.User" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.UserSex" Width="1.5" PointX="5.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.UserSexNote" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.UsersSession" Width="1.5" PointX="2.125" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.UserJurisdiction" Width="1.5" PointX="3.875" PointY="16.875" IsExpanded="true" />
+        <AssociationConnector Association="Damocles2Model.FK_EUReported_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_JurisdictionNotes_Jurisidctions1" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_JurisdictionNotes_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_UserJurisdictions_Jurisidctions1" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_RankNotes_Rank" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_UserRanks_Rank" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_RankNotes_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_StatusNotes_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_StatusNotes_StatusNotes" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_UserNotes_UserNotes1" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_UserRanks_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_UserJurisdictions_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_UsersSessions_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_UserSexNotes_UserSex" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_UserSexNotes_UserSexNotes" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
