@@ -12,31 +12,22 @@ namespace Imogen.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class EUReported
+    public partial class Processed
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public EUReported()
+        public Processed()
         {
-            this.GoneButNotForgottenLinks = new HashSet<GoneButNotForgottenLink>();
-            this.Processeds = new HashSet<Processed>();
+            this.ProcessedByUsers = new HashSet<ProcessedByUser>();
         }
     
+        public int pid { get; set; }
         public int id { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime UpdatedOn { get; set; }
-        public bool Processed { get; set; }
-        public string PageUrl { get; set; }
-        public string PageUrlHash { get; set; }
-        public string SrcUrl { get; set; }
-        public string SrcUrlHash { get; set; }
-        public string LinkUrl { get; set; }
-        public string LinkUrlHash { get; set; }
-        public Nullable<int> UserId { get; set; }
     
-        public virtual User User { get; set; }
+        public virtual EUReported EUReported { get; set; }
+        public virtual ProcessingResult ProcessingResult { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GoneButNotForgottenLink> GoneButNotForgottenLinks { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Processed> Processeds { get; set; }
+        public virtual ICollection<ProcessedByUser> ProcessedByUsers { get; set; }
     }
 }

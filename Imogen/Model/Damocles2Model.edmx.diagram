@@ -5,18 +5,18 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="752f9754216f43acabf030a17d9d3491" Name="Diagram1">
-        <EntityTypeShape EntityType="Damocles2Model.EUReported" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.JurisdictionNote" Width="1.5" PointX="4" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.EUReported" Width="1.5" PointX="10.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.JurisdictionNote" Width="1.5" PointX="3.875" PointY="17.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.Jurisidction" Width="1.5" PointX="6.125" PointY="14.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.Rank" Width="1.5" PointX="6.125" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.RankNote" Width="1.5" PointX="6.125" PointY="10.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.Status" Width="1.5" PointX="8.75" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.StatusNote" Width="1.5" PointX="11" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.UserNote" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.Status" Width="1.5" PointX="14.625" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.StatusNote" Width="1.5" PointX="16.875" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.UserNote" Width="1.5" PointX="11.375" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.UserRank" Width="1.5" PointX="4.25" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.User" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.UserSex" Width="1.5" PointX="5.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.UserSexNote" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.UserSex" Width="1.5" PointX="14.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.UserSexNote" Width="1.5" PointX="16.75" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.UsersSession" Width="1.5" PointX="0.5" PointY="16.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.UserJurisdiction" Width="1.5" PointX="3.875" PointY="14.875" IsExpanded="true" />
         <AssociationConnector Association="Damocles2Model.FK_EUReported_Users" ManuallyRouted="false" />
@@ -37,6 +37,23 @@
         <EntityTypeShape EntityType="Damocles2Model.GoneButNotForgottenLink" Width="1.5" PointX="4" PointY="3.875" />
         <AssociationConnector Association="Damocles2Model.FK_GoneButNotForgottenLinks_EUReported" />
         <AssociationConnector Association="Damocles2Model.FK_GoneButNotForgottenLinks_Users" />
+        <EntityTypeShape EntityType="Damocles2Model.A" Width="1.5" PointX="10.75" PointY="19" />
+        <EntityTypeShape EntityType="Damocles2Model.C" Width="1.5" PointX="8.5" PointY="18.5" />
+        <EntityTypeShape EntityType="Damocles2Model.Processed" Width="1.5" PointX="13" PointY="10.375" />
+        <EntityTypeShape EntityType="Damocles2Model.ProcessingResult" Width="1.5" PointX="10.75" PointY="13.5" />
+        <EntityTypeShape EntityType="Damocles2Model.R" Width="1.5" PointX="13" PointY="18.5" />
+        <EntityTypeShape EntityType="Damocles2Model.ProcessedByUser" Width="1.5" PointX="9.25" PointY="10.625" />
+        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_A" />
+        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_A1" />
+        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_C" />
+        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_C1" />
+        <AssociationConnector Association="Damocles2Model.FK_Processed_EUReported" />
+        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_Jurisidctions" />
+        <AssociationConnector Association="Damocles2Model.FK_Processed_ProcessingResults" />
+        <AssociationConnector Association="Damocles2Model.FK_ProcessedByUser_Processed" />
+        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_R" />
+        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_R1" />
+        <AssociationConnector Association="Damocles2Model.FK_ProcessedByUser_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

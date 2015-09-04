@@ -12,28 +12,24 @@ namespace Imogen.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Jurisidction
+    public partial class A
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Jurisidction()
+        public A()
         {
-            this.JurisdictionNotes = new HashSet<JurisdictionNote>();
-            this.UserJurisdictions = new HashSet<UserJurisdiction>();
             this.ProcessingResults = new HashSet<ProcessingResult>();
+            this.ProcessingResults1 = new HashSet<ProcessingResult>();
         }
     
-        public int Id { get; set; }
-        public string Country { get; set; }
-        public string State { get; set; }
+        public int pid { get; set; }
+        public int ResultCount { get; set; }
+        public bool IsAllowed { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime UpdatedOn { get; set; }
-        public int CreatedBy { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<JurisdictionNote> JurisdictionNotes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserJurisdiction> UserJurisdictions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProcessingResult> ProcessingResults { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProcessingResult> ProcessingResults1 { get; set; }
     }
 }

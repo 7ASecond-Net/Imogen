@@ -40,5 +40,11 @@ namespace Imogen.Model
         public virtual DbSet<UsersSession> UsersSessions { get; set; }
         public virtual DbSet<UserJurisdiction> UserJurisdictions { get; set; }
         public virtual DbSet<GoneButNotForgottenLink> GoneButNotForgottenLinks { get; set; }
+        public virtual DbSet<A> A { get; set; }
+        public virtual DbSet<C> C { get; set; }
+        public virtual DbSet<Processed> Processeds { get; set; }
+        public virtual DbSet<ProcessingResult> ProcessingResults { get; set; }
+        public virtual DbSet<R> R { get; set; }
+        public virtual DbSet<ProcessedByUser> ProcessedByUsers { get; set; }
     }
 }
