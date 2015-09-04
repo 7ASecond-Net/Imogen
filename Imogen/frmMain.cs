@@ -124,6 +124,7 @@ namespace Imogen
         {
             if (!ApplicationClosing)
             {
+                dockPanel.SuspendLayout();
                 string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
 
                 if (File.Exists(configFile))
@@ -131,6 +132,7 @@ namespace Imogen
 
                 lblPendingReports.Text = DBHelper.GetPendingReportCount();
                 lblUsersOnline.Text = DBHelper.GetUsersOnlineCount();
+                dockPanel.ResumeLayout();
 
                 Task tStart = new Task(() => Start());
                 tStart.Start();
@@ -207,7 +209,7 @@ namespace Imogen
         private void ProcessUnReported(EUReported eur)
         {
             DownloadImage di = new DownloadImage();
-            Log("Processing of New Report Begins"); // This could be a partial report so check the other tables as well !!
+            Log("Loading Processing of New Report"); // This could be a partial report so check the other tables as well !!
             Properties.Settings.Default.ProfileUrlHash = eur.PageUrlHash;
             Properties.Settings.Default.ProfileUrl = eur.PageUrl;
             Properties.Settings.Default.ProfileSrcUrlHash = eur.SrcUrlHash;
@@ -222,9 +224,14 @@ namespace Imogen
             Properties.Settings.Default.ProfilePossibleFileName2 = utils.GetPossibleFileName(eur.LinkUrl);
             Log("Downloading Image");
             string imgPath = di.Download(eur.SrcUrl);
-            Log("Displaying Image");
-            frmProfileImage.ShowImage(imgPath);
-            currentFilePath = imgPath;
+            if (imgPath != null)
+            {
+                Log("Download Completed", LogType.Success);
+                frmProfileImage.ShowImage(imgPath);
+                currentFilePath = imgPath;
+            }
+            else
+                Log("Download Failed", LogType.Error);
 
             // Shows the Src Image and Metadata
             Log("Opening Restricted Web Browser for Src Url");

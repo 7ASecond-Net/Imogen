@@ -53,5 +53,8 @@
     <Setting Name="ProfileUrl" Type="System.String" Scope="User">
       <Value Profile="(Default)">...</Value>
     </Setting>
+    <Setting Name="ProfileLinkUrlARCRating" Type="System.String" Scope="User">
+      <Value Profile="(Default)">...</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

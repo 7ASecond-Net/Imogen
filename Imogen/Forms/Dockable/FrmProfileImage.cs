@@ -38,7 +38,7 @@ namespace Imogen.Forms.Dockable
 
         private delegate void UpdatePbOriginalImageDelegate(PictureBox pb, Image img);
         private void UpdatePbOriginalImage(PictureBox pb, Image img)
-        { 
+        {
             if (pb.InvokeRequired)
             {
                 // This is a worker thread so delegate the task.
@@ -55,6 +55,9 @@ namespace Imogen.Forms.Dockable
         {
             InitializeComponent();
             Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
+
+           
+            
         }
 
         private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -67,18 +70,25 @@ namespace Imogen.Forms.Dockable
                 UpdateLabelText(lblLinkUrlHash, Properties.Settings.Default.ProfileLinkUrlHash);
             else if (e.PropertyName == "ProfileReportedOn")
             {
-                //TODO: Not providing a very accurate result
                 DateTime dtn = Convert.ToDateTime(Properties.Settings.Default.ProfileReportedOn);
-                             
-
                 UpdateLabelText(lblReportedon, Properties.Settings.Default.ProfileReportedOn + " (" + utils.HowLongAgo(dtn) + ")");
             }
             else if (e.PropertyName == "ProfileReportNumber")
+            {
                 UpdateLabelText(lblReportNumber, Properties.Settings.Default.ProfileReportNumber);
+                // Check to see if any of the ARC settings have already been produced by other contributors
+                string r = Properties.Settings.Default.ProfileReportNumber.Replace(",", "").Trim();
+                int reportId = Convert.ToInt32(r); //convert the report Id string to int for the DBHelper
+                string srcUrlARCRating = DBHelper.GetSrcARCRating(reportId);
+                Properties.Settings.Default.ProfileLinkUrlARCRating = DBHelper.GetLinkARCRating(reportId);
+            }
             else if (e.PropertyName == "ProfilePossibleFileName1")
                 UpdateLabelText(lblPossibleFileName1, Properties.Settings.Default.ProfilePossibleFileName1);
             else if (e.PropertyName == "ProfilePossibleFileName2")
                 UpdateLabelText(lblPossibleFileName2, Properties.Settings.Default.ProfilePossibleFileName2);
+            else if (e.PropertyName == "ProfileLinkUrlARCRating")
+                UpdateLabelText(lblLinkUrlARCRating, Properties.Settings.Default.ProfileLinkUrlARCRating);
+
         }
 
         internal void SetImage(string imgPath)
@@ -95,7 +105,7 @@ namespace Imogen.Forms.Dockable
         {
             lblSrcUrlARCRating.ForeColor = Color.PaleGreen;
             lblSrcUrlARCRating.Text = "Universally Allowed in this Jurisdiction";
-            btnSrcSubmit.Enabled = true;
+            btnSrcSubmit.Visible = true;
             btnSrcSubmit.Tag = "A";
         }
 
@@ -177,7 +187,7 @@ namespace Imogen.Forms.Dockable
                 default:
                     break;
             }
-            
+
             //TODO: Make Disposable?
             dbHelper = null;
         }

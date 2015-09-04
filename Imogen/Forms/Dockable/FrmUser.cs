@@ -33,7 +33,7 @@ namespace Imogen.Forms.Dockable
             lblJurisdiction.Text = DBHelper.UJurisdiction;
         }
 
-        //TODO: NOT WORKING
+        
         private void timerUpdate_Tick(object sender, EventArgs e)
         {
             TimeSpan sessionDuration = TimeSpan.FromSeconds(TotalSessionSeconds);

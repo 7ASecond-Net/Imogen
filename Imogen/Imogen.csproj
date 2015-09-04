@@ -169,6 +169,12 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\A.cs">
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\C.cs">
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Damocles2Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -194,6 +200,18 @@
       <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Jurisidction.cs">
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Processed.cs">
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ProcessedByUser.cs">
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ProcessingResult.cs">
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\R.cs">
       <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Rank.cs">

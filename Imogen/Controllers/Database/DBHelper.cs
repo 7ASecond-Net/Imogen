@@ -67,6 +67,25 @@ namespace Imogen.Controllers.Database
             }
         }
 
+        //TODO: Not completed Yet
+        // LinkARCRating will be in either - the GoneButNotForgotten table (files that are no longer available)
+        // or ... TBA
+        internal static string GetLinkARCRating(int reportId)
+        {
+            Damocles2Entities de = new Damocles2Entities();            
+            var gbResult = de.GoneButNotForgottenLinks.Where(gid => gid.Id == reportId).FirstOrDefault();
+            // If it exists
+            //TODO: Really need the error code saved in GoneButNotForgotten
+            if (gbResult != null)
+                return "Link Url Contents Not Available " + gbResult.LastCheckedOn;            
+            return string.Empty;
+        }
+
+        internal static string GetSrcARCRating(int reportId)
+        {
+            return string.Empty;
+        }
+
         private void ConnectToDamocles()
         {
             de.Database.Connection.Open();
@@ -206,9 +225,11 @@ namespace Imogen.Controllers.Database
             throw new NotImplementedException();
         }
 
+        // Source Image is not criminal in content.
         internal void SetSrcToAllowed(string url)
         {
-            throw new NotImplementedException();
+            Damocles2Entities de = new Damocles2Entities();
+            
         }
 
         internal void SetSrcToRestricted(string url)

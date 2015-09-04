@@ -52,13 +52,13 @@
             this.label8 = new System.Windows.Forms.Label();
             this.lblSrcUrlARCRating = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.lblLinkUrlARCRating = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.lblLinkUrl = new System.Windows.Forms.Label();
             this.lblSrcUrl = new System.Windows.Forms.Label();
             this.lblUrl = new System.Windows.Forms.Label();
+            this.lblLinkUrlARCRating = new System.Windows.Forms.Label();
             this.lblPossibleFileName2 = new System.Windows.Forms.Label();
             this.lblPossibleFileName1 = new System.Windows.Forms.Label();
             this.lblReportedon = new System.Windows.Forms.Label();
@@ -124,7 +124,6 @@
             // btnLinkSubmit
             // 
             this.btnLinkSubmit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnLinkSubmit.Enabled = false;
             this.btnLinkSubmit.Location = new System.Drawing.Point(233, 263);
             this.btnLinkSubmit.Name = "btnLinkSubmit";
             this.btnLinkSubmit.Size = new System.Drawing.Size(75, 24);
@@ -187,7 +186,6 @@
             // btnSrcSubmit
             // 
             this.btnSrcSubmit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSrcSubmit.Enabled = false;
             this.btnSrcSubmit.Location = new System.Drawing.Point(232, 233);
             this.btnSrcSubmit.Name = "btnSrcSubmit";
             this.btnSrcSubmit.Size = new System.Drawing.Size(75, 24);
@@ -354,17 +352,6 @@
             this.label9.TabIndex = 24;
             this.label9.Text = "Link Url ARC Rating";
             // 
-            // lblLinkUrlARCRating
-            // 
-            this.lblLinkUrlARCRating.AutoSize = true;
-            this.lblLinkUrlARCRating.Font = new System.Drawing.Font("Arial Unicode MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLinkUrlARCRating.ForeColor = System.Drawing.Color.NavajoWhite;
-            this.lblLinkUrlARCRating.Location = new System.Drawing.Point(480, 117);
-            this.lblLinkUrlARCRating.Name = "lblLinkUrlARCRating";
-            this.lblLinkUrlARCRating.Size = new System.Drawing.Size(19, 15);
-            this.lblLinkUrlARCRating.TabIndex = 25;
-            this.lblLinkUrlARCRating.Text = "...";
-            // 
             // label12
             // 
             this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -436,6 +423,18 @@
             this.lblUrl.Size = new System.Drawing.Size(19, 15);
             this.lblUrl.TabIndex = 27;
             this.lblUrl.Text = global::Imogen.Properties.Settings.Default.ProfileUrl;
+            // 
+            // lblLinkUrlARCRating
+            // 
+            this.lblLinkUrlARCRating.AutoSize = true;
+            this.lblLinkUrlARCRating.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Imogen.Properties.Settings.Default, "ProfileLinkUrlARCRating", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.lblLinkUrlARCRating.Font = new System.Drawing.Font("Arial Unicode MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLinkUrlARCRating.ForeColor = System.Drawing.Color.NavajoWhite;
+            this.lblLinkUrlARCRating.Location = new System.Drawing.Point(480, 117);
+            this.lblLinkUrlARCRating.Name = "lblLinkUrlARCRating";
+            this.lblLinkUrlARCRating.Size = new System.Drawing.Size(19, 15);
+            this.lblLinkUrlARCRating.TabIndex = 25;
+            this.lblLinkUrlARCRating.Text = global::Imogen.Properties.Settings.Default.ProfileLinkUrlARCRating;
             // 
             // lblPossibleFileName2
             // 
