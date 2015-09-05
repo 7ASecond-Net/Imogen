@@ -48,8 +48,8 @@ namespace Imogen.Controllers.Database
 
             int iCount = 0;
             foreach (ProcessingResult p in pr)
-            {               
-                 if (p.CSrcResultId != null) iCount++;              
+            {
+                if (p.CSrcResultId != null) iCount++;
             }
 
             return iCount.ToString("N0");
@@ -59,12 +59,12 @@ namespace Imogen.Controllers.Database
         {
             Damocles2Entities de = new Damocles2Entities();
             HashingHelper hh = new HashingHelper();
-            string passwordHash =  hh.GetSHA512(Properties.Settings.Default.UserPassword);
+            string passwordHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
             User u = de.Users.Where(usr => usr.Username == Properties.Settings.Default.UserUsername && usr.UserPassword == passwordHash).FirstOrDefault();
             var pr = de.ProcessingResults.Where(pi => pi.UserId == u.Id);
 
             int iCount = 0;
-            foreach(ProcessingResult p in pr)
+            foreach (ProcessingResult p in pr)
             {
                 if (p.ASrcResultId != null) iCount++;
                 if (p.CSrcResultId != null) iCount++;
@@ -255,7 +255,7 @@ namespace Imogen.Controllers.Database
         #endregion
 
 
-      
+
 
         //TODO: Refactor this
         internal void SetSrcToAllowed(string url)
@@ -331,7 +331,7 @@ namespace Imogen.Controllers.Database
                 if (pr.ALinkResultId != null || pr.RLinkResultId != null || pr.CLinkResultId != null)
                     eu.Processed = true;
             }
-            
+
             eu.UpdatedOn = DateTime.UtcNow;
             de.SaveChanges();
         }
@@ -692,17 +692,17 @@ namespace Imogen.Controllers.Database
             pr.UpdatedOn = DateTime.UtcNow;
             pr.UserId = usr.Id;
 
-          //  Only add records if they have not already been created(for just now)
-                if (pr.ALinkResultId == null)
-                {
-                    A aRecord = new A();
-                    aRecord.ResultCount = aRecord.ResultCount + 1;
-                    aRecord.UpdatedOn = DateTime.UtcNow;
-                    aRecord.CreatedOn = DateTime.UtcNow;
-                    aRecord.IsAllowed = true;
-                    de.A.Add(aRecord);
-                    pr.ALinkResultId = aRecord.pid;
-                }
+            //  Only add records if they have not already been created(for just now)
+            if (pr.ALinkResultId == null)
+            {
+                A aRecord = new A();
+                aRecord.ResultCount = aRecord.ResultCount + 1;
+                aRecord.UpdatedOn = DateTime.UtcNow;
+                aRecord.CreatedOn = DateTime.UtcNow;
+                aRecord.IsAllowed = true;
+                de.A.Add(aRecord);
+                pr.ALinkResultId = aRecord.pid;
+            }
 
             //if (pr.RLinkResultId == null)
             //{
@@ -767,7 +767,15 @@ namespace Imogen.Controllers.Database
             gb.LinkUrlHash = eu.LinkUrlHash;
             gb.ReportedBy = usr.Id;
             de.GoneButNotForgottenLinks.Add(gb);
-            de.SaveChanges();
+            try
+            {
+                de.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+            }
+
 
             de.Dispose();
             gb = null;
