@@ -22,7 +22,13 @@ namespace Imogen.Forms.Dockable
 
         public FrmUser()
         {
-            InitializeComponent();           
+            InitializeComponent();
+        }
+
+        internal void UpdateUserStats()
+        {
+           lblImagesInvestigated.Text = DBHelper.GetImagesInvestigated();
+            lblImagesReported.Text = DBHelper.GetImagesReported(); 
         }
 
         public void UpdateUserSessionTime()
@@ -31,9 +37,11 @@ namespace Imogen.Forms.Dockable
             lblTotalSessions.Text = DBHelper.TotalSessions.ToString("N0");
             lblRank.Text = DBHelper.UserRank;
             lblJurisdiction.Text = DBHelper.UJurisdiction;
+            lblImagesInvestigated.Text = DBHelper.GetImagesInvestigated();
+            lblImagesReported.Text = DBHelper.GetImagesReported();
         }
 
-        
+
         private void timerUpdate_Tick(object sender, EventArgs e)
         {
             TimeSpan sessionDuration = TimeSpan.FromSeconds(TotalSessionSeconds);
@@ -43,8 +51,8 @@ namespace Imogen.Forms.Dockable
 
             Properties.Settings.Default.SessionSeconds = TotalSessionSeconds;
 
-            TotalSecondsPassed ++;
-            TotalSessionSeconds ++;
+            TotalSecondsPassed++;
+            TotalSessionSeconds++;
         }
 
         private void FrmUser_Load(object sender, EventArgs e)

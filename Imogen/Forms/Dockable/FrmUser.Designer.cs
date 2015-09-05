@@ -1,4 +1,6 @@
-﻿namespace Imogen.Forms.Dockable
+﻿using System;
+
+namespace Imogen.Forms.Dockable
 {
     partial class FrmUser
     {
@@ -40,7 +42,7 @@
             this.label30 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
-            this.label33 = new System.Windows.Forms.Label();
+            this.lblImagesReported = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
@@ -56,7 +58,7 @@
             this.label20 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.lblImagesInvestigated = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -109,7 +111,7 @@
             this.groupBox2.Controls.Add(this.label30);
             this.groupBox2.Controls.Add(this.label31);
             this.groupBox2.Controls.Add(this.label32);
-            this.groupBox2.Controls.Add(this.label33);
+            this.groupBox2.Controls.Add(this.lblImagesReported);
             this.groupBox2.Controls.Add(this.label34);
             this.groupBox2.Controls.Add(this.label35);
             this.groupBox2.Controls.Add(this.label36);
@@ -125,7 +127,7 @@
             this.groupBox2.Controls.Add(this.label20);
             this.groupBox2.Controls.Add(this.label17);
             this.groupBox2.Controls.Add(this.label18);
-            this.groupBox2.Controls.Add(this.label9);
+            this.groupBox2.Controls.Add(this.lblImagesInvestigated);
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.label12);
@@ -219,15 +221,15 @@
             this.label32.TabIndex = 64;
             this.label32.Text = "Reported";
             // 
-            // label33
+            // lblImagesReported
             // 
-            this.label33.AutoSize = true;
-            this.label33.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label33.Location = new System.Drawing.Point(284, 55);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(16, 13);
-            this.label33.TabIndex = 63;
-            this.label33.Text = "...";
+            this.lblImagesReported.AutoSize = true;
+            this.lblImagesReported.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lblImagesReported.Location = new System.Drawing.Point(284, 55);
+            this.lblImagesReported.Name = "lblImagesReported";
+            this.lblImagesReported.Size = new System.Drawing.Size(16, 13);
+            this.lblImagesReported.TabIndex = 63;
+            this.lblImagesReported.Text = "...";
             // 
             // label34
             // 
@@ -379,15 +381,15 @@
             this.label18.TabIndex = 48;
             this.label18.Text = "Documents Investigated";
             // 
-            // label9
+            // lblImagesInvestigated
             // 
-            this.label9.AutoSize = true;
-            this.label9.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label9.Location = new System.Drawing.Point(145, 55);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(16, 13);
-            this.label9.TabIndex = 47;
-            this.label9.Text = "...";
+            this.lblImagesInvestigated.AutoSize = true;
+            this.lblImagesInvestigated.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lblImagesInvestigated.Location = new System.Drawing.Point(145, 55);
+            this.lblImagesInvestigated.Name = "lblImagesInvestigated";
+            this.lblImagesInvestigated.Size = new System.Drawing.Size(16, 13);
+            this.lblImagesInvestigated.TabIndex = 47;
+            this.lblImagesInvestigated.Text = "...";
             // 
             // label10
             // 
@@ -650,6 +652,8 @@
 
         }
 
+       
+
         #endregion
 
         private System.Windows.Forms.Panel panel1;
@@ -662,7 +666,7 @@
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Label lblImagesReported;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Label label36;
@@ -678,7 +682,7 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblImagesInvestigated;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
