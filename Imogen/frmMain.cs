@@ -287,6 +287,8 @@ namespace Imogen
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Log("Getting Unprocessed Report");
+            if (!frmYourAccount.IsDisposed)
+                frmYourAccount.UpdateUserStats();
             ProcessUnReported(upc.GetUnProcessedContent());
         }
         #endregion
