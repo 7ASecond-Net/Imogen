@@ -153,6 +153,16 @@ namespace Imogen.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap film_2_16 {
+            get {
+                object obj = ResourceManager.GetObject("film-2-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap full_trash_16 {
             get {
                 object obj = ResourceManager.GetObject("full-trash-16", resourceCulture);

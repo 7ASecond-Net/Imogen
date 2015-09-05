@@ -117,53 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="user-8-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\user-8-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="full-trash-white" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\full-trash-white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="cancel-black" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\cancel-black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="full-trash-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\full-trash-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DatabaseRead" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DatabaseRead.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="show-property-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\show-property-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DatabaseOnline" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DatabaseOnline.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="check-mark-3-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\check-mark-3-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="accept-database-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\accept-database-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="link-4-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\link-4-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DatabaseInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DatabaseInsert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DatabaseOffline" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DatabaseOffline.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="delete-database-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\delete-database-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="cancel-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\cancel-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Windows-Run-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Windows-Run-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="film-2-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\film-2-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAVVVCAFVVFgAAAAAAVVVQAFVVWABVVVgAVVVYAFVVWABVVVgAVVVYAFVVWABVVVgAVVVQAAAAAABV
+        VRYAVVVCAFVV7gBVVc4AVVW+AFVV+ABVVf8AVVX/AFVV/wBVVf8AVVX/AFVV/wBVVf8AVVX/AFVV+ABV
+        Vb4AVVXOAFVV8ABVVfQAVVX/AFVV/wBVVf8AVVX/AFVV/wBVVf8AVVX/AFVV/wBVVf8AVVX/AFVV/wBV
+        Vf8AVVX/AFVV/wBVVfQAVVX2AFVVUgBVVRYAVVXqAFVV/wBVVf8AVVX/AFVV/wBVVf8AVVX/AFVV/wBV
+        Vf8AVVXqAFVVFgBVVVQAVVX2AFVV9gBVVUwAVVUMAFVV6gBVVf8AVVX/AFVV/wBVVf8AVVX/AFVV/wBV
+        Vf8AVVX/AFVV6gBVVQ4AVVVOAFVV9gBVVfYAVVX/AFVV/wBVVf8AVVX/AFVV/wBVVWwAVVWoAFVV/wBV
+        Vf8AVVX/AFVV/wBVVf8AVVX/AFVV/wBVVfYAVVX2AFVV1ABVVcgAVVX6AFVV/wBVVf8AVVUqAAAAAABV
+        VT4AVVXQAFVV/wBVVf8AVVX6AFVVyABVVdQAVVX2AFVV9gBVVT4AAAAAAFVV6ABVVf8AVVX/AFVVKgAA
+        AAAAAAAAAFVVBABVVWoAVVX8AFVV6AAAAAAAVVVAAFVV9gBVVfYAVVWKAFVVYABVVfAAVVX/AFVV/wBV
+        VSoAAAAAAAAAAABVVQQAVVVsAFVV/ABVVfAAVVViAFVVigBVVfYAVVX2AFVV/wBVVf8AVVX/AFVV/wBV
+        Vf8AVVUqAAAAAABVVUAAVVXQAFVV/wBVVf8AVVX/AFVV/wBVVf8AVVX2AFVV9gBVVZYAVVV0AFVV8gBV
+        Vf8AVVX/AFVVbgBVVaoAVVX/AFVV/wBVVf8AVVX/AFVV8gBVVXQAVVWWAFVV9gBVVfYAVVU+AAAAAABV
+        VegAVVX/AFVV/wBVVf8AVVX/AFVV/wBVVf8AVVX/AFVV/wBVVegAAAAAAFVVPgBVVfYAVVX0AFVVxgBV
+        VbIAVVX4AFVV/wBVVf8AVVX/AFVV/wBVVf8AVVX/AFVV/wBVVf8AVVX4AFVVsgBVVcYAVVX2AFVV9ABV
+        Vf8AVVX/AFVV/wBVVf8AVVX/AFVV/wBVVf8AVVX/AFVV/wBVVf8AVVX/AFVV/wBVVf8AVVX/AFVV9ABV
+        VfAAVVVYAFVVIABVVewAVVX/AFVV/wBVVf8AVVX/AFVV/wBVVf8AVVX/AFVV/wBVVewAVVUgAFVVWABV
+        VfAAVVVAAFVVFgAAAAAAVVVQAFVVWABVVVgAVVVYAFVVWABVVVgAVVVYAFVVWABVVVgAVVVQAAAAAABV
+        VRYAVVVC//8AAAAAAAAAAAAAYAYAAGAGAAACAAAAA4AAAGPmAAAj5AAAA4AAACIEAABgBgAAAAAAAAAA
+        AABgBgAA//8AAA==
+</value>
   </data>
 </root>

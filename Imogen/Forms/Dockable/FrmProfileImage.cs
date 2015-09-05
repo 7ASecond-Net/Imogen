@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using WeifenLuo.WinFormsUI.Docking;
-using NTimeAgo;
 using Imogen.Controllers.Database;
 using Imogen.Controllers.Utils;
 

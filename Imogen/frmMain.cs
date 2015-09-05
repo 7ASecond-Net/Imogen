@@ -433,7 +433,8 @@ namespace Imogen
 
         private void videoLinkTesterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            FrmVideoLinkTester frmVideo = new FrmVideoLinkTester();
+            frmVideo.ShowDialog();
         }
     }
 }

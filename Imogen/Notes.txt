@@ -1,0 +1,2 @@
+﻿PornXs & VidEarn domains require accessing the video url first, then getting a newly generated url to the video
+before it will allow you to download. The newly generated link url does not last very long.

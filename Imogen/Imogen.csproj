@@ -90,13 +90,10 @@
       <HintPath>..\packages\FastColoredTextBox.1.0.0\lib\net40\FastColoredTextBox.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NTimeAgo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NTimeAgo.0.1.0\lib\net35\NTimeAgo.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -132,6 +129,12 @@
     </Compile>
     <Compile Include="Forms\Dialog\FrmRegister.Designer.cs">
       <DependentUpon>FrmRegister.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Dialog\FrmVideoLinkTester.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Dialog\FrmVideoLinkTester.Designer.cs">
+      <DependentUpon>FrmVideoLinkTester.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Dockable\FrmMetaData.cs">
       <SubType>Form</SubType>
@@ -228,6 +231,9 @@
     <EmbeddedResource Include="Forms\Dialog\FrmRegister.resx">
       <DependentUpon>FrmRegister.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Dialog\FrmVideoLinkTester.resx">
+      <DependentUpon>FrmVideoLinkTester.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Dockable\FrmMetaData.resx">
       <DependentUpon>FrmMetaData.cs</DependentUpon>
     </EmbeddedResource>
@@ -296,6 +302,8 @@
       <DependentUpon>Damocles2Model.edmx</DependentUpon>
       <LastGenOutput>Damocles2Model.cs</LastGenOutput>
     </Content>
+    <Content Include="Notes.txt" />
+    <None Include="Resources\film-2-16.png" />
     <None Include="Resources\full-trash-white.png" />
     <None Include="Resources\full-trash-16.png" />
     <None Include="Resources\cancel-black.png" />
