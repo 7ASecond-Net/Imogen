@@ -56,8 +56,8 @@ namespace Imogen.Forms.Dockable
             InitializeComponent();
             Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
 
-           
-            
+
+
         }
 
         private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -75,12 +75,15 @@ namespace Imogen.Forms.Dockable
             }
             else if (e.PropertyName == "ProfileReportNumber")
             {
+               
                 UpdateLabelText(lblReportNumber, Properties.Settings.Default.ProfileReportNumber);
-                // Check to see if any of the ARC settings have already been produced by other contributors
-                string r = Properties.Settings.Default.ProfileReportNumber.Replace(",", "").Trim();
-                int reportId = Convert.ToInt32(r); //convert the report Id string to int for the DBHelper
-                string srcUrlARCRating = DBHelper.GetSrcARCRating(reportId);
-                Properties.Settings.Default.ProfileLinkUrlARCRating = DBHelper.GetLinkARCRating(reportId);
+              
+                    // Check to see if any of the ARC settings have already been produced by other contributors
+                    string r = Properties.Settings.Default.ProfileReportNumber.Replace(",", "").Trim();
+                    int reportId = Convert.ToInt32(r); //convert the report Id string to int for the DBHelper
+                    string srcUrlARCRating = DBHelper.GetSrcARCRating(reportId);
+                    Properties.Settings.Default.ProfileLinkUrlARCRating = DBHelper.GetLinkARCRating(reportId);
+               
             }
             else if (e.PropertyName == "ProfilePossibleFileName1")
                 UpdateLabelText(lblPossibleFileName1, Properties.Settings.Default.ProfilePossibleFileName1);
