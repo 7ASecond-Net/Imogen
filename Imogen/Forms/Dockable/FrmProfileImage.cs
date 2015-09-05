@@ -172,6 +172,7 @@ namespace Imogen.Forms.Dockable
 
         private void btnSrcSubmit_Click(object sender, EventArgs e)
         {
+            btnSrcSubmit.Visible = false;
             DBHelper dbHelper = new DBHelper();
             switch ((string)btnSrcSubmit.Tag)
             {
@@ -197,6 +198,7 @@ namespace Imogen.Forms.Dockable
 
         private void btnLinkSubmit_Click(object sender, EventArgs e)
         {
+            btnLinkSubmit.Visible = false;
             DBHelper dbHelper = new DBHelper();
             switch ((string)btnLinkSubmit.Tag)
             {
