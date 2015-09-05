@@ -38,6 +38,42 @@ namespace Imogen.Controllers.Database
             SetConnectionStatus();
         }
 
+        internal static string GetImagesReported()
+        {
+            Damocles2Entities de = new Damocles2Entities();
+            HashingHelper hh = new HashingHelper();
+            string passwordHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
+            User u = de.Users.Where(usr => usr.Username == Properties.Settings.Default.UserUsername && usr.UserPassword == passwordHash).FirstOrDefault();
+            var pr = de.ProcessingResults.Where(pi => pi.id == u.Id);
+
+            int iCount = 0;
+            foreach (ProcessingResult p in pr)
+            {               
+                 if (p.CSrcResultId != null) iCount++;              
+            }
+
+            return iCount.ToString("N0");
+        }
+
+        internal static string GetImagesInvestigated()
+        {
+            Damocles2Entities de = new Damocles2Entities();
+            HashingHelper hh = new HashingHelper();
+            string passwordHash =  hh.GetSHA512(Properties.Settings.Default.UserPassword);
+            User u = de.Users.Where(usr => usr.Username == Properties.Settings.Default.UserUsername && usr.UserPassword == passwordHash).FirstOrDefault();
+            var pr = de.ProcessingResults.Where(pi => pi.UserId == u.Id);
+
+            int iCount = 0;
+            foreach(ProcessingResult p in pr)
+            {
+                if (p.ASrcResultId != null) iCount++;
+                if (p.CSrcResultId != null) iCount++;
+                if (p.RSrcResultId != null) iCount++;
+            }
+
+            return iCount.ToString("N0");
+        }
+
         private void SetConnectionStatus()
         {
             switch (de.Database.Connection.State)
@@ -72,12 +108,12 @@ namespace Imogen.Controllers.Database
         // or ... TBA
         internal static string GetLinkARCRating(int reportId)
         {
-            Damocles2Entities de = new Damocles2Entities();            
+            Damocles2Entities de = new Damocles2Entities();
             var gbResult = de.GoneButNotForgottenLinks.Where(gid => gid.Id == reportId).FirstOrDefault();
             // If it exists
             //TODO: Really need the error code saved in GoneButNotForgotten
             if (gbResult != null)
-                return "Link Url Contents Not Available " + gbResult.LastCheckedOn;            
+                return "Link Url Contents Not Available " + gbResult.LastCheckedOn;
             return string.Empty;
         }
 
@@ -193,7 +229,6 @@ namespace Imogen.Controllers.Database
             de.SaveChanges();
         }
 
-        //TODO: NOT WORKING - user class is always null;
         internal double GetUserLifetimeSessionTime()
         {
             Damocles2Entities de = new Damocles2Entities();
@@ -219,42 +254,498 @@ namespace Imogen.Controllers.Database
 
         #endregion
 
-        
-        internal void SetSrcToGoneButNotForgotten(string url)
-        {
-            throw new NotImplementedException();
-        }
 
-        // Source Image is not criminal in content.
+      
+
+        //TODO: Refactor this
         internal void SetSrcToAllowed(string url)
         {
             Damocles2Entities de = new Damocles2Entities();
+            string pHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
+            User usr = de.Users.Where(u => u.Username == Properties.Settings.Default.UserUsername && u.UserPassword == pHash).FirstOrDefault();
+
+            EUReported eu = de.EUReporteds.Where(l => l.SrcUrl == url).FirstOrDefault();
+
+
+            // Create ProcessingResult table if it does not already exist!
+            var pr = de.ProcessingResults.Where(prr => prr.id == eu.id).FirstOrDefault();
+
+            bool Update = true;
+            if (pr == null)
+            {
+                Update = false;
+                pr = new ProcessingResult();
+            }
+
+            pr.id = eu.id;
+            var uju = de.UserJurisdictions.Where(uj => uj.UserId == usr.Id).FirstOrDefault();
+            pr.JurisdictionId = uju.JurisdictionID;
+            pr.CreatedOn = DateTime.UtcNow;
+            pr.UpdatedOn = DateTime.UtcNow;
+            pr.UserId = usr.Id;
+
+            // Only add records if they have not already been created (for just now)
+            if (pr.ASrcResultId == null)
+            {
+                A aRecord = new A();
+                aRecord.ResultCount = aRecord.ResultCount + 1;
+                aRecord.UpdatedOn = DateTime.UtcNow;
+                aRecord.CreatedOn = DateTime.UtcNow;
+                aRecord.IsAllowed = true;
+                de.A.Add(aRecord);
+                pr.ASrcResultId = aRecord.pid;
+            }
+
+            //if (pr.RSrcResultId == null)
+            //{
+            //    R rRecord = new R();
+            //    rRecord.ResultCount = rRecord.ResultCount + 1;
+            //    rRecord.UpdatedOn = DateTime.UtcNow;
+            //    rRecord.CreatedOn = DateTime.UtcNow;
+            //    rRecord.IsRestricted = false;
+            //    de.R.Add(rRecord);
+            //    pr.RSrcResultId = rRecord.pid;
+            //}
+
+            //if (pr.CSrcResultId == null)
+            //{
+            //    C cRecord = new C();
+            //    cRecord.ResultCount = cRecord.ResultCount + 1;
+            //    cRecord.UpdatedOn = DateTime.UtcNow;
+            //    cRecord.CreatedOn = DateTime.UtcNow;
+            //    cRecord.IsCriminal = false;
+            //    de.C.Add(cRecord);
+            //    pr.CSrcResultId = cRecord.pid;
+            //}
+
+            if (!Update)
+                de.ProcessingResults.Add(pr);
+
+            // Check to see if the LinkUrl is GoneButNotForgotten
+            var gbnf = de.GoneButNotForgottenLinks.Where(gbn => gbn.LinkUrlHash == eu.LinkUrlHash).FirstOrDefault();
+            if (gbnf != null)
+                eu.Processed = true;
+            else
+            {
+                // this record had already been created so we may have to mark EU as processed - check now
+                if (pr.ALinkResultId != null || pr.RLinkResultId != null || pr.CLinkResultId != null)
+                    eu.Processed = true;
+            }
             
+            eu.UpdatedOn = DateTime.UtcNow;
+            de.SaveChanges();
         }
 
+        //TODO: Who is it restricted to?
         internal void SetSrcToRestricted(string url)
         {
-            throw new NotImplementedException();
+            Damocles2Entities de = new Damocles2Entities();
+            string pHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
+            User usr = de.Users.Where(u => u.Username == Properties.Settings.Default.UserUsername && u.UserPassword == pHash).FirstOrDefault();
+
+            EUReported eu = de.EUReporteds.Where(l => l.SrcUrl == url).FirstOrDefault();
+
+
+            // Create ProcessingResult table if it does not already exist!
+            var pr = de.ProcessingResults.Where(prr => prr.id == eu.id).FirstOrDefault();
+
+            bool Update = true;
+            if (pr == null)
+            {
+                Update = false;
+                pr = new ProcessingResult();
+            }
+
+            pr.id = eu.id;
+            var uju = de.UserJurisdictions.Where(uj => uj.UserId == usr.Id).FirstOrDefault();
+            pr.JurisdictionId = uju.JurisdictionID;
+            pr.CreatedOn = DateTime.UtcNow;
+            pr.UpdatedOn = DateTime.UtcNow;
+            pr.UserId = usr.Id;
+
+            // Only add records if they have not already been created (for just now)
+            //if (pr.ASrcResultId == null)
+            //{
+            //    A aRecord = new A();
+            //    aRecord.ResultCount = aRecord.ResultCount + 1;
+            //    aRecord.UpdatedOn = DateTime.UtcNow;
+            //    aRecord.CreatedOn = DateTime.UtcNow;
+            //    aRecord.IsAllowed = true;
+            //    de.A.Add(aRecord);
+            //    pr.ASrcResultId = aRecord.pid;
+            //}
+
+            if (pr.RSrcResultId == null)
+            {
+                R rRecord = new R();
+                rRecord.ResultCount = rRecord.ResultCount + 1;
+                rRecord.UpdatedOn = DateTime.UtcNow;
+                rRecord.CreatedOn = DateTime.UtcNow;
+                rRecord.IsRestricted = true;
+                de.R.Add(rRecord);
+                pr.RSrcResultId = rRecord.pid;
+            }
+
+            //if (pr.CSrcResultId == null)
+            //{
+            //    C cRecord = new C();
+            //    cRecord.ResultCount = cRecord.ResultCount + 1;
+            //    cRecord.UpdatedOn = DateTime.UtcNow;
+            //    cRecord.CreatedOn = DateTime.UtcNow;
+            //    cRecord.IsCriminal = false;
+            //    de.C.Add(cRecord);
+            //    pr.CSrcResultId = cRecord.pid;
+            //}
+
+            if (!Update)
+                de.ProcessingResults.Add(pr);
+
+            // Check to see if the LinkUrl is GoneButNotForgotten
+            var gbnf = de.GoneButNotForgottenLinks.Where(gbn => gbn.LinkUrlHash == eu.LinkUrlHash).FirstOrDefault();
+            if (gbnf != null)
+                eu.Processed = true;
+            else
+            {
+                // this record had already been created so we may have to mark EU as processed - check now
+                if (pr.ALinkResultId != null || pr.RLinkResultId != null || pr.CLinkResultId != null)
+                    eu.Processed = true;
+            }
+
+            eu.UpdatedOn = DateTime.UtcNow;
+            de.SaveChanges();
+
+            //TODO: Implement this
+            // if eu.Processed == true then raise Event to tell frmMain to go to the next unprocessed Report
+
         }
 
         internal void SetSrcToCriminal(string url)
         {
-            throw new NotImplementedException();
+            Damocles2Entities de = new Damocles2Entities();
+            string pHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
+            User usr = de.Users.Where(u => u.Username == Properties.Settings.Default.UserUsername && u.UserPassword == pHash).FirstOrDefault();
+
+            EUReported eu = de.EUReporteds.Where(l => l.SrcUrl == url).FirstOrDefault();
+
+
+            // Create ProcessingResult table if it does not already exist!
+            var pr = de.ProcessingResults.Where(prr => prr.id == eu.id).FirstOrDefault();
+
+            bool Update = true;
+            if (pr == null)
+            {
+                Update = false;
+                pr = new ProcessingResult();
+            }
+
+            pr.id = eu.id;
+            var uju = de.UserJurisdictions.Where(uj => uj.UserId == usr.Id).FirstOrDefault();
+            pr.JurisdictionId = uju.JurisdictionID;
+            pr.CreatedOn = DateTime.UtcNow;
+            pr.UpdatedOn = DateTime.UtcNow;
+            pr.UserId = usr.Id;
+
+            // Only add records if they have not already been created (for just now)
+            //if (pr.ASrcResultId == null)
+            //{
+            //    A aRecord = new A();
+            //    aRecord.ResultCount = aRecord.ResultCount + 1;
+            //    aRecord.UpdatedOn = DateTime.UtcNow;
+            //    aRecord.CreatedOn = DateTime.UtcNow;
+            //    aRecord.IsAllowed = true;
+            //    de.A.Add(aRecord);
+            //    pr.ASrcResultId = aRecord.pid;
+            //}
+
+            //if (pr.RSrcResultId == null)
+            //{
+            //    R rRecord = new R();
+            //    rRecord.ResultCount = rRecord.ResultCount + 1;
+            //    rRecord.UpdatedOn = DateTime.UtcNow;
+            //    rRecord.CreatedOn = DateTime.UtcNow;
+            //    rRecord.IsRestricted = true;
+            //    de.R.Add(rRecord);
+            //    pr.RSrcResultId = rRecord.pid;
+            //}
+
+            if (pr.CSrcResultId == null)
+            {
+                C cRecord = new C();
+                cRecord.ResultCount = cRecord.ResultCount + 1;
+                cRecord.UpdatedOn = DateTime.UtcNow;
+                cRecord.CreatedOn = DateTime.UtcNow;
+                cRecord.IsCriminal = true;
+                de.C.Add(cRecord);
+                pr.CSrcResultId = cRecord.pid;
+            }
+
+            if (!Update)
+                de.ProcessingResults.Add(pr);
+
+            // Check to see if the LinkUrl is GoneButNotForgotten
+            var gbnf = de.GoneButNotForgottenLinks.Where(gbn => gbn.LinkUrlHash == eu.LinkUrlHash).FirstOrDefault();
+            if (gbnf != null)
+                eu.Processed = true;
+            else
+            {
+                // this record had already been created so we may have to mark EU as processed - check now
+                if (pr.ALinkResultId != null || pr.RLinkResultId != null || pr.CLinkResultId != null)
+                    eu.Processed = true;
+            }
+
+            eu.UpdatedOn = DateTime.UtcNow;
+            de.SaveChanges();
+
+            //TODO: Implement this
+            // if eu.Processed == true then raise Event to tell frmMain to go to the next unprocessed Report
+
         }
 
+        //TODO: Who is it restricted to?
         internal void SetLinkToRestricted(string url)
         {
-            throw new NotImplementedException();
+            Damocles2Entities de = new Damocles2Entities();
+            string pHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
+            User usr = de.Users.Where(u => u.Username == Properties.Settings.Default.UserUsername && u.UserPassword == pHash).FirstOrDefault();
+
+            EUReported eu = de.EUReporteds.Where(l => l.LinkUrl == url).FirstOrDefault();
+
+
+            // Create ProcessingResult table if it does not already exist!
+            var pr = de.ProcessingResults.Where(prr => prr.id == eu.id).FirstOrDefault();
+
+            bool Update = true;
+            if (pr == null)
+            {
+                Update = false;
+                pr = new ProcessingResult();
+            }
+
+            pr.id = eu.id;
+            var uju = de.UserJurisdictions.Where(uj => uj.UserId == usr.Id).FirstOrDefault();
+            pr.JurisdictionId = uju.JurisdictionID;
+            pr.CreatedOn = DateTime.UtcNow;
+            pr.UpdatedOn = DateTime.UtcNow;
+            pr.UserId = usr.Id;
+
+            // Only add records if they have not already been created (for just now)
+            //if (pr.ALinkResultId == null)
+            //{
+            //    A aRecord = new A();
+            //    aRecord.ResultCount = aRecord.ResultCount + 1;
+            //    aRecord.UpdatedOn = DateTime.UtcNow;
+            //    aRecord.CreatedOn = DateTime.UtcNow;
+            //    aRecord.IsAllowed = true;
+            //    de.A.Add(aRecord);
+            //    pr.ALinkResultId = aRecord.pid;
+            //}
+
+            if (pr.RLinkResultId == null)
+            {
+                R rRecord = new R();
+                rRecord.ResultCount = rRecord.ResultCount + 1;
+                rRecord.UpdatedOn = DateTime.UtcNow;
+                rRecord.CreatedOn = DateTime.UtcNow;
+                rRecord.IsRestricted = true;
+                de.R.Add(rRecord);
+                pr.RLinkResultId = rRecord.pid;
+            }
+
+            //if (pr.CLinkResultId == null)
+            //{
+            //    C cRecord = new C();
+            //    cRecord.ResultCount = cRecord.ResultCount + 1;
+            //    cRecord.UpdatedOn = DateTime.UtcNow;
+            //    cRecord.CreatedOn = DateTime.UtcNow;
+            //    cRecord.IsCriminal = true;
+            //    de.C.Add(cRecord);
+            //    pr.CLinkResultId = cRecord.pid;
+            //}
+
+            if (!Update)
+                de.ProcessingResults.Add(pr);
+
+            // Check to see if the LinkUrl is GoneButNotForgotten
+            var gbnf = de.GoneButNotForgottenLinks.Where(gbn => gbn.SrcUrlHash == eu.SrcUrlHash).FirstOrDefault();
+            if (gbnf != null)
+                eu.Processed = true;
+            else
+            {
+                // this record had already been created so we may have to mark EU as processed - check now
+                if (pr.ASrcResultId != null || pr.RSrcResultId != null || pr.CSrcResultId != null)
+                    eu.Processed = true;
+            }
+
+            eu.UpdatedOn = DateTime.UtcNow;
+            de.SaveChanges();
+
+            //TODO: Implement this
+            // if eu.Processed == true then raise Event to tell frmMain to go to the next unprocessed Report
+
         }
 
         internal void SetLinkToCriminal(string url)
         {
-            throw new NotImplementedException();
+            Damocles2Entities de = new Damocles2Entities();
+            string pHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
+            User usr = de.Users.Where(u => u.Username == Properties.Settings.Default.UserUsername && u.UserPassword == pHash).FirstOrDefault();
+
+            EUReported eu = de.EUReporteds.Where(l => l.LinkUrl == url).FirstOrDefault();
+
+
+            // Create ProcessingResult table if it does not already exist!
+            var pr = de.ProcessingResults.Where(prr => prr.id == eu.id).FirstOrDefault();
+
+            bool Update = true;
+            if (pr == null)
+            {
+                Update = false;
+                pr = new ProcessingResult();
+            }
+
+            pr.id = eu.id;
+            var uju = de.UserJurisdictions.Where(uj => uj.UserId == usr.Id).FirstOrDefault();
+            pr.JurisdictionId = uju.JurisdictionID;
+            pr.CreatedOn = DateTime.UtcNow;
+            pr.UpdatedOn = DateTime.UtcNow;
+            pr.UserId = usr.Id;
+
+            // Only add records if they have not already been created (for just now)
+            //if (pr.ALinkResultId == null)
+            //{
+            //    A aRecord = new A();
+            //    aRecord.ResultCount = aRecord.ResultCount + 1;
+            //    aRecord.UpdatedOn = DateTime.UtcNow;
+            //    aRecord.CreatedOn = DateTime.UtcNow;
+            //    aRecord.IsAllowed = true;
+            //    de.A.Add(aRecord);
+            //    pr.ALinkResultId = aRecord.pid;
+            //}
+
+            //if (pr.RLinkResultId == null)
+            //{
+            //    R rRecord = new R();
+            //    rRecord.ResultCount = rRecord.ResultCount + 1;
+            //    rRecord.UpdatedOn = DateTime.UtcNow;
+            //    rRecord.CreatedOn = DateTime.UtcNow;
+            //    rRecord.IsRestricted = true;
+            //    de.R.Add(rRecord);
+            //    pr.RLinkResultId = rRecord.pid;
+            //}
+
+            if (pr.CLinkResultId == null)
+            {
+                C cRecord = new C();
+                cRecord.ResultCount = cRecord.ResultCount + 1;
+                cRecord.UpdatedOn = DateTime.UtcNow;
+                cRecord.CreatedOn = DateTime.UtcNow;
+                cRecord.IsCriminal = true;
+                de.C.Add(cRecord);
+                pr.CLinkResultId = cRecord.pid;
+            }
+
+            if (!Update)
+                de.ProcessingResults.Add(pr);
+
+            // Check to see if the LinkUrl is GoneButNotForgotten
+            var gbnf = de.GoneButNotForgottenLinks.Where(gbn => gbn.SrcUrlHash == eu.SrcUrlHash).FirstOrDefault();
+            if (gbnf != null)
+                eu.Processed = true;
+            else
+            {
+                // this record had already been created so we may have to mark EU as processed - check now
+                if (pr.ASrcResultId != null || pr.RSrcResultId != null || pr.CSrcResultId != null)
+                    eu.Processed = true;
+            }
+
+            eu.UpdatedOn = DateTime.UtcNow;
+            de.SaveChanges();
+
+            //TODO: Implement this
+            // if eu.Processed == true then raise Event to tell frmMain to go to the next unprocessed Report
+
         }
 
         internal void SetLinkToAllowed(string url)
         {
-            throw new NotImplementedException();
+            Damocles2Entities de = new Damocles2Entities();
+            string pHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
+            User usr = de.Users.Where(u => u.Username == Properties.Settings.Default.UserUsername && u.UserPassword == pHash).FirstOrDefault();
+
+            EUReported eu = de.EUReporteds.Where(l => l.LinkUrl == url).FirstOrDefault();
+
+
+            // Create ProcessingResult table if it does not already exist!
+            var pr = de.ProcessingResults.Where(prr => prr.id == eu.id).FirstOrDefault();
+
+            bool Update = true;
+            if (pr == null)
+            {
+                Update = false;
+                pr = new ProcessingResult();
+            }
+
+            pr.id = eu.id;
+            var uju = de.UserJurisdictions.Where(uj => uj.UserId == usr.Id).FirstOrDefault();
+            pr.JurisdictionId = uju.JurisdictionID;
+            pr.CreatedOn = DateTime.UtcNow;
+            pr.UpdatedOn = DateTime.UtcNow;
+            pr.UserId = usr.Id;
+
+          //  Only add records if they have not already been created(for just now)
+                if (pr.ALinkResultId == null)
+                {
+                    A aRecord = new A();
+                    aRecord.ResultCount = aRecord.ResultCount + 1;
+                    aRecord.UpdatedOn = DateTime.UtcNow;
+                    aRecord.CreatedOn = DateTime.UtcNow;
+                    aRecord.IsAllowed = true;
+                    de.A.Add(aRecord);
+                    pr.ALinkResultId = aRecord.pid;
+                }
+
+            //if (pr.RLinkResultId == null)
+            //{
+            //    R rRecord = new R();
+            //    rRecord.ResultCount = rRecord.ResultCount + 1;
+            //    rRecord.UpdatedOn = DateTime.UtcNow;
+            //    rRecord.CreatedOn = DateTime.UtcNow;
+            //    rRecord.IsRestricted = true;
+            //    de.R.Add(rRecord);
+            //    pr.RLinkResultId = rRecord.pid;
+            //}
+
+            //if (pr.CLinkResultId == null)
+            //{
+            //    C cRecord = new C();
+            //    cRecord.ResultCount = cRecord.ResultCount + 1;
+            //    cRecord.UpdatedOn = DateTime.UtcNow;
+            //    cRecord.CreatedOn = DateTime.UtcNow;
+            //    cRecord.IsCriminal = true;
+            //    de.C.Add(cRecord);
+            //    pr.CLinkResultId = cRecord.pid;
+            //}
+
+            if (!Update)
+                de.ProcessingResults.Add(pr);
+
+            // Check to see if the LinkUrl is GoneButNotForgotten
+            var gbnf = de.GoneButNotForgottenLinks.Where(gbn => gbn.SrcUrlHash == eu.SrcUrlHash).FirstOrDefault();
+            if (gbnf != null)
+                eu.Processed = true;
+            else
+            {
+                // this record had already been created so we may have to mark EU as processed - check now
+                if (pr.ASrcResultId != null || pr.RSrcResultId != null || pr.CSrcResultId != null)
+                    eu.Processed = true;
+            }
+
+            eu.UpdatedOn = DateTime.UtcNow;
+            de.SaveChanges();
+
+            //TODO: Implement this
+            // if eu.Processed == true then raise Event to tell frmMain to go to the next unprocessed Report
+
         }
 
         // This is a 404 or some other error - do a check for a month to see if it returns
@@ -283,6 +774,31 @@ namespace Imogen.Controllers.Database
             eu = null;
             usr = null;
 
+        }
+
+        internal void SetSrcToGoneButNotForgotten(string url)
+        {
+            Damocles2Entities de = new Damocles2Entities();
+
+            string pHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
+            User usr = de.Users.Where(u => u.Username == Properties.Settings.Default.UserUsername && u.UserPassword == pHash).FirstOrDefault();
+
+            EUReported eu = de.EUReporteds.Where(l => l.SrcUrl == url).FirstOrDefault();
+            eu.UpdatedOn = DateTime.UtcNow;
+
+            GoneButNotForgottenLink gb = new GoneButNotForgottenLink();
+            gb.CreatedOn = DateTime.UtcNow;
+            gb.Id = eu.id;
+            gb.LastCheckedOn = DateTime.UtcNow;
+            gb.SrcUrlHash = eu.SrcUrlHash;
+            gb.ReportedBy = usr.Id;
+            de.GoneButNotForgottenLinks.Add(gb);
+            de.SaveChanges();
+
+            de.Dispose();
+            gb = null;
+            eu = null;
+            usr = null;
         }
 
         #region Statistics
