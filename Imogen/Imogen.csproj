@@ -196,16 +196,7 @@
     <Compile Include="Model\GoneButNotForgottenLink.cs">
       <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\JurisdictionNote.cs">
-      <DependentUpon>Damocles2Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Jurisidction.cs">
-      <DependentUpon>Damocles2Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Processed.cs">
-      <DependentUpon>Damocles2Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ProcessedByUser.cs">
       <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ProcessingResult.cs">
@@ -217,31 +208,13 @@
     <Compile Include="Model\Rank.cs">
       <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\RankNote.cs">
-      <DependentUpon>Damocles2Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Status.cs">
-      <DependentUpon>Damocles2Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\StatusNote.cs">
-      <DependentUpon>Damocles2Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\User.cs">
       <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\UserJurisdiction.cs">
       <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\UserNote.cs">
-      <DependentUpon>Damocles2Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\UserRank.cs">
-      <DependentUpon>Damocles2Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\UserSex.cs">
-      <DependentUpon>Damocles2Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\UserSexNote.cs">
       <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\UsersSession.cs">
