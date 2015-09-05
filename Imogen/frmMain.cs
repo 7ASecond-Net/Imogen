@@ -430,5 +430,10 @@ namespace Imogen
             lblPendingReports.Text = DBHelper.GetPendingReportCount();
             lblUsersOnline.Text = DBHelper.GetUsersOnlineCount();
         }
+
+        private void videoLinkTesterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
