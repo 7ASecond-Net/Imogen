@@ -17,8 +17,8 @@ namespace Imogen.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Jurisidction()
         {
-            this.UserJurisdictions = new HashSet<UserJurisdiction>();
             this.ProcessingResults = new HashSet<ProcessingResult>();
+            this.UserJurisdictions = new HashSet<UserJurisdiction>();
         }
     
         public int Id { get; set; }
@@ -29,8 +29,8 @@ namespace Imogen.Model
         public int CreatedBy { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserJurisdiction> UserJurisdictions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProcessingResult> ProcessingResults { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserJurisdiction> UserJurisdictions { get; set; }
     }
 }

@@ -14,7 +14,15 @@ namespace Imogen.Model
     
     public partial class ProcessingResult
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ProcessingResult()
+        {
+            this.EUReporteds = new HashSet<EUReported>();
+        }
+    
         public int pid { get; set; }
+        public int id { get; set; }
+        public Nullable<int> UserId { get; set; }
         public Nullable<int> ASrcResultId { get; set; }
         public Nullable<int> CSrcResultId { get; set; }
         public Nullable<int> RSrcResultId { get; set; }
@@ -24,15 +32,16 @@ namespace Imogen.Model
         public int JurisdictionId { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime UpdatedOn { get; set; }
-        public int id { get; set; }
     
         public virtual A A { get; set; }
         public virtual A A1 { get; set; }
         public virtual C C { get; set; }
         public virtual C C1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EUReported> EUReporteds { get; set; }
         public virtual Jurisidction Jurisidction { get; set; }
         public virtual R R { get; set; }
         public virtual R R1 { get; set; }
-        public virtual EUReported EUReported { get; set; }
+        public virtual User User { get; set; }
     }
 }

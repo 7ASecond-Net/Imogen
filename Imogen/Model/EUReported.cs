@@ -18,7 +18,6 @@ namespace Imogen.Model
         public EUReported()
         {
             this.GoneButNotForgottenLinks = new HashSet<GoneButNotForgottenLink>();
-            this.ProcessingResults = new HashSet<ProcessingResult>();
         }
     
         public int id { get; set; }
@@ -33,10 +32,9 @@ namespace Imogen.Model
         public string LinkUrlHash { get; set; }
         public Nullable<int> UserId { get; set; }
     
+        public virtual ProcessingResult ProcessingResult { get; set; }
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoneButNotForgottenLink> GoneButNotForgottenLinks { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProcessingResult> ProcessingResults { get; set; }
     }
 }

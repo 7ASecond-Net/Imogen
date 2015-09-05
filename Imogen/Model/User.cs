@@ -18,10 +18,11 @@ namespace Imogen.Model
         public User()
         {
             this.EUReporteds = new HashSet<EUReported>();
-            this.UserRanks = new HashSet<UserRank>();
-            this.UserJurisdictions = new HashSet<UserJurisdiction>();
-            this.UsersSessions = new HashSet<UsersSession>();
             this.GoneButNotForgottenLinks = new HashSet<GoneButNotForgottenLink>();
+            this.ProcessingResults = new HashSet<ProcessingResult>();
+            this.UserJurisdictions = new HashSet<UserJurisdiction>();
+            this.UserRanks = new HashSet<UserRank>();
+            this.UsersSessions = new HashSet<UsersSession>();
         }
     
         public int Id { get; set; }
@@ -41,12 +42,14 @@ namespace Imogen.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EUReported> EUReporteds { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserRank> UserRanks { get; set; }
+        public virtual ICollection<GoneButNotForgottenLink> GoneButNotForgottenLinks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProcessingResult> ProcessingResults { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserJurisdiction> UserJurisdictions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsersSession> UsersSessions { get; set; }
+        public virtual ICollection<UserRank> UserRanks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GoneButNotForgottenLink> GoneButNotForgottenLinks { get; set; }
+        public virtual ICollection<UsersSession> UsersSessions { get; set; }
     }
 }

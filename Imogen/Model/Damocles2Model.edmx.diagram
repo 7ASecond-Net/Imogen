@@ -4,36 +4,36 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="752f9754216f43acabf030a17d9d3491" Name="Diagram1" ZoomLevel="71">
-        <EntityTypeShape EntityType="Damocles2Model.EUReported" Width="1.5" PointX="26.375" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.Jurisidction" Width="1.5" PointX="24.125" PointY="12" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.Rank" Width="1.5" PointX="29.5" PointY="19.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.UserRank" Width="1.5" PointX="26.75" PointY="19.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.User" Width="1.5" PointX="26.875" PointY="14.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.UsersSession" Width="1.5" PointX="24.125" PointY="17.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.UserJurisdiction" Width="1.5" PointX="24.125" PointY="15" IsExpanded="true" />
+      <Diagram DiagramId="2645ecf076874e328005134ea2ae056e" Name="Diagram1">
+        <EntityTypeShape EntityType="Damocles2Model.A" Width="1.5" PointX="3.125" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.C" Width="1.5" PointX="3.125" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.EUReported" Width="1.5" PointX="9.375" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.GoneButNotForgottenLink" Width="1.5" PointX="12.125" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.Jurisidction" Width="1.5" PointX="6.875" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.ProcessingResult" Width="1.5" PointX="5.875" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.R" Width="1.5" PointX="5.75" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.Rank" Width="1.5" PointX="13.875" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.UserJurisdiction" Width="1.5" PointX="9.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.UserRank" Width="1.5" PointX="12.125" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.User" Width="1.5" PointX="9.375" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.UsersSession" Width="1.5" PointX="13.875" PointY="11.125" IsExpanded="true" />
+        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_A" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_A1" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_C" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_C1" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_EUReported_ProcessingResults" ManuallyRouted="false" />
         <AssociationConnector Association="Damocles2Model.FK_EUReported_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_GoneButNotForgottenLinks_EUReported" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_GoneButNotForgottenLinks_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_Jurisidctions" ManuallyRouted="false" />
         <AssociationConnector Association="Damocles2Model.FK_UserJurisdictions_Jurisidctions1" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_R" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_R1" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_Users" ManuallyRouted="false" />
         <AssociationConnector Association="Damocles2Model.FK_UserRanks_Rank" ManuallyRouted="false" />
-        <AssociationConnector Association="Damocles2Model.FK_UserRanks_Users" ManuallyRouted="false" />
         <AssociationConnector Association="Damocles2Model.FK_UserJurisdictions_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="Damocles2Model.FK_UserRanks_Users" ManuallyRouted="false" />
         <AssociationConnector Association="Damocles2Model.FK_UsersSessions_Users" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="Damocles2Model.GoneButNotForgottenLink" Width="1.5" PointX="29.375" PointY="15" />
-        <AssociationConnector Association="Damocles2Model.FK_GoneButNotForgottenLinks_EUReported" />
-        <AssociationConnector Association="Damocles2Model.FK_GoneButNotForgottenLinks_Users" />
-        <EntityTypeShape EntityType="Damocles2Model.A" Width="1.5" PointX="21" PointY="14.25" />
-        <EntityTypeShape EntityType="Damocles2Model.C" Width="1.5" PointX="21.125" PointY="5.5" />
-        <EntityTypeShape EntityType="Damocles2Model.ProcessingResult" Width="1.5" PointX="21.125" PointY="8.625" />
-        <EntityTypeShape EntityType="Damocles2Model.R" Width="1.5" PointX="18" PointY="10" />
-        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_A" />
-        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_A1" />
-        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_C" />
-        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_C1" />
-        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_Jurisidctions" ManuallyRouted="false" >
-        </AssociationConnector>
-        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_R" />
-        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_R1" />
-        <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_EUReported" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

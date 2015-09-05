@@ -70,6 +70,7 @@
           </Key>
           <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
           <Property Name="ASrcResultId" Type="int" />
           <Property Name="CSrcResultId" Type="int" />
           <Property Name="RSrcResultId" Type="int" />
@@ -149,6 +150,18 @@
           <Property Name="loggedOffAt" Type="datetime" />
           <Property Name="SessionSeconds" Type="float" Nullable="false" />
         </EntityType>
+        <Association Name="FK_EUReported_ProcessingResults">
+          <End Role="ProcessingResults" Type="Self.ProcessingResults" Multiplicity="0..1" />
+          <End Role="EUReported" Type="Self.EUReported" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcessingResults">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="EUReported">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EUReported_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="EUReported" Type="Self.EUReported" Multiplicity="*" />
@@ -233,18 +246,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ProcessingResults_EUReported">
-          <End Role="EUReported" Type="Self.EUReported" Multiplicity="1" />
-          <End Role="ProcessingResults" Type="Self.ProcessingResults" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EUReported">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="ProcessingResults">
-              <PropertyRef Name="id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ProcessingResults_Jurisidctions">
           <End Role="Jurisidctions" Type="Self.Jurisidctions" Multiplicity="1" />
           <End Role="ProcessingResults" Type="Self.ProcessingResults" Multiplicity="*" />
@@ -278,6 +279,18 @@
             </Principal>
             <Dependent Role="ProcessingResults">
               <PropertyRef Name="RLinkResultId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcessingResults_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="ProcessingResults" Type="Self.ProcessingResults" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProcessingResults">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -354,6 +367,10 @@
           <EntitySet Name="UserRanks" EntityType="Self.UserRanks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersSessions" EntityType="Self.UsersSessions" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EUReported_ProcessingResults" Association="Self.FK_EUReported_ProcessingResults">
+            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
+            <End Role="EUReported" EntitySet="EUReported" />
+          </AssociationSet>
           <AssociationSet Name="FK_EUReported_Users" Association="Self.FK_EUReported_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="EUReported" EntitySet="EUReported" />
@@ -382,10 +399,6 @@
             <End Role="C" EntitySet="C" />
             <End Role="ProcessingResults" EntitySet="ProcessingResults" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProcessingResults_EUReported" Association="Self.FK_ProcessingResults_EUReported">
-            <End Role="EUReported" EntitySet="EUReported" />
-            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
-          </AssociationSet>
           <AssociationSet Name="FK_ProcessingResults_Jurisidctions" Association="Self.FK_ProcessingResults_Jurisidctions">
             <End Role="Jurisidctions" EntitySet="Jurisidctions" />
             <End Role="ProcessingResults" EntitySet="ProcessingResults" />
@@ -396,6 +409,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_ProcessingResults_R1" Association="Self.FK_ProcessingResults_R1">
             <End Role="R" EntitySet="R" />
+            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcessingResults_Users" Association="Self.FK_ProcessingResults_Users">
+            <End Role="Users" EntitySet="Users" />
             <End Role="ProcessingResults" EntitySet="ProcessingResults" />
           </AssociationSet>
           <AssociationSet Name="FK_UserJurisdictions_Jurisidctions1" Association="Self.FK_UserJurisdictions_Jurisidctions1">
@@ -423,6 +440,30 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Damocles2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="A">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ResultCount" Type="Int32" Nullable="false" />
+          <Property Name="IsAllowed" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ProcessingResults" Relationship="Self.FK_ProcessingResults_A" FromRole="A" ToRole="ProcessingResults" />
+          <NavigationProperty Name="ProcessingResults1" Relationship="Self.FK_ProcessingResults_A1" FromRole="A" ToRole="ProcessingResults" />
+        </EntityType>
+        <EntityType Name="C">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ResultCount" Type="Int32" Nullable="false" />
+          <Property Name="IsCriminal" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ProcessingResults" Relationship="Self.FK_ProcessingResults_C" FromRole="C" ToRole="ProcessingResults" />
+          <NavigationProperty Name="ProcessingResults1" Relationship="Self.FK_ProcessingResults_C1" FromRole="C" ToRole="ProcessingResults" />
+        </EntityType>
         <EntityType Name="EUReported">
           <Key>
             <PropertyRef Name="id" />
@@ -438,9 +479,23 @@
           <Property Name="LinkUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="LinkUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
           <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="ProcessingResult" Relationship="Self.FK_EUReported_ProcessingResults" FromRole="EUReported" ToRole="ProcessingResults" />
           <NavigationProperty Name="User" Relationship="Self.FK_EUReported_Users" FromRole="EUReported" ToRole="Users" />
-          <NavigationProperty Name="GoneButNotForgottenLinks" Relationship="Damocles2Model.FK_GoneButNotForgottenLinks_EUReported" FromRole="EUReported" ToRole="GoneButNotForgottenLink" />
-          <NavigationProperty Name="ProcessingResults" Relationship="Damocles2Model.FK_ProcessingResults_EUReported" FromRole="EUReported" ToRole="ProcessingResult" />
+          <NavigationProperty Name="GoneButNotForgottenLinks" Relationship="Self.FK_GoneButNotForgottenLinks_EUReported" FromRole="EUReported" ToRole="GoneButNotForgottenLinks" />
+        </EntityType>
+        <EntityType Name="GoneButNotForgottenLink">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastCheckedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ReportedBy" Type="Int32" Nullable="false" />
+          <Property Name="SrcUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="LinkUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="EUReported" Relationship="Self.FK_GoneButNotForgottenLinks_EUReported" FromRole="GoneButNotForgottenLinks" ToRole="EUReported" />
+          <NavigationProperty Name="User" Relationship="Self.FK_GoneButNotForgottenLinks_Users" FromRole="GoneButNotForgottenLinks" ToRole="Users" />
         </EntityType>
         <EntityType Name="Jurisidction">
           <Key>
@@ -452,8 +507,46 @@
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProcessingResults" Relationship="Self.FK_ProcessingResults_Jurisidctions" FromRole="Jurisidctions" ToRole="ProcessingResults" />
           <NavigationProperty Name="UserJurisdictions" Relationship="Self.FK_UserJurisdictions_Jurisidctions1" FromRole="Jurisidctions" ToRole="UserJurisdictions" />
-          <NavigationProperty Name="ProcessingResults" Relationship="Damocles2Model.FK_ProcessingResults_Jurisidctions" FromRole="Jurisidction" ToRole="ProcessingResult" />
+        </EntityType>
+        <EntityType Name="ProcessingResult">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="ASrcResultId" Type="Int32" />
+          <Property Name="CSrcResultId" Type="Int32" />
+          <Property Name="RSrcResultId" Type="Int32" />
+          <Property Name="ALinkResultId" Type="Int32" />
+          <Property Name="RLinkResultId" Type="Int32" />
+          <Property Name="CLinkResultId" Type="Int32" />
+          <Property Name="JurisdictionId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="A" Relationship="Self.FK_ProcessingResults_A" FromRole="ProcessingResults" ToRole="A" />
+          <NavigationProperty Name="A1" Relationship="Self.FK_ProcessingResults_A1" FromRole="ProcessingResults" ToRole="A" />
+          <NavigationProperty Name="C" Relationship="Self.FK_ProcessingResults_C" FromRole="ProcessingResults" ToRole="C" />
+          <NavigationProperty Name="C1" Relationship="Self.FK_ProcessingResults_C1" FromRole="ProcessingResults" ToRole="C" />
+          <NavigationProperty Name="EUReporteds" Relationship="Self.FK_EUReported_ProcessingResults" FromRole="ProcessingResults" ToRole="EUReported" />
+          <NavigationProperty Name="Jurisidction" Relationship="Self.FK_ProcessingResults_Jurisidctions" FromRole="ProcessingResults" ToRole="Jurisidctions" />
+          <NavigationProperty Name="R" Relationship="Self.FK_ProcessingResults_R" FromRole="ProcessingResults" ToRole="R" />
+          <NavigationProperty Name="R1" Relationship="Self.FK_ProcessingResults_R1" FromRole="ProcessingResults" ToRole="R" />
+          <NavigationProperty Name="User" Relationship="Self.FK_ProcessingResults_Users" FromRole="ProcessingResults" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="R">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ResultCount" Type="Int32" Nullable="false" />
+          <Property Name="IsRestricted" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ProcessingResults" Relationship="Self.FK_ProcessingResults_R" FromRole="R" ToRole="ProcessingResults" />
+          <NavigationProperty Name="ProcessingResults1" Relationship="Self.FK_ProcessingResults_R1" FromRole="R" ToRole="ProcessingResults" />
         </EntityType>
         <EntityType Name="Rank">
           <Key>
@@ -466,6 +559,18 @@
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
           <NavigationProperty Name="UserRanks" Relationship="Self.FK_UserRanks_Rank" FromRole="Rank" ToRole="UserRanks" />
+        </EntityType>
+        <EntityType Name="UserJurisdiction">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="JurisdictionID" Type="Int32" Nullable="false" />
+          <Property Name="JurisdictionNotesId" Type="Int32" />
+          <Property Name="AwardedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Jurisidction" Relationship="Self.FK_UserJurisdictions_Jurisidctions1" FromRole="UserJurisdictions" ToRole="Jurisidctions" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserJurisdictions_Users" FromRole="UserJurisdictions" ToRole="Users" />
         </EntityType>
         <EntityType Name="UserRank">
           <Key>
@@ -497,10 +602,11 @@
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsOnline" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="EUReporteds" Relationship="Self.FK_EUReported_Users" FromRole="Users" ToRole="EUReported" />
-          <NavigationProperty Name="UserRanks" Relationship="Self.FK_UserRanks_Users" FromRole="Users" ToRole="UserRanks" />
+          <NavigationProperty Name="GoneButNotForgottenLinks" Relationship="Self.FK_GoneButNotForgottenLinks_Users" FromRole="Users" ToRole="GoneButNotForgottenLinks" />
+          <NavigationProperty Name="ProcessingResults" Relationship="Self.FK_ProcessingResults_Users" FromRole="Users" ToRole="ProcessingResults" />
           <NavigationProperty Name="UserJurisdictions" Relationship="Self.FK_UserJurisdictions_Users" FromRole="Users" ToRole="UserJurisdictions" />
+          <NavigationProperty Name="UserRanks" Relationship="Self.FK_UserRanks_Users" FromRole="Users" ToRole="UserRanks" />
           <NavigationProperty Name="UsersSessions" Relationship="Self.FK_UsersSessions_Users" FromRole="Users" ToRole="UsersSessions" />
-          <NavigationProperty Name="GoneButNotForgottenLinks" Relationship="Damocles2Model.FK_GoneButNotForgottenLinks_Users" FromRole="User" ToRole="GoneButNotForgottenLink" />
         </EntityType>
         <EntityType Name="UsersSession">
           <Key>
@@ -513,18 +619,66 @@
           <Property Name="SessionSeconds" Type="Double" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_UsersSessions_Users" FromRole="UsersSessions" ToRole="Users" />
         </EntityType>
-        <EntityType Name="UserJurisdiction">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="JurisdictionID" Type="Int32" Nullable="false" />
-          <Property Name="JurisdictionNotesId" Type="Int32" />
-          <Property Name="AwardedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Jurisidction" Relationship="Self.FK_UserJurisdictions_Jurisidctions1" FromRole="UserJurisdictions" ToRole="Jurisidctions" />
-          <NavigationProperty Name="User" Relationship="Self.FK_UserJurisdictions_Users" FromRole="UserJurisdictions" ToRole="Users" />
-        </EntityType>
+        <Association Name="FK_ProcessingResults_A">
+          <End Role="A" Type="Self.A" Multiplicity="0..1" />
+          <End Role="ProcessingResults" Type="Self.ProcessingResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="ProcessingResults">
+              <PropertyRef Name="ALinkResultId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcessingResults_A1">
+          <End Role="A" Type="Self.A" Multiplicity="0..1" />
+          <End Role="ProcessingResults" Type="Self.ProcessingResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="ProcessingResults">
+              <PropertyRef Name="ASrcResultId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcessingResults_C">
+          <End Role="C" Type="Self.C" Multiplicity="0..1" />
+          <End Role="ProcessingResults" Type="Self.ProcessingResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="ProcessingResults">
+              <PropertyRef Name="CSrcResultId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcessingResults_C1">
+          <End Role="C" Type="Self.C" Multiplicity="0..1" />
+          <End Role="ProcessingResults" Type="Self.ProcessingResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="ProcessingResults">
+              <PropertyRef Name="CLinkResultId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EUReported_ProcessingResults">
+          <End Role="ProcessingResults" Type="Self.ProcessingResult" Multiplicity="0..1" />
+          <End Role="EUReported" Type="Self.EUReported" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcessingResults">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="EUReported">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EUReported_Users">
           <End Role="Users" Type="Self.User" Multiplicity="0..1" />
           <End Role="EUReported" Type="Self.EUReported" Multiplicity="*" />
@@ -534,6 +688,42 @@
             </Principal>
             <Dependent Role="EUReported">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoneButNotForgottenLinks_EUReported">
+          <End Role="EUReported" Type="Self.EUReported" Multiplicity="1" />
+          <End Role="GoneButNotForgottenLinks" Type="Self.GoneButNotForgottenLink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EUReported">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="GoneButNotForgottenLinks">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoneButNotForgottenLinks_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="GoneButNotForgottenLinks" Type="Self.GoneButNotForgottenLink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GoneButNotForgottenLinks">
+              <PropertyRef Name="ReportedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcessingResults_Jurisidctions">
+          <End Role="Jurisidctions" Type="Self.Jurisidction" Multiplicity="1" />
+          <End Role="ProcessingResults" Type="Self.ProcessingResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jurisidctions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProcessingResults">
+              <PropertyRef Name="JurisdictionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -549,6 +739,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProcessingResults_R">
+          <End Role="R" Type="Self.R" Multiplicity="0..1" />
+          <End Role="ProcessingResults" Type="Self.ProcessingResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="R">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="ProcessingResults">
+              <PropertyRef Name="RSrcResultId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcessingResults_R1">
+          <End Role="R" Type="Self.R" Multiplicity="0..1" />
+          <End Role="ProcessingResults" Type="Self.ProcessingResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="R">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="ProcessingResults">
+              <PropertyRef Name="RLinkResultId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcessingResults_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="ProcessingResults" Type="Self.ProcessingResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProcessingResults">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserRanks_Rank">
           <End Role="Rank" Type="Self.Rank" Multiplicity="1" />
           <End Role="UserRanks" Type="Self.UserRank" Multiplicity="*" />
@@ -561,18 +787,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserRanks_Users">
-          <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="UserRanks" Type="Self.UserRank" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserRanks">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UserJurisdictions_Users">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="UserJurisdictions" Type="Self.UserJurisdiction" Multiplicity="*" />
@@ -581,6 +795,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="UserJurisdictions">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRanks_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="UserRanks" Type="Self.UserRank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRanks">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -598,283 +824,115 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Damocles2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="A" EntityType="Self.A" />
+          <EntitySet Name="C" EntityType="Self.C" />
           <EntitySet Name="EUReporteds" EntityType="Self.EUReported" />
+          <EntitySet Name="GoneButNotForgottenLinks" EntityType="Self.GoneButNotForgottenLink" />
           <EntitySet Name="Jurisidctions" EntityType="Self.Jurisidction" />
+          <EntitySet Name="ProcessingResults" EntityType="Self.ProcessingResult" />
+          <EntitySet Name="R" EntityType="Self.R" />
           <EntitySet Name="Ranks" EntityType="Self.Rank" />
+          <EntitySet Name="UserJurisdictions" EntityType="Self.UserJurisdiction" />
           <EntitySet Name="UserRanks" EntityType="Self.UserRank" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UsersSessions" EntityType="Self.UsersSession" />
-          <EntitySet Name="UserJurisdictions" EntityType="Self.UserJurisdiction" />
+          <AssociationSet Name="FK_ProcessingResults_A" Association="Self.FK_ProcessingResults_A">
+            <End Role="A" EntitySet="A" />
+            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcessingResults_A1" Association="Self.FK_ProcessingResults_A1">
+            <End Role="A" EntitySet="A" />
+            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcessingResults_C" Association="Self.FK_ProcessingResults_C">
+            <End Role="C" EntitySet="C" />
+            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcessingResults_C1" Association="Self.FK_ProcessingResults_C1">
+            <End Role="C" EntitySet="C" />
+            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EUReported_ProcessingResults" Association="Self.FK_EUReported_ProcessingResults">
+            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
+            <End Role="EUReported" EntitySet="EUReporteds" />
+          </AssociationSet>
           <AssociationSet Name="FK_EUReported_Users" Association="Self.FK_EUReported_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="EUReported" EntitySet="EUReporteds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoneButNotForgottenLinks_EUReported" Association="Self.FK_GoneButNotForgottenLinks_EUReported">
+            <End Role="EUReported" EntitySet="EUReporteds" />
+            <End Role="GoneButNotForgottenLinks" EntitySet="GoneButNotForgottenLinks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoneButNotForgottenLinks_Users" Association="Self.FK_GoneButNotForgottenLinks_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="GoneButNotForgottenLinks" EntitySet="GoneButNotForgottenLinks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcessingResults_Jurisidctions" Association="Self.FK_ProcessingResults_Jurisidctions">
+            <End Role="Jurisidctions" EntitySet="Jurisidctions" />
+            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
           </AssociationSet>
           <AssociationSet Name="FK_UserJurisdictions_Jurisidctions1" Association="Self.FK_UserJurisdictions_Jurisidctions1">
             <End Role="Jurisidctions" EntitySet="Jurisidctions" />
             <End Role="UserJurisdictions" EntitySet="UserJurisdictions" />
           </AssociationSet>
+          <AssociationSet Name="FK_ProcessingResults_R" Association="Self.FK_ProcessingResults_R">
+            <End Role="R" EntitySet="R" />
+            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcessingResults_R1" Association="Self.FK_ProcessingResults_R1">
+            <End Role="R" EntitySet="R" />
+            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcessingResults_Users" Association="Self.FK_ProcessingResults_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserRanks_Rank" Association="Self.FK_UserRanks_Rank">
             <End Role="Rank" EntitySet="Ranks" />
-            <End Role="UserRanks" EntitySet="UserRanks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserRanks_Users" Association="Self.FK_UserRanks_Users">
-            <End Role="Users" EntitySet="Users" />
             <End Role="UserRanks" EntitySet="UserRanks" />
           </AssociationSet>
           <AssociationSet Name="FK_UserJurisdictions_Users" Association="Self.FK_UserJurisdictions_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserJurisdictions" EntitySet="UserJurisdictions" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserRanks_Users" Association="Self.FK_UserRanks_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRanks" EntitySet="UserRanks" />
+          </AssociationSet>
           <AssociationSet Name="FK_UsersSessions_Users" Association="Self.FK_UsersSessions_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="UsersSessions" EntitySet="UsersSessions" />
           </AssociationSet>
-          <EntitySet Name="GoneButNotForgottenLinks" EntityType="Damocles2Model.GoneButNotForgottenLink" />
-          <AssociationSet Name="FK_GoneButNotForgottenLinks_EUReported" Association="Damocles2Model.FK_GoneButNotForgottenLinks_EUReported">
-            <End Role="EUReported" EntitySet="EUReporteds" />
-            <End Role="GoneButNotForgottenLink" EntitySet="GoneButNotForgottenLinks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GoneButNotForgottenLinks_Users" Association="Damocles2Model.FK_GoneButNotForgottenLinks_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="GoneButNotForgottenLink" EntitySet="GoneButNotForgottenLinks" />
-          </AssociationSet>
-          <EntitySet Name="A" EntityType="Damocles2Model.A" />
-          <EntitySet Name="C" EntityType="Damocles2Model.C" />
-          <EntitySet Name="ProcessingResults" EntityType="Damocles2Model.ProcessingResult" />
-          <EntitySet Name="R" EntityType="Damocles2Model.R" />
-          <AssociationSet Name="FK_ProcessingResults_A" Association="Damocles2Model.FK_ProcessingResults_A">
-            <End Role="A" EntitySet="A" />
-            <End Role="ProcessingResult" EntitySet="ProcessingResults" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProcessingResults_A1" Association="Damocles2Model.FK_ProcessingResults_A1">
-            <End Role="A" EntitySet="A" />
-            <End Role="ProcessingResult" EntitySet="ProcessingResults" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProcessingResults_C" Association="Damocles2Model.FK_ProcessingResults_C">
-            <End Role="C" EntitySet="C" />
-            <End Role="ProcessingResult" EntitySet="ProcessingResults" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProcessingResults_C1" Association="Damocles2Model.FK_ProcessingResults_C1">
-            <End Role="C" EntitySet="C" />
-            <End Role="ProcessingResult" EntitySet="ProcessingResults" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProcessingResults_Jurisidctions" Association="Damocles2Model.FK_ProcessingResults_Jurisidctions">
-            <End Role="Jurisidction" EntitySet="Jurisidctions" />
-            <End Role="ProcessingResult" EntitySet="ProcessingResults" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProcessingResults_R" Association="Damocles2Model.FK_ProcessingResults_R">
-            <End Role="R" EntitySet="R" />
-            <End Role="ProcessingResult" EntitySet="ProcessingResults" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProcessingResults_R1" Association="Damocles2Model.FK_ProcessingResults_R1">
-            <End Role="R" EntitySet="R" />
-            <End Role="ProcessingResult" EntitySet="ProcessingResults" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProcessingResults_EUReported" Association="Damocles2Model.FK_ProcessingResults_EUReported">
-            <End Role="EUReported" EntitySet="EUReporteds" />
-            <End Role="ProcessingResult" EntitySet="ProcessingResults" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="GoneButNotForgottenLink">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LastCheckedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ReportedBy" Type="Int32" Nullable="false" />
-          <Property Name="SrcUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="LinkUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="EUReported" Relationship="Damocles2Model.FK_GoneButNotForgottenLinks_EUReported" FromRole="GoneButNotForgottenLink" ToRole="EUReported" />
-          <NavigationProperty Name="User" Relationship="Damocles2Model.FK_GoneButNotForgottenLinks_Users" FromRole="GoneButNotForgottenLink" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_GoneButNotForgottenLinks_EUReported">
-          <End Type="Damocles2Model.EUReported" Role="EUReported" Multiplicity="1" />
-          <End Type="Damocles2Model.GoneButNotForgottenLink" Role="GoneButNotForgottenLink" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EUReported">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="GoneButNotForgottenLink">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GoneButNotForgottenLinks_Users">
-          <End Type="Damocles2Model.User" Role="User" Multiplicity="1" />
-          <End Type="Damocles2Model.GoneButNotForgottenLink" Role="GoneButNotForgottenLink" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="GoneButNotForgottenLink">
-              <PropertyRef Name="ReportedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="A">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ResultCount" Type="Int32" Nullable="false" />
-          <Property Name="IsAllowed" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="ProcessingResults" Relationship="Damocles2Model.FK_ProcessingResults_A" FromRole="A" ToRole="ProcessingResult" />
-          <NavigationProperty Name="ProcessingResults1" Relationship="Damocles2Model.FK_ProcessingResults_A1" FromRole="A" ToRole="ProcessingResult" />
-        </EntityType>
-        <EntityType Name="C">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ResultCount" Type="Int32" Nullable="false" />
-          <Property Name="IsCriminal" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="ProcessingResults" Relationship="Damocles2Model.FK_ProcessingResults_C" FromRole="C" ToRole="ProcessingResult" />
-          <NavigationProperty Name="ProcessingResults1" Relationship="Damocles2Model.FK_ProcessingResults_C1" FromRole="C" ToRole="ProcessingResult" />
-        </EntityType>
-        <EntityType Name="ProcessingResult">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ASrcResultId" Type="Int32" />
-          <Property Name="CSrcResultId" Type="Int32" />
-          <Property Name="RSrcResultId" Type="Int32" />
-          <Property Name="ALinkResultId" Type="Int32" />
-          <Property Name="RLinkResultId" Type="Int32" />
-          <Property Name="CLinkResultId" Type="Int32" />
-          <Property Name="JurisdictionId" Type="Int32" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="A" Relationship="Damocles2Model.FK_ProcessingResults_A" FromRole="ProcessingResult" ToRole="A" />
-          <NavigationProperty Name="A1" Relationship="Damocles2Model.FK_ProcessingResults_A1" FromRole="ProcessingResult" ToRole="A" />
-          <NavigationProperty Name="C" Relationship="Damocles2Model.FK_ProcessingResults_C" FromRole="ProcessingResult" ToRole="C" />
-          <NavigationProperty Name="C1" Relationship="Damocles2Model.FK_ProcessingResults_C1" FromRole="ProcessingResult" ToRole="C" />
-          <NavigationProperty Name="Jurisidction" Relationship="Damocles2Model.FK_ProcessingResults_Jurisidctions" FromRole="ProcessingResult" ToRole="Jurisidction" />
-          <NavigationProperty Name="R" Relationship="Damocles2Model.FK_ProcessingResults_R" FromRole="ProcessingResult" ToRole="R" />
-          <NavigationProperty Name="R1" Relationship="Damocles2Model.FK_ProcessingResults_R1" FromRole="ProcessingResult" ToRole="R" />
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="EUReported" Relationship="Damocles2Model.FK_ProcessingResults_EUReported" FromRole="ProcessingResult" ToRole="EUReported" />
-        </EntityType>
-        <EntityType Name="R">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ResultCount" Type="Int32" Nullable="false" />
-          <Property Name="IsRestricted" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="ProcessingResults" Relationship="Damocles2Model.FK_ProcessingResults_R" FromRole="R" ToRole="ProcessingResult" />
-          <NavigationProperty Name="ProcessingResults1" Relationship="Damocles2Model.FK_ProcessingResults_R1" FromRole="R" ToRole="ProcessingResult" />
-        </EntityType>
-        <Association Name="FK_ProcessingResults_A">
-          <End Type="Damocles2Model.A" Role="A" Multiplicity="0..1" />
-          <End Type="Damocles2Model.ProcessingResult" Role="ProcessingResult" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="A">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="ProcessingResult">
-              <PropertyRef Name="ALinkResultId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProcessingResults_A1">
-          <End Type="Damocles2Model.A" Role="A" Multiplicity="0..1" />
-          <End Type="Damocles2Model.ProcessingResult" Role="ProcessingResult" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="A">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="ProcessingResult">
-              <PropertyRef Name="ASrcResultId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProcessingResults_C">
-          <End Type="Damocles2Model.C" Role="C" Multiplicity="0..1" />
-          <End Type="Damocles2Model.ProcessingResult" Role="ProcessingResult" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="C">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="ProcessingResult">
-              <PropertyRef Name="CSrcResultId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProcessingResults_C1">
-          <End Type="Damocles2Model.C" Role="C" Multiplicity="0..1" />
-          <End Type="Damocles2Model.ProcessingResult" Role="ProcessingResult" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="C">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="ProcessingResult">
-              <PropertyRef Name="CLinkResultId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProcessingResults_Jurisidctions">
-          <End Type="Damocles2Model.Jurisidction" Role="Jurisidction" Multiplicity="1" />
-          <End Type="Damocles2Model.ProcessingResult" Role="ProcessingResult" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Jurisidction">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProcessingResult">
-              <PropertyRef Name="JurisdictionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProcessingResults_R">
-          <End Type="Damocles2Model.R" Role="R" Multiplicity="0..1" />
-          <End Type="Damocles2Model.ProcessingResult" Role="ProcessingResult" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="R">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="ProcessingResult">
-              <PropertyRef Name="RSrcResultId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProcessingResults_R1">
-          <End Type="Damocles2Model.R" Role="R" Multiplicity="0..1" />
-          <End Type="Damocles2Model.ProcessingResult" Role="ProcessingResult" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="R">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="ProcessingResult">
-              <PropertyRef Name="RLinkResultId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProcessingResults_EUReported">
-          <End Type="Damocles2Model.EUReported" Role="EUReported" Multiplicity="1" />
-          <End Type="Damocles2Model.ProcessingResult" Role="ProcessingResult" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EUReported">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="ProcessingResult">
-              <PropertyRef Name="id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Damocles2ModelStoreContainer" CdmEntityContainer="Damocles2Entities">
+          <EntitySetMapping Name="A">
+            <EntityTypeMapping TypeName="Damocles2Model.A">
+              <MappingFragment StoreEntitySet="A">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="ResultCount" ColumnName="ResultCount" />
+                <ScalarProperty Name="IsAllowed" ColumnName="IsAllowed" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C">
+            <EntityTypeMapping TypeName="Damocles2Model.C">
+              <MappingFragment StoreEntitySet="C">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="ResultCount" ColumnName="ResultCount" />
+                <ScalarProperty Name="IsCriminal" ColumnName="IsCriminal" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="EUReporteds">
             <EntityTypeMapping TypeName="Damocles2Model.EUReported">
               <MappingFragment StoreEntitySet="EUReported">
@@ -892,6 +950,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="GoneButNotForgottenLinks">
+            <EntityTypeMapping TypeName="Damocles2Model.GoneButNotForgottenLink">
+              <MappingFragment StoreEntitySet="GoneButNotForgottenLinks">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="LastCheckedOn" ColumnName="LastCheckedOn" />
+                <ScalarProperty Name="ReportedBy" ColumnName="ReportedBy" />
+                <ScalarProperty Name="SrcUrlHash" ColumnName="SrcUrlHash" />
+                <ScalarProperty Name="LinkUrlHash" ColumnName="LinkUrlHash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Jurisidctions">
             <EntityTypeMapping TypeName="Damocles2Model.Jurisidction">
               <MappingFragment StoreEntitySet="Jurisidctions">
@@ -904,6 +975,35 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ProcessingResults">
+            <EntityTypeMapping TypeName="Damocles2Model.ProcessingResult">
+              <MappingFragment StoreEntitySet="ProcessingResults">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ASrcResultId" ColumnName="ASrcResultId" />
+                <ScalarProperty Name="CSrcResultId" ColumnName="CSrcResultId" />
+                <ScalarProperty Name="RSrcResultId" ColumnName="RSrcResultId" />
+                <ScalarProperty Name="ALinkResultId" ColumnName="ALinkResultId" />
+                <ScalarProperty Name="RLinkResultId" ColumnName="RLinkResultId" />
+                <ScalarProperty Name="CLinkResultId" ColumnName="CLinkResultId" />
+                <ScalarProperty Name="JurisdictionId" ColumnName="JurisdictionId" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="R">
+            <EntityTypeMapping TypeName="Damocles2Model.R">
+              <MappingFragment StoreEntitySet="R">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="ResultCount" ColumnName="ResultCount" />
+                <ScalarProperty Name="IsRestricted" ColumnName="IsRestricted" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Ranks">
             <EntityTypeMapping TypeName="Damocles2Model.Rank">
               <MappingFragment StoreEntitySet="Rank">
@@ -913,6 +1013,17 @@
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserJurisdictions">
+            <EntityTypeMapping TypeName="Damocles2Model.UserJurisdiction">
+              <MappingFragment StoreEntitySet="UserJurisdictions">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="JurisdictionID" ColumnName="JurisdictionID" />
+                <ScalarProperty Name="JurisdictionNotesId" ColumnName="JurisdictionNotesId" />
+                <ScalarProperty Name="AwardedOn" ColumnName="AwardedOn" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -954,80 +1065,6 @@
                 <ScalarProperty Name="LoggedOnAt" ColumnName="LoggedOnAt" />
                 <ScalarProperty Name="loggedOffAt" ColumnName="loggedOffAt" />
                 <ScalarProperty Name="SessionSeconds" ColumnName="SessionSeconds" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserJurisdictions">
-            <EntityTypeMapping TypeName="Damocles2Model.UserJurisdiction">
-              <MappingFragment StoreEntitySet="UserJurisdictions">
-                <ScalarProperty Name="pid" ColumnName="pid" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="JurisdictionID" ColumnName="JurisdictionID" />
-                <ScalarProperty Name="JurisdictionNotesId" ColumnName="JurisdictionNotesId" />
-                <ScalarProperty Name="AwardedOn" ColumnName="AwardedOn" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="GoneButNotForgottenLinks">
-            <EntityTypeMapping TypeName="Damocles2Model.GoneButNotForgottenLink">
-              <MappingFragment StoreEntitySet="GoneButNotForgottenLinks">
-                <ScalarProperty Name="LinkUrlHash" ColumnName="LinkUrlHash" />
-                <ScalarProperty Name="SrcUrlHash" ColumnName="SrcUrlHash" />
-                <ScalarProperty Name="ReportedBy" ColumnName="ReportedBy" />
-                <ScalarProperty Name="LastCheckedOn" ColumnName="LastCheckedOn" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="pid" ColumnName="pid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="A">
-            <EntityTypeMapping TypeName="Damocles2Model.A">
-              <MappingFragment StoreEntitySet="A">
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsAllowed" ColumnName="IsAllowed" />
-                <ScalarProperty Name="ResultCount" ColumnName="ResultCount" />
-                <ScalarProperty Name="pid" ColumnName="pid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="C">
-            <EntityTypeMapping TypeName="Damocles2Model.C">
-              <MappingFragment StoreEntitySet="C">
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsCriminal" ColumnName="IsCriminal" />
-                <ScalarProperty Name="ResultCount" ColumnName="ResultCount" />
-                <ScalarProperty Name="pid" ColumnName="pid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProcessingResults">
-            <EntityTypeMapping TypeName="Damocles2Model.ProcessingResult">
-              <MappingFragment StoreEntitySet="ProcessingResults">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="JurisdictionId" ColumnName="JurisdictionId" />
-                <ScalarProperty Name="CLinkResultId" ColumnName="CLinkResultId" />
-                <ScalarProperty Name="RLinkResultId" ColumnName="RLinkResultId" />
-                <ScalarProperty Name="ALinkResultId" ColumnName="ALinkResultId" />
-                <ScalarProperty Name="RSrcResultId" ColumnName="RSrcResultId" />
-                <ScalarProperty Name="CSrcResultId" ColumnName="CSrcResultId" />
-                <ScalarProperty Name="ASrcResultId" ColumnName="ASrcResultId" />
-                <ScalarProperty Name="pid" ColumnName="pid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="R">
-            <EntityTypeMapping TypeName="Damocles2Model.R">
-              <MappingFragment StoreEntitySet="R">
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsRestricted" ColumnName="IsRestricted" />
-                <ScalarProperty Name="ResultCount" ColumnName="ResultCount" />
-                <ScalarProperty Name="pid" ColumnName="pid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
