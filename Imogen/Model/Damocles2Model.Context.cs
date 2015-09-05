@@ -26,25 +26,16 @@ namespace Imogen.Model
         }
     
         public virtual DbSet<EUReported> EUReporteds { get; set; }
-        public virtual DbSet<JurisdictionNote> JurisdictionNotes { get; set; }
         public virtual DbSet<Jurisidction> Jurisidctions { get; set; }
         public virtual DbSet<Rank> Ranks { get; set; }
-        public virtual DbSet<RankNote> RankNotes { get; set; }
-        public virtual DbSet<Status> Status { get; set; }
-        public virtual DbSet<StatusNote> StatusNotes { get; set; }
-        public virtual DbSet<UserNote> UserNotes { get; set; }
         public virtual DbSet<UserRank> UserRanks { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UserSex> UserSexes { get; set; }
-        public virtual DbSet<UserSexNote> UserSexNotes { get; set; }
         public virtual DbSet<UsersSession> UsersSessions { get; set; }
         public virtual DbSet<UserJurisdiction> UserJurisdictions { get; set; }
         public virtual DbSet<GoneButNotForgottenLink> GoneButNotForgottenLinks { get; set; }
         public virtual DbSet<A> A { get; set; }
         public virtual DbSet<C> C { get; set; }
-        public virtual DbSet<Processed> Processeds { get; set; }
         public virtual DbSet<ProcessingResult> ProcessingResults { get; set; }
         public virtual DbSet<R> R { get; set; }
-        public virtual DbSet<ProcessedByUser> ProcessedByUsers { get; set; }
     }
 }

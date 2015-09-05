@@ -53,17 +53,6 @@
           <Property Name="SrcUrlHash" Type="nchar" MaxLength="128" />
           <Property Name="LinkUrlHash" Type="nchar" MaxLength="128" />
         </EntityType>
-        <EntityType Name="JurisdictionNotes">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
-          <Property Name="PreviousMessage" Type="int" />
-          <Property Name="AddedBy" Type="int" Nullable="false" />
-          <Property Name="JurisdictionId" Type="int" />
-        </EntityType>
         <EntityType Name="Jurisidctions">
           <Key>
             <PropertyRef Name="Id" />
@@ -75,28 +64,12 @@
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Processed">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ProcessedByUser">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="ProcessedRecordId" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="ProcessingResults">
           <Key>
             <PropertyRef Name="pid" />
           </Key>
           <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
           <Property Name="ASrcResultId" Type="int" />
           <Property Name="CSrcResultId" Type="int" />
           <Property Name="RSrcResultId" Type="int" />
@@ -128,40 +101,6 @@
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="RankNotes">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="RankId" Type="int" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
-          <Property Name="PreviousMessage" Type="int" Nullable="false" />
-          <Property Name="AddedBy" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Status">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="StatusEnglishName" Type="nchar" MaxLength="50" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
-          <Property Name="CreatedBy" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="StatusNotes">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StatusId" Type="int" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
-          <Property Name="PreviousMessage" Type="int" Nullable="false" />
-          <Property Name="AddedBy" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="UserJurisdictions">
           <Key>
             <PropertyRef Name="pid" />
@@ -171,17 +110,6 @@
           <Property Name="JurisdictionID" Type="int" Nullable="false" />
           <Property Name="JurisdictionNotesId" Type="int" />
           <Property Name="AwardedOn" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserNotes">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
-          <Property Name="PreviousMessage" Type="int" Nullable="false" />
-          <Property Name="AddedBy" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UserRanks">
           <Key>
@@ -210,27 +138,6 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
           <Property Name="IsOnline" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserSex">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Sex" Type="nchar" MaxLength="20" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
-          <Property Name="CreatedBy" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserSexNotes">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
-          <Property Name="PreviousMessage" Type="int" Nullable="false" />
-          <Property Name="AddedBy" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UsersSessions">
           <Key>
@@ -275,78 +182,6 @@
             </Principal>
             <Dependent Role="GoneButNotForgottenLinks">
               <PropertyRef Name="ReportedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_JurisdictionNotes_Jurisidctions1">
-          <End Role="Jurisidctions" Type="Self.Jurisidctions" Multiplicity="0..1" />
-          <End Role="JurisdictionNotes" Type="Self.JurisdictionNotes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Jurisidctions">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="JurisdictionNotes">
-              <PropertyRef Name="JurisdictionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_JurisdictionNotes_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="JurisdictionNotes" Type="Self.JurisdictionNotes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="JurisdictionNotes">
-              <PropertyRef Name="AddedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Processed_EUReported">
-          <End Role="EUReported" Type="Self.EUReported" Multiplicity="1" />
-          <End Role="Processed" Type="Self.Processed" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EUReported">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Processed">
-              <PropertyRef Name="id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Processed_ProcessingResults">
-          <End Role="ProcessingResults" Type="Self.ProcessingResults" Multiplicity="1" />
-          <End Role="Processed" Type="Self.Processed" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProcessingResults">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="Processed">
-              <PropertyRef Name="id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProcessedByUser_Processed">
-          <End Role="Processed" Type="Self.Processed" Multiplicity="1" />
-          <End Role="ProcessedByUser" Type="Self.ProcessedByUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Processed">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="ProcessedByUser">
-              <PropertyRef Name="ProcessedRecordId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProcessedByUser_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="ProcessedByUser" Type="Self.ProcessedByUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProcessedByUser">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -398,6 +233,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProcessingResults_EUReported">
+          <End Role="EUReported" Type="Self.EUReported" Multiplicity="1" />
+          <End Role="ProcessingResults" Type="Self.ProcessingResults" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EUReported">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProcessingResults">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProcessingResults_Jurisidctions">
           <End Role="Jurisidctions" Type="Self.Jurisidctions" Multiplicity="1" />
           <End Role="ProcessingResults" Type="Self.ProcessingResults" Multiplicity="*" />
@@ -434,54 +281,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RankNotes_Rank">
-          <End Role="Rank" Type="Self.Rank" Multiplicity="1" />
-          <End Role="RankNotes" Type="Self.RankNotes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Rank">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="RankNotes">
-              <PropertyRef Name="RankId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RankNotes_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="RankNotes" Type="Self.RankNotes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="RankNotes">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StatusNotes_Status">
-          <End Role="Status" Type="Self.Status" Multiplicity="1" />
-          <End Role="StatusNotes" Type="Self.StatusNotes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Status">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="StatusNotes">
-              <PropertyRef Name="StatusId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StatusNotes_StatusNotes">
-          <End Role="StatusNotes" Type="Self.StatusNotes" Multiplicity="1" />
-          <End Role="StatusNotes1" Type="Self.StatusNotes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StatusNotes">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="StatusNotes1">
-              <PropertyRef Name="PreviousMessage" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UserJurisdictions_Jurisidctions1">
           <End Role="Jurisidctions" Type="Self.Jurisidctions" Multiplicity="1" />
           <End Role="UserJurisdictions" Type="Self.UserJurisdictions" Multiplicity="*" />
@@ -503,18 +302,6 @@
             </Principal>
             <Dependent Role="UserJurisdictions">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserNotes_UserNotes1">
-          <End Role="UserNotes" Type="Self.UserNotes" Multiplicity="1" />
-          <End Role="UserNotes1" Type="Self.UserNotes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserNotes">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="UserNotes1">
-              <PropertyRef Name="PreviousMessage" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -542,30 +329,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserSexNotes_UserSex">
-          <End Role="UserSex" Type="Self.UserSex" Multiplicity="1" />
-          <End Role="UserSexNotes" Type="Self.UserSexNotes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserSex">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserSexNotes">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserSexNotes_UserSexNotes">
-          <End Role="UserSexNotes" Type="Self.UserSexNotes" Multiplicity="1" />
-          <End Role="UserSexNotes1" Type="Self.UserSexNotes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserSexNotes">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="UserSexNotes1">
-              <PropertyRef Name="PreviousMessage" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UsersSessions_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="UsersSessions" Type="Self.UsersSessions" Multiplicity="*" />
@@ -583,22 +346,13 @@
           <EntitySet Name="C" EntityType="Self.C" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EUReported" EntityType="Self.EUReported" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoneButNotForgottenLinks" EntityType="Self.GoneButNotForgottenLinks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="JurisdictionNotes" EntityType="Self.JurisdictionNotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Jurisidctions" EntityType="Self.Jurisidctions" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Processed" EntityType="Self.Processed" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProcessedByUser" EntityType="Self.ProcessedByUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProcessingResults" EntityType="Self.ProcessingResults" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="R" EntityType="Self.R" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rank" EntityType="Self.Rank" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RankNotes" EntityType="Self.RankNotes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="StatusNotes" EntityType="Self.StatusNotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserJurisdictions" EntityType="Self.UserJurisdictions" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserNotes" EntityType="Self.UserNotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRanks" EntityType="Self.UserRanks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserSex" EntityType="Self.UserSex" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserSexNotes" EntityType="Self.UserSexNotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersSessions" EntityType="Self.UsersSessions" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_EUReported_Users" Association="Self.FK_EUReported_Users">
             <End Role="Users" EntitySet="Users" />
@@ -611,30 +365,6 @@
           <AssociationSet Name="FK_GoneButNotForgottenLinks_Users" Association="Self.FK_GoneButNotForgottenLinks_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="GoneButNotForgottenLinks" EntitySet="GoneButNotForgottenLinks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_JurisdictionNotes_Jurisidctions1" Association="Self.FK_JurisdictionNotes_Jurisidctions1">
-            <End Role="Jurisidctions" EntitySet="Jurisidctions" />
-            <End Role="JurisdictionNotes" EntitySet="JurisdictionNotes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_JurisdictionNotes_Users" Association="Self.FK_JurisdictionNotes_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="JurisdictionNotes" EntitySet="JurisdictionNotes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Processed_EUReported" Association="Self.FK_Processed_EUReported">
-            <End Role="EUReported" EntitySet="EUReported" />
-            <End Role="Processed" EntitySet="Processed" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Processed_ProcessingResults" Association="Self.FK_Processed_ProcessingResults">
-            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
-            <End Role="Processed" EntitySet="Processed" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProcessedByUser_Processed" Association="Self.FK_ProcessedByUser_Processed">
-            <End Role="Processed" EntitySet="Processed" />
-            <End Role="ProcessedByUser" EntitySet="ProcessedByUser" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProcessedByUser_Users" Association="Self.FK_ProcessedByUser_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="ProcessedByUser" EntitySet="ProcessedByUser" />
           </AssociationSet>
           <AssociationSet Name="FK_ProcessingResults_A" Association="Self.FK_ProcessingResults_A">
             <End Role="A" EntitySet="A" />
@@ -652,6 +382,10 @@
             <End Role="C" EntitySet="C" />
             <End Role="ProcessingResults" EntitySet="ProcessingResults" />
           </AssociationSet>
+          <AssociationSet Name="FK_ProcessingResults_EUReported" Association="Self.FK_ProcessingResults_EUReported">
+            <End Role="EUReported" EntitySet="EUReported" />
+            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProcessingResults_Jurisidctions" Association="Self.FK_ProcessingResults_Jurisidctions">
             <End Role="Jurisidctions" EntitySet="Jurisidctions" />
             <End Role="ProcessingResults" EntitySet="ProcessingResults" />
@@ -664,22 +398,6 @@
             <End Role="R" EntitySet="R" />
             <End Role="ProcessingResults" EntitySet="ProcessingResults" />
           </AssociationSet>
-          <AssociationSet Name="FK_RankNotes_Rank" Association="Self.FK_RankNotes_Rank">
-            <End Role="Rank" EntitySet="Rank" />
-            <End Role="RankNotes" EntitySet="RankNotes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RankNotes_Users" Association="Self.FK_RankNotes_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="RankNotes" EntitySet="RankNotes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StatusNotes_Status" Association="Self.FK_StatusNotes_Status">
-            <End Role="Status" EntitySet="Status" />
-            <End Role="StatusNotes" EntitySet="StatusNotes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StatusNotes_StatusNotes" Association="Self.FK_StatusNotes_StatusNotes">
-            <End Role="StatusNotes" EntitySet="StatusNotes" />
-            <End Role="StatusNotes1" EntitySet="StatusNotes" />
-          </AssociationSet>
           <AssociationSet Name="FK_UserJurisdictions_Jurisidctions1" Association="Self.FK_UserJurisdictions_Jurisidctions1">
             <End Role="Jurisidctions" EntitySet="Jurisidctions" />
             <End Role="UserJurisdictions" EntitySet="UserJurisdictions" />
@@ -688,10 +406,6 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UserJurisdictions" EntitySet="UserJurisdictions" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserNotes_UserNotes1" Association="Self.FK_UserNotes_UserNotes1">
-            <End Role="UserNotes" EntitySet="UserNotes" />
-            <End Role="UserNotes1" EntitySet="UserNotes" />
-          </AssociationSet>
           <AssociationSet Name="FK_UserRanks_Rank" Association="Self.FK_UserRanks_Rank">
             <End Role="Rank" EntitySet="Rank" />
             <End Role="UserRanks" EntitySet="UserRanks" />
@@ -699,14 +413,6 @@
           <AssociationSet Name="FK_UserRanks_Users" Association="Self.FK_UserRanks_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserRanks" EntitySet="UserRanks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserSexNotes_UserSex" Association="Self.FK_UserSexNotes_UserSex">
-            <End Role="UserSex" EntitySet="UserSex" />
-            <End Role="UserSexNotes" EntitySet="UserSexNotes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserSexNotes_UserSexNotes" Association="Self.FK_UserSexNotes_UserSexNotes">
-            <End Role="UserSexNotes" EntitySet="UserSexNotes" />
-            <End Role="UserSexNotes1" EntitySet="UserSexNotes" />
           </AssociationSet>
           <AssociationSet Name="FK_UsersSessions_Users" Association="Self.FK_UsersSessions_Users">
             <End Role="Users" EntitySet="Users" />
@@ -734,20 +440,7 @@
           <Property Name="UserId" Type="Int32" />
           <NavigationProperty Name="User" Relationship="Self.FK_EUReported_Users" FromRole="EUReported" ToRole="Users" />
           <NavigationProperty Name="GoneButNotForgottenLinks" Relationship="Damocles2Model.FK_GoneButNotForgottenLinks_EUReported" FromRole="EUReported" ToRole="GoneButNotForgottenLink" />
-          <NavigationProperty Name="Processeds" Relationship="Damocles2Model.FK_Processed_EUReported" FromRole="EUReported" ToRole="Processed" />
-        </EntityType>
-        <EntityType Name="JurisdictionNote">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="PreviousMessage" Type="Int32" />
-          <Property Name="AddedBy" Type="Int32" Nullable="false" />
-          <Property Name="JurisdictionId" Type="Int32" />
-          <NavigationProperty Name="Jurisidction" Relationship="Self.FK_JurisdictionNotes_Jurisidctions1" FromRole="JurisdictionNotes" ToRole="Jurisidctions" />
-          <NavigationProperty Name="User" Relationship="Self.FK_JurisdictionNotes_Users" FromRole="JurisdictionNotes" ToRole="Users" />
+          <NavigationProperty Name="ProcessingResults" Relationship="Damocles2Model.FK_ProcessingResults_EUReported" FromRole="EUReported" ToRole="ProcessingResult" />
         </EntityType>
         <EntityType Name="Jurisidction">
           <Key>
@@ -759,7 +452,6 @@
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="JurisdictionNotes" Relationship="Self.FK_JurisdictionNotes_Jurisidctions1" FromRole="Jurisidctions" ToRole="JurisdictionNotes" />
           <NavigationProperty Name="UserJurisdictions" Relationship="Self.FK_UserJurisdictions_Jurisidctions1" FromRole="Jurisidctions" ToRole="UserJurisdictions" />
           <NavigationProperty Name="ProcessingResults" Relationship="Damocles2Model.FK_ProcessingResults_Jurisidctions" FromRole="Jurisidction" ToRole="ProcessingResult" />
         </EntityType>
@@ -773,61 +465,7 @@
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="RankNotes" Relationship="Self.FK_RankNotes_Rank" FromRole="Rank" ToRole="RankNotes" />
           <NavigationProperty Name="UserRanks" Relationship="Self.FK_UserRanks_Rank" FromRole="Rank" ToRole="UserRanks" />
-        </EntityType>
-        <EntityType Name="RankNote">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="RankId" Type="Int32" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="PreviousMessage" Type="Int32" Nullable="false" />
-          <Property Name="AddedBy" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Rank" Relationship="Self.FK_RankNotes_Rank" FromRole="RankNotes" ToRole="Rank" />
-          <NavigationProperty Name="User" Relationship="Self.FK_RankNotes_Users" FromRole="RankNotes" ToRole="Users" />
-        </EntityType>
-        <EntityType Name="Status">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="StatusEnglishName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="StatusNotes" Relationship="Self.FK_StatusNotes_Status" FromRole="Status" ToRole="StatusNotes" />
-        </EntityType>
-        <EntityType Name="StatusNote">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StatusId" Type="Int32" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="PreviousMessage" Type="Int32" Nullable="false" />
-          <Property Name="AddedBy" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Status" Relationship="Self.FK_StatusNotes_Status" FromRole="StatusNotes" ToRole="Status" />
-          <NavigationProperty Name="StatusNotes1" Relationship="Self.FK_StatusNotes_StatusNotes" FromRole="StatusNotes" ToRole="StatusNotes1" />
-          <NavigationProperty Name="StatusNote1" Relationship="Self.FK_StatusNotes_StatusNotes" FromRole="StatusNotes1" ToRole="StatusNotes" />
-        </EntityType>
-        <EntityType Name="UserNote">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="PreviousMessage" Type="Int32" Nullable="false" />
-          <Property Name="AddedBy" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserNotes1" Relationship="Self.FK_UserNotes_UserNotes1" FromRole="UserNotes" ToRole="UserNotes1" />
-          <NavigationProperty Name="UserNote1" Relationship="Self.FK_UserNotes_UserNotes1" FromRole="UserNotes1" ToRole="UserNotes" />
         </EntityType>
         <EntityType Name="UserRank">
           <Key>
@@ -859,38 +497,10 @@
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsOnline" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="EUReporteds" Relationship="Self.FK_EUReported_Users" FromRole="Users" ToRole="EUReported" />
-          <NavigationProperty Name="JurisdictionNotes" Relationship="Self.FK_JurisdictionNotes_Users" FromRole="Users" ToRole="JurisdictionNotes" />
-          <NavigationProperty Name="RankNotes" Relationship="Self.FK_RankNotes_Users" FromRole="Users" ToRole="RankNotes" />
           <NavigationProperty Name="UserRanks" Relationship="Self.FK_UserRanks_Users" FromRole="Users" ToRole="UserRanks" />
           <NavigationProperty Name="UserJurisdictions" Relationship="Self.FK_UserJurisdictions_Users" FromRole="Users" ToRole="UserJurisdictions" />
           <NavigationProperty Name="UsersSessions" Relationship="Self.FK_UsersSessions_Users" FromRole="Users" ToRole="UsersSessions" />
           <NavigationProperty Name="GoneButNotForgottenLinks" Relationship="Damocles2Model.FK_GoneButNotForgottenLinks_Users" FromRole="User" ToRole="GoneButNotForgottenLink" />
-          <NavigationProperty Name="ProcessedByUsers" Relationship="Damocles2Model.FK_ProcessedByUser_Users" FromRole="User" ToRole="ProcessedByUser" />
-        </EntityType>
-        <EntityType Name="UserSex">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Sex" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserSexNotes" Relationship="Self.FK_UserSexNotes_UserSex" FromRole="UserSex" ToRole="UserSexNotes" />
-        </EntityType>
-        <EntityType Name="UserSexNote">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="PreviousMessage" Type="Int32" Nullable="false" />
-          <Property Name="AddedBy" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserSex" Relationship="Self.FK_UserSexNotes_UserSex" FromRole="UserSexNotes" ToRole="UserSex" />
-          <NavigationProperty Name="UserSexNotes1" Relationship="Self.FK_UserSexNotes_UserSexNotes" FromRole="UserSexNotes" ToRole="UserSexNotes1" />
-          <NavigationProperty Name="UserSexNote1" Relationship="Self.FK_UserSexNotes_UserSexNotes" FromRole="UserSexNotes1" ToRole="UserSexNotes" />
         </EntityType>
         <EntityType Name="UsersSession">
           <Key>
@@ -927,30 +537,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_JurisdictionNotes_Jurisidctions1">
-          <End Role="Jurisidctions" Type="Self.Jurisidction" Multiplicity="0..1" />
-          <End Role="JurisdictionNotes" Type="Self.JurisdictionNote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Jurisidctions">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="JurisdictionNotes">
-              <PropertyRef Name="JurisdictionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_JurisdictionNotes_Users">
-          <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="JurisdictionNotes" Type="Self.JurisdictionNote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="JurisdictionNotes">
-              <PropertyRef Name="AddedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UserJurisdictions_Jurisidctions1">
           <End Role="Jurisidctions" Type="Self.Jurisidction" Multiplicity="1" />
           <End Role="UserJurisdictions" Type="Self.UserJurisdiction" Multiplicity="*" />
@@ -963,18 +549,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RankNotes_Rank">
-          <End Role="Rank" Type="Self.Rank" Multiplicity="1" />
-          <End Role="RankNotes" Type="Self.RankNote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Rank">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="RankNotes">
-              <PropertyRef Name="RankId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UserRanks_Rank">
           <End Role="Rank" Type="Self.Rank" Multiplicity="1" />
           <End Role="UserRanks" Type="Self.UserRank" Multiplicity="*" />
@@ -984,54 +558,6 @@
             </Principal>
             <Dependent Role="UserRanks">
               <PropertyRef Name="RankId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RankNotes_Users">
-          <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="RankNotes" Type="Self.RankNote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="RankNotes">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StatusNotes_Status">
-          <End Role="Status" Type="Self.Status" Multiplicity="1" />
-          <End Role="StatusNotes" Type="Self.StatusNote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Status">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="StatusNotes">
-              <PropertyRef Name="StatusId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StatusNotes_StatusNotes">
-          <End Role="StatusNotes" Type="Self.StatusNote" Multiplicity="1" />
-          <End Role="StatusNotes1" Type="Self.StatusNote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StatusNotes">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="StatusNotes1">
-              <PropertyRef Name="PreviousMessage" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserNotes_UserNotes1">
-          <End Role="UserNotes" Type="Self.UserNote" Multiplicity="1" />
-          <End Role="UserNotes1" Type="Self.UserNote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserNotes">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="UserNotes1">
-              <PropertyRef Name="PreviousMessage" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1071,84 +597,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserSexNotes_UserSex">
-          <End Role="UserSex" Type="Self.UserSex" Multiplicity="1" />
-          <End Role="UserSexNotes" Type="Self.UserSexNote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserSex">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserSexNotes">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserSexNotes_UserSexNotes">
-          <End Role="UserSexNotes" Type="Self.UserSexNote" Multiplicity="1" />
-          <End Role="UserSexNotes1" Type="Self.UserSexNote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserSexNotes">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="UserSexNotes1">
-              <PropertyRef Name="PreviousMessage" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="Damocles2Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="EUReporteds" EntityType="Self.EUReported" />
-          <EntitySet Name="JurisdictionNotes" EntityType="Self.JurisdictionNote" />
           <EntitySet Name="Jurisidctions" EntityType="Self.Jurisidction" />
           <EntitySet Name="Ranks" EntityType="Self.Rank" />
-          <EntitySet Name="RankNotes" EntityType="Self.RankNote" />
-          <EntitySet Name="Status" EntityType="Self.Status" />
-          <EntitySet Name="StatusNotes" EntityType="Self.StatusNote" />
-          <EntitySet Name="UserNotes" EntityType="Self.UserNote" />
           <EntitySet Name="UserRanks" EntityType="Self.UserRank" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <EntitySet Name="UserSexes" EntityType="Self.UserSex" />
-          <EntitySet Name="UserSexNotes" EntityType="Self.UserSexNote" />
           <EntitySet Name="UsersSessions" EntityType="Self.UsersSession" />
           <EntitySet Name="UserJurisdictions" EntityType="Self.UserJurisdiction" />
           <AssociationSet Name="FK_EUReported_Users" Association="Self.FK_EUReported_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="EUReported" EntitySet="EUReporteds" />
           </AssociationSet>
-          <AssociationSet Name="FK_JurisdictionNotes_Jurisidctions1" Association="Self.FK_JurisdictionNotes_Jurisidctions1">
-            <End Role="Jurisidctions" EntitySet="Jurisidctions" />
-            <End Role="JurisdictionNotes" EntitySet="JurisdictionNotes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_JurisdictionNotes_Users" Association="Self.FK_JurisdictionNotes_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="JurisdictionNotes" EntitySet="JurisdictionNotes" />
-          </AssociationSet>
           <AssociationSet Name="FK_UserJurisdictions_Jurisidctions1" Association="Self.FK_UserJurisdictions_Jurisidctions1">
             <End Role="Jurisidctions" EntitySet="Jurisidctions" />
             <End Role="UserJurisdictions" EntitySet="UserJurisdictions" />
           </AssociationSet>
-          <AssociationSet Name="FK_RankNotes_Rank" Association="Self.FK_RankNotes_Rank">
-            <End Role="Rank" EntitySet="Ranks" />
-            <End Role="RankNotes" EntitySet="RankNotes" />
-          </AssociationSet>
           <AssociationSet Name="FK_UserRanks_Rank" Association="Self.FK_UserRanks_Rank">
             <End Role="Rank" EntitySet="Ranks" />
             <End Role="UserRanks" EntitySet="UserRanks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RankNotes_Users" Association="Self.FK_RankNotes_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="RankNotes" EntitySet="RankNotes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StatusNotes_Status" Association="Self.FK_StatusNotes_Status">
-            <End Role="Status" EntitySet="Status" />
-            <End Role="StatusNotes" EntitySet="StatusNotes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StatusNotes_StatusNotes" Association="Self.FK_StatusNotes_StatusNotes">
-            <End Role="StatusNotes" EntitySet="StatusNotes" />
-            <End Role="StatusNotes1" EntitySet="StatusNotes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserNotes_UserNotes1" Association="Self.FK_UserNotes_UserNotes1">
-            <End Role="UserNotes" EntitySet="UserNotes" />
-            <End Role="UserNotes1" EntitySet="UserNotes" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRanks_Users" Association="Self.FK_UserRanks_Users">
             <End Role="Users" EntitySet="Users" />
@@ -1162,14 +629,6 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UsersSessions" EntitySet="UsersSessions" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserSexNotes_UserSex" Association="Self.FK_UserSexNotes_UserSex">
-            <End Role="UserSex" EntitySet="UserSexes" />
-            <End Role="UserSexNotes" EntitySet="UserSexNotes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserSexNotes_UserSexNotes" Association="Self.FK_UserSexNotes_UserSexNotes">
-            <End Role="UserSexNotes" EntitySet="UserSexNotes" />
-            <End Role="UserSexNotes1" EntitySet="UserSexNotes" />
-          </AssociationSet>
           <EntitySet Name="GoneButNotForgottenLinks" EntityType="Damocles2Model.GoneButNotForgottenLink" />
           <AssociationSet Name="FK_GoneButNotForgottenLinks_EUReported" Association="Damocles2Model.FK_GoneButNotForgottenLinks_EUReported">
             <End Role="EUReported" EntitySet="EUReporteds" />
@@ -1181,10 +640,8 @@
           </AssociationSet>
           <EntitySet Name="A" EntityType="Damocles2Model.A" />
           <EntitySet Name="C" EntityType="Damocles2Model.C" />
-          <EntitySet Name="Processeds" EntityType="Damocles2Model.Processed" />
           <EntitySet Name="ProcessingResults" EntityType="Damocles2Model.ProcessingResult" />
           <EntitySet Name="R" EntityType="Damocles2Model.R" />
-          <EntitySet Name="ProcessedByUsers" EntityType="Damocles2Model.ProcessedByUser" />
           <AssociationSet Name="FK_ProcessingResults_A" Association="Damocles2Model.FK_ProcessingResults_A">
             <End Role="A" EntitySet="A" />
             <End Role="ProcessingResult" EntitySet="ProcessingResults" />
@@ -1201,21 +658,9 @@
             <End Role="C" EntitySet="C" />
             <End Role="ProcessingResult" EntitySet="ProcessingResults" />
           </AssociationSet>
-          <AssociationSet Name="FK_Processed_EUReported" Association="Damocles2Model.FK_Processed_EUReported">
-            <End Role="EUReported" EntitySet="EUReporteds" />
-            <End Role="Processed" EntitySet="Processeds" />
-          </AssociationSet>
           <AssociationSet Name="FK_ProcessingResults_Jurisidctions" Association="Damocles2Model.FK_ProcessingResults_Jurisidctions">
             <End Role="Jurisidction" EntitySet="Jurisidctions" />
             <End Role="ProcessingResult" EntitySet="ProcessingResults" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Processed_ProcessingResults" Association="Damocles2Model.FK_Processed_ProcessingResults">
-            <End Role="ProcessingResult" EntitySet="ProcessingResults" />
-            <End Role="Processed" EntitySet="Processeds" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProcessedByUser_Processed" Association="Damocles2Model.FK_ProcessedByUser_Processed">
-            <End Role="Processed" EntitySet="Processeds" />
-            <End Role="ProcessedByUser" EntitySet="ProcessedByUsers" />
           </AssociationSet>
           <AssociationSet Name="FK_ProcessingResults_R" Association="Damocles2Model.FK_ProcessingResults_R">
             <End Role="R" EntitySet="R" />
@@ -1225,9 +670,9 @@
             <End Role="R" EntitySet="R" />
             <End Role="ProcessingResult" EntitySet="ProcessingResults" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProcessedByUser_Users" Association="Damocles2Model.FK_ProcessedByUser_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="ProcessedByUser" EntitySet="ProcessedByUsers" />
+          <AssociationSet Name="FK_ProcessingResults_EUReported" Association="Damocles2Model.FK_ProcessingResults_EUReported">
+            <End Role="EUReported" EntitySet="EUReporteds" />
+            <End Role="ProcessingResult" EntitySet="ProcessingResults" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="GoneButNotForgottenLink">
@@ -1292,18 +737,6 @@
           <NavigationProperty Name="ProcessingResults" Relationship="Damocles2Model.FK_ProcessingResults_C" FromRole="C" ToRole="ProcessingResult" />
           <NavigationProperty Name="ProcessingResults1" Relationship="Damocles2Model.FK_ProcessingResults_C1" FromRole="C" ToRole="ProcessingResult" />
         </EntityType>
-        <EntityType Name="Processed">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="EUReported" Relationship="Damocles2Model.FK_Processed_EUReported" FromRole="Processed" ToRole="EUReported" />
-          <NavigationProperty Name="ProcessingResult" Relationship="Damocles2Model.FK_Processed_ProcessingResults" FromRole="Processed" ToRole="ProcessingResult" />
-          <NavigationProperty Name="ProcessedByUsers" Relationship="Damocles2Model.FK_ProcessedByUser_Processed" FromRole="Processed" ToRole="ProcessedByUser" />
-        </EntityType>
         <EntityType Name="ProcessingResult">
           <Key>
             <PropertyRef Name="pid" />
@@ -1323,9 +756,10 @@
           <NavigationProperty Name="C" Relationship="Damocles2Model.FK_ProcessingResults_C" FromRole="ProcessingResult" ToRole="C" />
           <NavigationProperty Name="C1" Relationship="Damocles2Model.FK_ProcessingResults_C1" FromRole="ProcessingResult" ToRole="C" />
           <NavigationProperty Name="Jurisidction" Relationship="Damocles2Model.FK_ProcessingResults_Jurisidctions" FromRole="ProcessingResult" ToRole="Jurisidction" />
-          <NavigationProperty Name="Processeds" Relationship="Damocles2Model.FK_Processed_ProcessingResults" FromRole="ProcessingResult" ToRole="Processed" />
           <NavigationProperty Name="R" Relationship="Damocles2Model.FK_ProcessingResults_R" FromRole="ProcessingResult" ToRole="R" />
           <NavigationProperty Name="R1" Relationship="Damocles2Model.FK_ProcessingResults_R1" FromRole="ProcessingResult" ToRole="R" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EUReported" Relationship="Damocles2Model.FK_ProcessingResults_EUReported" FromRole="ProcessingResult" ToRole="EUReported" />
         </EntityType>
         <EntityType Name="R">
           <Key>
@@ -1338,16 +772,6 @@
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="ProcessingResults" Relationship="Damocles2Model.FK_ProcessingResults_R" FromRole="R" ToRole="ProcessingResult" />
           <NavigationProperty Name="ProcessingResults1" Relationship="Damocles2Model.FK_ProcessingResults_R1" FromRole="R" ToRole="ProcessingResult" />
-        </EntityType>
-        <EntityType Name="ProcessedByUser">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="ProcessedRecordId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Processed" Relationship="Damocles2Model.FK_ProcessedByUser_Processed" FromRole="ProcessedByUser" ToRole="Processed" />
-          <NavigationProperty Name="User" Relationship="Damocles2Model.FK_ProcessedByUser_Users" FromRole="ProcessedByUser" ToRole="User" />
         </EntityType>
         <Association Name="FK_ProcessingResults_A">
           <End Type="Damocles2Model.A" Role="A" Multiplicity="0..1" />
@@ -1397,18 +821,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Processed_EUReported">
-          <End Type="Damocles2Model.EUReported" Role="EUReported" Multiplicity="1" />
-          <End Type="Damocles2Model.Processed" Role="Processed" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EUReported">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Processed">
-              <PropertyRef Name="id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ProcessingResults_Jurisidctions">
           <End Type="Damocles2Model.Jurisidction" Role="Jurisidction" Multiplicity="1" />
           <End Type="Damocles2Model.ProcessingResult" Role="ProcessingResult" Multiplicity="*" />
@@ -1418,30 +830,6 @@
             </Principal>
             <Dependent Role="ProcessingResult">
               <PropertyRef Name="JurisdictionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Processed_ProcessingResults">
-          <End Type="Damocles2Model.ProcessingResult" Role="ProcessingResult" Multiplicity="1" />
-          <End Type="Damocles2Model.Processed" Role="Processed" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProcessingResult">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="Processed">
-              <PropertyRef Name="id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProcessedByUser_Processed">
-          <End Type="Damocles2Model.Processed" Role="Processed" Multiplicity="1" />
-          <End Type="Damocles2Model.ProcessedByUser" Role="ProcessedByUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Processed">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="ProcessedByUser">
-              <PropertyRef Name="ProcessedRecordId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1469,15 +857,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ProcessedByUser_Users">
-          <End Type="Damocles2Model.User" Role="User" Multiplicity="1" />
-          <End Type="Damocles2Model.ProcessedByUser" Role="ProcessedByUser" Multiplicity="*" />
+        <Association Name="FK_ProcessingResults_EUReported">
+          <End Type="Damocles2Model.EUReported" Role="EUReported" Multiplicity="1" />
+          <End Type="Damocles2Model.ProcessingResult" Role="ProcessingResult" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
+            <Principal Role="EUReported">
+              <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="ProcessedByUser">
-              <PropertyRef Name="UserId" />
+            <Dependent Role="ProcessingResult">
+              <PropertyRef Name="id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1504,18 +892,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="JurisdictionNotes">
-            <EntityTypeMapping TypeName="Damocles2Model.JurisdictionNote">
-              <MappingFragment StoreEntitySet="JurisdictionNotes">
-                <ScalarProperty Name="pid" ColumnName="pid" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="PreviousMessage" ColumnName="PreviousMessage" />
-                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
-                <ScalarProperty Name="JurisdictionId" ColumnName="JurisdictionId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Jurisidctions">
             <EntityTypeMapping TypeName="Damocles2Model.Jurisidction">
               <MappingFragment StoreEntitySet="Jurisidctions">
@@ -1537,55 +913,6 @@
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RankNotes">
-            <EntityTypeMapping TypeName="Damocles2Model.RankNote">
-              <MappingFragment StoreEntitySet="RankNotes">
-                <ScalarProperty Name="pid" ColumnName="pid" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="RankId" ColumnName="RankId" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="PreviousMessage" ColumnName="PreviousMessage" />
-                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Status">
-            <EntityTypeMapping TypeName="Damocles2Model.Status">
-              <MappingFragment StoreEntitySet="Status">
-                <ScalarProperty Name="pid" ColumnName="pid" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="StatusEnglishName" ColumnName="StatusEnglishName" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StatusNotes">
-            <EntityTypeMapping TypeName="Damocles2Model.StatusNote">
-              <MappingFragment StoreEntitySet="StatusNotes">
-                <ScalarProperty Name="pid" ColumnName="pid" />
-                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="PreviousMessage" ColumnName="PreviousMessage" />
-                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserNotes">
-            <EntityTypeMapping TypeName="Damocles2Model.UserNote">
-              <MappingFragment StoreEntitySet="UserNotes">
-                <ScalarProperty Name="pid" ColumnName="pid" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="PreviousMessage" ColumnName="PreviousMessage" />
-                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1616,29 +943,6 @@
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
                 <ScalarProperty Name="IsOnline" ColumnName="IsOnline" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserSexes">
-            <EntityTypeMapping TypeName="Damocles2Model.UserSex">
-              <MappingFragment StoreEntitySet="UserSex">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Sex" ColumnName="Sex" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserSexNotes">
-            <EntityTypeMapping TypeName="Damocles2Model.UserSexNote">
-              <MappingFragment StoreEntitySet="UserSexNotes">
-                <ScalarProperty Name="pid" ColumnName="pid" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="PreviousMessage" ColumnName="PreviousMessage" />
-                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1699,19 +1003,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Processeds">
-            <EntityTypeMapping TypeName="Damocles2Model.Processed">
-              <MappingFragment StoreEntitySet="Processed">
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="pid" ColumnName="pid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ProcessingResults">
             <EntityTypeMapping TypeName="Damocles2Model.ProcessingResult">
               <MappingFragment StoreEntitySet="ProcessingResults">
+                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="JurisdictionId" ColumnName="JurisdictionId" />
@@ -1732,15 +1027,6 @@
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="IsRestricted" ColumnName="IsRestricted" />
                 <ScalarProperty Name="ResultCount" ColumnName="ResultCount" />
-                <ScalarProperty Name="pid" ColumnName="pid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProcessedByUsers">
-            <EntityTypeMapping TypeName="Damocles2Model.ProcessedByUser">
-              <MappingFragment StoreEntitySet="ProcessedByUser">
-                <ScalarProperty Name="ProcessedRecordId" ColumnName="ProcessedRecordId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="pid" ColumnName="pid" />
               </MappingFragment>
             </EntityTypeMapping>

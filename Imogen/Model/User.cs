@@ -18,13 +18,10 @@ namespace Imogen.Model
         public User()
         {
             this.EUReporteds = new HashSet<EUReported>();
-            this.JurisdictionNotes = new HashSet<JurisdictionNote>();
-            this.RankNotes = new HashSet<RankNote>();
             this.UserRanks = new HashSet<UserRank>();
             this.UserJurisdictions = new HashSet<UserJurisdiction>();
             this.UsersSessions = new HashSet<UsersSession>();
             this.GoneButNotForgottenLinks = new HashSet<GoneButNotForgottenLink>();
-            this.ProcessedByUsers = new HashSet<ProcessedByUser>();
         }
     
         public int Id { get; set; }
@@ -44,10 +41,6 @@ namespace Imogen.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EUReported> EUReporteds { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<JurisdictionNote> JurisdictionNotes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RankNote> RankNotes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRank> UserRanks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserJurisdiction> UserJurisdictions { get; set; }
@@ -55,7 +48,5 @@ namespace Imogen.Model
         public virtual ICollection<UsersSession> UsersSessions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoneButNotForgottenLink> GoneButNotForgottenLinks { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProcessedByUser> ProcessedByUsers { get; set; }
     }
 }

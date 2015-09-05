@@ -17,7 +17,6 @@ namespace Imogen.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Jurisidction()
         {
-            this.JurisdictionNotes = new HashSet<JurisdictionNote>();
             this.UserJurisdictions = new HashSet<UserJurisdiction>();
             this.ProcessingResults = new HashSet<ProcessingResult>();
         }
@@ -29,8 +28,6 @@ namespace Imogen.Model
         public System.DateTime UpdatedOn { get; set; }
         public int CreatedBy { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<JurisdictionNote> JurisdictionNotes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserJurisdiction> UserJurisdictions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
