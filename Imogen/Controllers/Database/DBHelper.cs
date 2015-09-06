@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Imogen.Controllers.Database
 {
@@ -143,8 +144,8 @@ namespace Imogen.Controllers.Database
 
         //TODO: Not completed Yet
         // LinkARCRating will be in either - the GoneButNotForgotten table (files that are no longer available)
-        // or ... TBA
-        internal static string GetLinkARCRating(int reportId)
+        // or ... Processing Results
+        internal static string GetLinkARCValue(int reportId)
         {
             Damocles2Entities de = new Damocles2Entities();
             var gbResult = de.GoneButNotForgottenLinks.Where(gid => gid.Id == reportId).FirstOrDefault();
@@ -155,15 +156,83 @@ namespace Imogen.Controllers.Database
             return string.Empty;
         }
 
-        internal static string GetSrcARCRating(int reportId)
+        /// <summary>
+        /// Tells us if the Report was of a A R C or X type
+        /// </summary>
+        /// <param name="reportId">
+        /// nnt: The ReportId we are looking up
+        /// </param>
+        /// <returns>
+        /// string: A R C or X Where X = GoneButNotForgotten
+        /// </returns>
+        /// <remarks>
+        /// The ReportId can be derived from: Convert.ToInt32(Properties.Settings.Default.ProfileReportNumber)
+        /// </remarks>
+        internal static string GetLinkARCRating(int reportId)
         {
             Damocles2Entities de = new Damocles2Entities();
             var gbResult = de.GoneButNotForgottenLinks.Where(gid => gid.Id == reportId).FirstOrDefault();
             // If it exists
             //TODO: Really need the error code saved in GoneButNotForgotten
             if (gbResult != null)
-                return "Src Url Contents Not Available " + gbResult.LastCheckedOn;
-            return string.Empty;
+                return "X";
+            ProcessingResult pr = de.ProcessingResults.Where(pid => pid.id == reportId).FirstOrDefault();
+            if (pr.ASrcResultId != null)
+                return "A";
+            if (pr.RSrcResultId != null)
+                return "R";
+            if (pr.CSrcResultId != null)
+                return "C";
+
+            return string.Empty; // We May not have a Src - it may be the whole page that has been reported, or only a link!
+        }
+
+
+        internal static ProcessingResult GeProcessingResultById(int reportId)
+        {
+            Damocles2Entities de = new Damocles2Entities();
+            var gbResult = de.ProcessingResults.Where(gid => gid.id == reportId).FirstOrDefault();
+            // If it exists
+            //TODO: Really need the error code saved in GoneButNotForgotten
+
+            return gbResult;
+        }
+
+        internal static void SaveIndividualsBasicInformation(string Name, string Age, string Sex, string SpokenLanguage, string WrittenLanguage, string Nationality, string Ethnicity, Image image)
+        {
+            Utils.Utils utils = new Utils.Utils();
+            Damocles2Entities de = new Damocles2Entities();
+            FaceARC farc = new FaceARC();
+            Face face = new Face();
+            
+            // Possible Return Values = X, A, R, C, String.Empty
+            var pr = GeProcessingResultById(Convert.ToInt32(Properties.Settings.Default.ProfileReportNumber));
+
+            if (pr.CSrcResultId != null)    // Theoretically the most common result
+                farc.CId = pr.CSrcResultId;
+
+            if (pr.RSrcResultId != null)
+                farc.RId = pr.RSrcResultId;
+
+            if (pr.ASrcResultId != null) // Theoretically the least common result
+                farc.AId = pr.ASrcResultId;
+
+            farc.FaceId = face.id;
+            face.FaceData = utils.BytesToString(utils.imageToByteArray(image));
+            face.CreatedOn = DateTime.UtcNow;
+            face.UpdatedOn = DateTime.UtcNow;
+            face.CreatedBy = Properties.Settings.Default.UserId;
+            face.Name = Name;
+            face.Age = Convert.ToInt32(Age);
+            face.Sex = Sex;
+            face.SpokenLanguage = SpokenLanguage;
+            face.WrittenLanguage = WrittenLanguage;
+            face.Nationality = Nationality;
+            face.Ethnicity = Ethnicity;
+
+            de.Faces.Add(face);
+            de.FaceARCs.Add(farc);
+            de.SaveChanges();
         }
 
         private void ConnectToDamocles()
@@ -200,6 +269,8 @@ namespace Imogen.Controllers.Database
             User user = de.Users.Where(u => u.Username == username && u.UserPassword == passwordHash).FirstOrDefault();
             if (user == null)
                 return false;
+
+            Properties.Settings.Default.UserId = user.Id;
 
             //TODO: This is not functioning correctly - simply want the User's current rank.
             UserRank ur = de.UserRanks.Where(usr => usr.UserId == user.Id).FirstOrDefault();

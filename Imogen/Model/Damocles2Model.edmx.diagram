@@ -4,19 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2645ecf076874e328005134ea2ae056e" Name="Diagram1" ZoomLevel="37">
+      <Diagram DiagramId="2645ecf076874e328005134ea2ae056e" Name="Diagram1" ZoomLevel="63">
         <EntityTypeShape EntityType="Damocles2Model.A" Width="1.5" PointX="3.625" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.C" Width="1.5" PointX="3.5" PointY="14.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.EUReported" Width="1.5" PointX="18.125" PointY="14.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.GoneButNotForgottenLink" Width="1.5" PointX="13.375" PointY="18.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.Jurisidction" Width="1.5" PointX="18.125" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.ProcessingResult" Width="1.5" PointX="13" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.R" Width="1.5" PointX="3.75" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.Rank" Width="1.5" PointX="40.875" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.R" Width="1.5" PointX="5.125" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.Rank" Width="1.5" PointX="37.125" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.UserJurisdiction" Width="1.5" PointX="23" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.UserRank" Width="1.5" PointX="38.5" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.UserRank" Width="1.5" PointX="34.75" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.User" Width="1.5" PointX="28.625" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Damocles2Model.UsersSession" Width="1.5" PointX="38.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="Damocles2Model.UsersSession" Width="1.5" PointX="34.75" PointY="11.125" IsExpanded="true" />
         <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_A" ManuallyRouted="false" />
         <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_A1" ManuallyRouted="false" />
         <AssociationConnector Association="Damocles2Model.FK_ProcessingResults_C" ManuallyRouted="false" />
@@ -36,7 +36,7 @@
         <AssociationConnector Association="Damocles2Model.FK_UsersSessions_Users" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Damocles2Model.FaceARC" Width="1.5" PointX="0.875" PointY="8.75" />
         <EntityTypeShape EntityType="Damocles2Model.Face" Width="1.5" PointX="5.75" PointY="21.375" />
-        <EntityTypeShape EntityType="Damocles2Model.Hash" Width="1.5" PointX="18.25" PointY="8.75" />
+        <EntityTypeShape EntityType="Damocles2Model.Hash" Width="1.5" PointX="18.125" PointY="8.75" />
         <EntityTypeShape EntityType="Damocles2Model.Matedata" Width="1.5" PointX="5.75" PointY="17.125" />
         <AssociationConnector Association="Damocles2Model.FK_FaceARCs_A" />
         <AssociationConnector Association="Damocles2Model.FK_FaceARCs_C" />
