@@ -124,9 +124,6 @@
   <data name="full-trash-white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\full-trash-white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="cancel-black" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\cancel-black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="full-trash-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\full-trash-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -139,8 +136,17 @@
   <data name="DatabaseOnline" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DatabaseOnline.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="flip-horizontal-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\flip-horizontal-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="film-2-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\film-2-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="check-mark-3-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\check-mark-3-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="delete-database-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\delete-database-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="accept-database-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\accept-database-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -148,14 +154,17 @@
   <data name="link-4-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\link-4-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="DatabaseInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DatabaseInsert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="DatabaseOffline" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DatabaseOffline.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="delete-database-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\delete-database-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="DatabaseInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DatabaseInsert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="redo-2-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\redo-2-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cancel-black" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cancel-black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="cancel-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cancel-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -163,7 +172,7 @@
   <data name="Windows-Run-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Windows-Run-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="film-2-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\film-2-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="flip-vertical-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\flip-vertical-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

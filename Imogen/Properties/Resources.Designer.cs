@@ -163,6 +163,26 @@ namespace Imogen.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap flip_horizontal_16 {
+            get {
+                object obj = ResourceManager.GetObject("flip-horizontal-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap flip_vertical_16 {
+            get {
+                object obj = ResourceManager.GetObject("flip-vertical-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap full_trash_16 {
             get {
                 object obj = ResourceManager.GetObject("full-trash-16", resourceCulture);
@@ -186,6 +206,16 @@ namespace Imogen.Properties {
         internal static System.Drawing.Bitmap link_4_16 {
             get {
                 object obj = ResourceManager.GetObject("link-4-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap redo_2_16 {
+            get {
+                object obj = ResourceManager.GetObject("redo-2-16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

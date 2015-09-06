@@ -239,5 +239,7 @@ namespace Imogen.Properties {
                 this["ProfileLinkUrlARCRating"] = value;
             }
         }
+
+        public string ImagePath { get; internal set; }
     }
 }
