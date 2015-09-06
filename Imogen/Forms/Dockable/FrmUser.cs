@@ -28,7 +28,9 @@ namespace Imogen.Forms.Dockable
         internal void UpdateUserStats()
         {
            lblImagesInvestigated.Text = DBHelper.GetImagesInvestigated();
-            lblImagesReported.Text = DBHelper.GetImagesReported(); 
+           lblImagesReported.Text = DBHelper.GetImagesReported();
+            lblVideosInvestigated.Text = DBHelper.GetVideosInvestigated();
+            lblVideosReported.Text = DBHelper.GetVideosReported();
         }
 
         public void UpdateUserSessionTime()
@@ -37,8 +39,7 @@ namespace Imogen.Forms.Dockable
             lblTotalSessions.Text = DBHelper.TotalSessions.ToString("N0");
             lblRank.Text = DBHelper.UserRank;
             lblJurisdiction.Text = DBHelper.UJurisdiction;
-            lblImagesInvestigated.Text = DBHelper.GetImagesInvestigated();
-            lblImagesReported.Text = DBHelper.GetImagesReported();
+            UpdateUserStats();
         }
 
 

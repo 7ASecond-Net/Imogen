@@ -44,7 +44,7 @@ namespace Imogen.Forms.Dockable
             this.label32 = new System.Windows.Forms.Label();
             this.lblImagesReported = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
-            this.label35 = new System.Windows.Forms.Label();
+            this.lblVideosReported = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
@@ -60,7 +60,7 @@ namespace Imogen.Forms.Dockable
             this.label18 = new System.Windows.Forms.Label();
             this.lblImagesInvestigated = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
+            this.lblVideosInvestigated = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -113,7 +113,7 @@ namespace Imogen.Forms.Dockable
             this.groupBox2.Controls.Add(this.label32);
             this.groupBox2.Controls.Add(this.lblImagesReported);
             this.groupBox2.Controls.Add(this.label34);
-            this.groupBox2.Controls.Add(this.label35);
+            this.groupBox2.Controls.Add(this.lblVideosReported);
             this.groupBox2.Controls.Add(this.label36);
             this.groupBox2.Controls.Add(this.label37);
             this.groupBox2.Controls.Add(this.label38);
@@ -129,7 +129,7 @@ namespace Imogen.Forms.Dockable
             this.groupBox2.Controls.Add(this.label18);
             this.groupBox2.Controls.Add(this.lblImagesInvestigated);
             this.groupBox2.Controls.Add(this.label10);
-            this.groupBox2.Controls.Add(this.label11);
+            this.groupBox2.Controls.Add(this.lblVideosInvestigated);
             this.groupBox2.Controls.Add(this.label12);
             this.groupBox2.Controls.Add(this.label13);
             this.groupBox2.Controls.Add(this.label14);
@@ -241,15 +241,15 @@ namespace Imogen.Forms.Dockable
             this.label34.TabIndex = 62;
             this.label34.Text = "Reported";
             // 
-            // label35
+            // lblVideosReported
             // 
-            this.label35.AutoSize = true;
-            this.label35.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label35.Location = new System.Drawing.Point(284, 42);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(16, 13);
-            this.label35.TabIndex = 61;
-            this.label35.Text = "...";
+            this.lblVideosReported.AutoSize = true;
+            this.lblVideosReported.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lblVideosReported.Location = new System.Drawing.Point(284, 42);
+            this.lblVideosReported.Name = "lblVideosReported";
+            this.lblVideosReported.Size = new System.Drawing.Size(16, 13);
+            this.lblVideosReported.TabIndex = 61;
+            this.lblVideosReported.Text = "...";
             // 
             // label36
             // 
@@ -401,15 +401,15 @@ namespace Imogen.Forms.Dockable
             this.label10.TabIndex = 46;
             this.label10.Text = "Images Investigated";
             // 
-            // label11
+            // lblVideosInvestigated
             // 
-            this.label11.AutoSize = true;
-            this.label11.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label11.Location = new System.Drawing.Point(145, 42);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(16, 13);
-            this.label11.TabIndex = 45;
-            this.label11.Text = "...";
+            this.lblVideosInvestigated.AutoSize = true;
+            this.lblVideosInvestigated.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lblVideosInvestigated.Location = new System.Drawing.Point(145, 42);
+            this.lblVideosInvestigated.Name = "lblVideosInvestigated";
+            this.lblVideosInvestigated.Size = new System.Drawing.Size(16, 13);
+            this.lblVideosInvestigated.TabIndex = 45;
+            this.lblVideosInvestigated.Text = "...";
             // 
             // label12
             // 
@@ -668,7 +668,7 @@ namespace Imogen.Forms.Dockable
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Label lblImagesReported;
         private System.Windows.Forms.Label label34;
-        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.Label lblVideosReported;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label38;
@@ -684,7 +684,7 @@ namespace Imogen.Forms.Dockable
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label lblImagesInvestigated;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label lblVideosInvestigated;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
