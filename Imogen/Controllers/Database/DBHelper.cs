@@ -29,6 +29,8 @@ namespace Imogen.Controllers.Database
             SetConnectionStatus();
         }
 
+       
+
 
 
         #region Connections
@@ -50,6 +52,42 @@ namespace Imogen.Controllers.Database
             foreach (ProcessingResult p in pr)
             {
                 if (p.CSrcResultId != null) iCount++;
+            }
+
+            return iCount.ToString("N0");
+        }
+
+        internal static string GetVideosReported()
+        {
+            Damocles2Entities de = new Damocles2Entities();
+            HashingHelper hh = new HashingHelper();
+            string passwordHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
+            User u = de.Users.Where(usr => usr.Username == Properties.Settings.Default.UserUsername && usr.UserPassword == passwordHash).FirstOrDefault();
+            var pr = de.ProcessingResults.Where(pi => pi.id == u.Id);
+
+            int iCount = 0;
+            foreach (ProcessingResult p in pr)
+            {
+                if (p.CLinkResultId != null) iCount++;
+            }
+
+            return iCount.ToString("N0");
+        }
+
+        internal static string GetVideosInvestigated()
+        {
+            Damocles2Entities de = new Damocles2Entities();
+            HashingHelper hh = new HashingHelper();
+            string passwordHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
+            User u = de.Users.Where(usr => usr.Username == Properties.Settings.Default.UserUsername && usr.UserPassword == passwordHash).FirstOrDefault();
+            var pr = de.ProcessingResults.Where(pi => pi.UserId == u.Id);
+
+            int iCount = 0;
+            foreach (ProcessingResult p in pr)
+            {
+                if (p.ALinkResultId != null) iCount++;
+                if (p.CLinkResultId != null) iCount++;
+                if (p.RLinkResultId != null) iCount++;
             }
 
             return iCount.ToString("N0");
@@ -119,6 +157,12 @@ namespace Imogen.Controllers.Database
 
         internal static string GetSrcARCRating(int reportId)
         {
+            Damocles2Entities de = new Damocles2Entities();
+            var gbResult = de.GoneButNotForgottenLinks.Where(gid => gid.Id == reportId).FirstOrDefault();
+            // If it exists
+            //TODO: Really need the error code saved in GoneButNotForgotten
+            if (gbResult != null)
+                return "Src Url Contents Not Available " + gbResult.LastCheckedOn;
             return string.Empty;
         }
 
