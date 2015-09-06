@@ -1,6 +1,6 @@
 ﻿namespace Imogen.Forms.Dockable
 {
-    partial class lblSrcUrl
+    partial class FrmProfileImage
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(lblSrcUrl));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmProfileImage));
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnLinkSubmit = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();

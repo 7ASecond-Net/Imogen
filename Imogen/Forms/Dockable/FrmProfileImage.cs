@@ -11,10 +11,11 @@ using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using Imogen.Controllers.Database;
 using Imogen.Controllers.Utils;
+using Imogen.Forms.Dialog;
 
 namespace Imogen.Forms.Dockable
 {
-    public partial class lblSrcUrl : DockContent
+    public partial class FrmProfileImage : DockContent
     {
 
         private Utils utils = new Utils();
@@ -66,7 +67,7 @@ namespace Imogen.Forms.Dockable
             }
         }
 
-        public lblSrcUrl()
+        public FrmProfileImage()
         {
             InitializeComponent();
             Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;            
@@ -115,6 +116,7 @@ namespace Imogen.Forms.Dockable
         internal void SetImage(string imgPath)
         {
             UpdatePbOriginalImage(pbOriginal, Image.FromFile(imgPath));
+            Properties.Settings.Default.ImagePath = imgPath;
         }
 
         internal void ShowImage(string imgPath)
@@ -132,6 +134,9 @@ namespace Imogen.Forms.Dockable
 
         private void btnRestricted_Click(object sender, EventArgs e)
         {
+            // Because restricted files can be miss-defined as criminal we need to do more processing than in the case of allowed files.
+           
+
             //TODO: Who is this restricted to?
             btnSrcSubmit.Visible = true;
             btnSrcSubmit.Tag = "R";
