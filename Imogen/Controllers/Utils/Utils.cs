@@ -123,5 +123,13 @@ namespace Imogen.Controllers.Utils
                 return years <= 1 ? "one year ago" : years + " years ago";
             }
         }
+
+        //Source: http://stackoverflow.com/questions/17352061/fastest-way-to-convert-image-to-byte-array
+        public byte[] imageToByteArray(System.Drawing.Image imageIn)
+        {
+            MemoryStream ms = new MemoryStream();
+            imageIn.Save(ms, imageIn.RawFormat);
+            return ms.ToArray();
+        }
     }
 }
