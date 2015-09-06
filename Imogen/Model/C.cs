@@ -19,6 +19,7 @@ namespace Imogen.Model
         {
             this.ProcessingResults = new HashSet<ProcessingResult>();
             this.ProcessingResults1 = new HashSet<ProcessingResult>();
+            this.FaceARCs = new HashSet<FaceARC>();
         }
     
         public int pid { get; set; }
@@ -31,5 +32,7 @@ namespace Imogen.Model
         public virtual ICollection<ProcessingResult> ProcessingResults { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProcessingResult> ProcessingResults1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FaceARC> FaceARCs { get; set; }
     }
 }

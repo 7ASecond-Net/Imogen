@@ -37,5 +37,9 @@ namespace Imogen.Model
         public virtual DbSet<UserRank> UserRanks { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UsersSession> UsersSessions { get; set; }
+        public virtual DbSet<FaceARC> FaceARCs { get; set; }
+        public virtual DbSet<Face> Faces { get; set; }
+        public virtual DbSet<Hash> Hashes { get; set; }
+        public virtual DbSet<Matedata> Matedatas { get; set; }
     }
 }

@@ -41,6 +41,33 @@
           <Property Name="LinkUrlHash" Type="nchar" MaxLength="128" />
           <Property Name="UserId" Type="int" />
         </EntityType>
+        <EntityType Name="FaceARCs">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AId" Type="int" />
+          <Property Name="RId" Type="int" />
+          <Property Name="CId" Type="int" />
+          <Property Name="FaceId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Faces">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FaceData" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Sex" Type="nvarchar" MaxLength="50" />
+          <Property Name="SpokenLanguage" Type="nvarchar" MaxLength="50" />
+          <Property Name="WrittenLanguage" Type="nvarchar" MaxLength="50" />
+          <Property Name="Nationality" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ethnicity" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="GoneButNotForgottenLinks">
           <Key>
             <PropertyRef Name="pid" />
@@ -53,6 +80,17 @@
           <Property Name="SrcUrlHash" Type="nchar" MaxLength="128" />
           <Property Name="LinkUrlHash" Type="nchar" MaxLength="128" />
         </EntityType>
+        <EntityType Name="Hashes">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="HashType" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="HashValue" Type="nvarchar" MaxLength="512" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Jurisidctions">
           <Key>
             <PropertyRef Name="Id" />
@@ -63,6 +101,17 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Matedata">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Value" Type="nchar" MaxLength="250" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="ProcessingResults">
           <Key>
@@ -174,6 +223,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FaceARCs_A">
+          <End Role="A" Type="Self.A" Multiplicity="0..1" />
+          <End Role="FaceARCs" Type="Self.FaceARCs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="FaceARCs">
+              <PropertyRef Name="AId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FaceARCs_C">
+          <End Role="C" Type="Self.C" Multiplicity="0..1" />
+          <End Role="FaceARCs" Type="Self.FaceARCs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="FaceARCs">
+              <PropertyRef Name="CId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FaceARCs_Faces">
+          <End Role="Faces" Type="Self.Faces" Multiplicity="1" />
+          <End Role="FaceARCs" Type="Self.FaceARCs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faces">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FaceARCs">
+              <PropertyRef Name="FaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FaceARCs_R">
+          <End Role="R" Type="Self.R" Multiplicity="0..1" />
+          <End Role="FaceARCs" Type="Self.FaceARCs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="R">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="FaceARCs">
+              <PropertyRef Name="RId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Faces_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Faces" Type="Self.Faces" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Faces">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_GoneButNotForgottenLinks_EUReported">
           <End Role="EUReported" Type="Self.EUReported" Multiplicity="1" />
           <End Role="GoneButNotForgottenLinks" Type="Self.GoneButNotForgottenLinks" Multiplicity="*" />
@@ -195,6 +304,30 @@
             </Principal>
             <Dependent Role="GoneButNotForgottenLinks">
               <PropertyRef Name="ReportedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hashes_ProcessingResults">
+          <End Role="ProcessingResults" Type="Self.ProcessingResults" Multiplicity="1" />
+          <End Role="Hashes" Type="Self.Hashes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcessingResults">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="Hashes">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matedata_ProcessingResults">
+          <End Role="ProcessingResults" Type="Self.ProcessingResults" Multiplicity="1" />
+          <End Role="Matedata" Type="Self.Matedata" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcessingResults">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="Matedata">
+              <PropertyRef Name="id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -358,8 +491,12 @@
           <EntitySet Name="A" EntityType="Self.A" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="C" EntityType="Self.C" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EUReported" EntityType="Self.EUReported" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FaceARCs" EntityType="Self.FaceARCs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Faces" EntityType="Self.Faces" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoneButNotForgottenLinks" EntityType="Self.GoneButNotForgottenLinks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hashes" EntityType="Self.Hashes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Jurisidctions" EntityType="Self.Jurisidctions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Matedata" EntityType="Self.Matedata" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProcessingResults" EntityType="Self.ProcessingResults" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="R" EntityType="Self.R" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rank" EntityType="Self.Rank" Schema="dbo" store:Type="Tables" />
@@ -375,6 +512,26 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="EUReported" EntitySet="EUReported" />
           </AssociationSet>
+          <AssociationSet Name="FK_FaceARCs_A" Association="Self.FK_FaceARCs_A">
+            <End Role="A" EntitySet="A" />
+            <End Role="FaceARCs" EntitySet="FaceARCs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FaceARCs_C" Association="Self.FK_FaceARCs_C">
+            <End Role="C" EntitySet="C" />
+            <End Role="FaceARCs" EntitySet="FaceARCs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FaceARCs_Faces" Association="Self.FK_FaceARCs_Faces">
+            <End Role="Faces" EntitySet="Faces" />
+            <End Role="FaceARCs" EntitySet="FaceARCs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FaceARCs_R" Association="Self.FK_FaceARCs_R">
+            <End Role="R" EntitySet="R" />
+            <End Role="FaceARCs" EntitySet="FaceARCs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Faces_Users" Association="Self.FK_Faces_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Faces" EntitySet="Faces" />
+          </AssociationSet>
           <AssociationSet Name="FK_GoneButNotForgottenLinks_EUReported" Association="Self.FK_GoneButNotForgottenLinks_EUReported">
             <End Role="EUReported" EntitySet="EUReported" />
             <End Role="GoneButNotForgottenLinks" EntitySet="GoneButNotForgottenLinks" />
@@ -382,6 +539,14 @@
           <AssociationSet Name="FK_GoneButNotForgottenLinks_Users" Association="Self.FK_GoneButNotForgottenLinks_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="GoneButNotForgottenLinks" EntitySet="GoneButNotForgottenLinks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hashes_ProcessingResults" Association="Self.FK_Hashes_ProcessingResults">
+            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
+            <End Role="Hashes" EntitySet="Hashes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matedata_ProcessingResults" Association="Self.FK_Matedata_ProcessingResults">
+            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
+            <End Role="Matedata" EntitySet="Matedata" />
           </AssociationSet>
           <AssociationSet Name="FK_ProcessingResults_A" Association="Self.FK_ProcessingResults_A">
             <End Role="A" EntitySet="A" />
@@ -451,6 +616,7 @@
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="ProcessingResults" Relationship="Self.FK_ProcessingResults_A" FromRole="A" ToRole="ProcessingResults" />
           <NavigationProperty Name="ProcessingResults1" Relationship="Self.FK_ProcessingResults_A1" FromRole="A" ToRole="ProcessingResults" />
+          <NavigationProperty Name="FaceARCs" Relationship="Damocles2Model.FK_FaceARCs_A" FromRole="A" ToRole="FaceARC" />
         </EntityType>
         <EntityType Name="C">
           <Key>
@@ -463,6 +629,7 @@
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="ProcessingResults" Relationship="Self.FK_ProcessingResults_C" FromRole="C" ToRole="ProcessingResults" />
           <NavigationProperty Name="ProcessingResults1" Relationship="Self.FK_ProcessingResults_C1" FromRole="C" ToRole="ProcessingResults" />
+          <NavigationProperty Name="FaceARCs" Relationship="Damocles2Model.FK_FaceARCs_C" FromRole="C" ToRole="FaceARC" />
         </EntityType>
         <EntityType Name="EUReported">
           <Key>
@@ -535,6 +702,8 @@
           <NavigationProperty Name="R" Relationship="Self.FK_ProcessingResults_R" FromRole="ProcessingResults" ToRole="R" />
           <NavigationProperty Name="R1" Relationship="Self.FK_ProcessingResults_R1" FromRole="ProcessingResults" ToRole="R" />
           <NavigationProperty Name="User" Relationship="Self.FK_ProcessingResults_Users" FromRole="ProcessingResults" ToRole="Users" />
+          <NavigationProperty Name="Hashes" Relationship="Damocles2Model.FK_Hashes_ProcessingResults" FromRole="ProcessingResult" ToRole="Hash" />
+          <NavigationProperty Name="Matedatas" Relationship="Damocles2Model.FK_Matedata_ProcessingResults" FromRole="ProcessingResult" ToRole="Matedata" />
         </EntityType>
         <EntityType Name="R">
           <Key>
@@ -547,6 +716,7 @@
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="ProcessingResults" Relationship="Self.FK_ProcessingResults_R" FromRole="R" ToRole="ProcessingResults" />
           <NavigationProperty Name="ProcessingResults1" Relationship="Self.FK_ProcessingResults_R1" FromRole="R" ToRole="ProcessingResults" />
+          <NavigationProperty Name="FaceARCs" Relationship="Damocles2Model.FK_FaceARCs_R" FromRole="R" ToRole="FaceARC" />
         </EntityType>
         <EntityType Name="Rank">
           <Key>
@@ -607,6 +777,7 @@
           <NavigationProperty Name="UserJurisdictions" Relationship="Self.FK_UserJurisdictions_Users" FromRole="Users" ToRole="UserJurisdictions" />
           <NavigationProperty Name="UserRanks" Relationship="Self.FK_UserRanks_Users" FromRole="Users" ToRole="UserRanks" />
           <NavigationProperty Name="UsersSessions" Relationship="Self.FK_UsersSessions_Users" FromRole="Users" ToRole="UsersSessions" />
+          <NavigationProperty Name="Faces" Relationship="Damocles2Model.FK_Faces_Users" FromRole="User" ToRole="Face" />
         </EntityType>
         <EntityType Name="UsersSession">
           <Key>
@@ -904,7 +1075,180 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UsersSessions" EntitySet="UsersSessions" />
           </AssociationSet>
+          <EntitySet Name="FaceARCs" EntityType="Damocles2Model.FaceARC" />
+          <EntitySet Name="Faces" EntityType="Damocles2Model.Face" />
+          <EntitySet Name="Hashes" EntityType="Damocles2Model.Hash" />
+          <EntitySet Name="Matedatas" EntityType="Damocles2Model.Matedata" />
+          <AssociationSet Name="FK_FaceARCs_A" Association="Damocles2Model.FK_FaceARCs_A">
+            <End Role="A" EntitySet="A" />
+            <End Role="FaceARC" EntitySet="FaceARCs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FaceARCs_C" Association="Damocles2Model.FK_FaceARCs_C">
+            <End Role="C" EntitySet="C" />
+            <End Role="FaceARC" EntitySet="FaceARCs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FaceARCs_Faces" Association="Damocles2Model.FK_FaceARCs_Faces">
+            <End Role="Face" EntitySet="Faces" />
+            <End Role="FaceARC" EntitySet="FaceARCs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FaceARCs_R" Association="Damocles2Model.FK_FaceARCs_R">
+            <End Role="R" EntitySet="R" />
+            <End Role="FaceARC" EntitySet="FaceARCs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Faces_Users" Association="Damocles2Model.FK_Faces_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Face" EntitySet="Faces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hashes_ProcessingResults" Association="Damocles2Model.FK_Hashes_ProcessingResults">
+            <End Role="ProcessingResult" EntitySet="ProcessingResults" />
+            <End Role="Hash" EntitySet="Hashes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matedata_ProcessingResults" Association="Damocles2Model.FK_Matedata_ProcessingResults">
+            <End Role="ProcessingResult" EntitySet="ProcessingResults" />
+            <End Role="Matedata" EntitySet="Matedatas" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="FaceARC">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AId" Type="Int32" />
+          <Property Name="RId" Type="Int32" />
+          <Property Name="CId" Type="Int32" />
+          <Property Name="FaceId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="A" Relationship="Damocles2Model.FK_FaceARCs_A" FromRole="FaceARC" ToRole="A" />
+          <NavigationProperty Name="C" Relationship="Damocles2Model.FK_FaceARCs_C" FromRole="FaceARC" ToRole="C" />
+          <NavigationProperty Name="Face" Relationship="Damocles2Model.FK_FaceARCs_Faces" FromRole="FaceARC" ToRole="Face" />
+          <NavigationProperty Name="R" Relationship="Damocles2Model.FK_FaceARCs_R" FromRole="FaceARC" ToRole="R" />
+        </EntityType>
+        <EntityType Name="Face">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FaceData" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Sex" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SpokenLanguage" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WrittenLanguage" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Nationality" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ethnicity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FaceARCs" Relationship="Damocles2Model.FK_FaceARCs_Faces" FromRole="Face" ToRole="FaceARC" />
+          <NavigationProperty Name="User" Relationship="Damocles2Model.FK_Faces_Users" FromRole="Face" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Hash">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="HashType" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="HashValue" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ProcessingResult" Relationship="Damocles2Model.FK_Hashes_ProcessingResults" FromRole="Hash" ToRole="ProcessingResult" />
+        </EntityType>
+        <EntityType Name="Matedata">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="250" FixedLength="true" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ProcessingResult" Relationship="Damocles2Model.FK_Matedata_ProcessingResults" FromRole="Matedata" ToRole="ProcessingResult" />
+        </EntityType>
+        <Association Name="FK_FaceARCs_A">
+          <End Type="Damocles2Model.A" Role="A" Multiplicity="0..1" />
+          <End Type="Damocles2Model.FaceARC" Role="FaceARC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="A">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="FaceARC">
+              <PropertyRef Name="AId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FaceARCs_C">
+          <End Type="Damocles2Model.C" Role="C" Multiplicity="0..1" />
+          <End Type="Damocles2Model.FaceARC" Role="FaceARC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="FaceARC">
+              <PropertyRef Name="CId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FaceARCs_Faces">
+          <End Type="Damocles2Model.Face" Role="Face" Multiplicity="1" />
+          <End Type="Damocles2Model.FaceARC" Role="FaceARC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Face">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FaceARC">
+              <PropertyRef Name="FaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FaceARCs_R">
+          <End Type="Damocles2Model.R" Role="R" Multiplicity="0..1" />
+          <End Type="Damocles2Model.FaceARC" Role="FaceARC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="R">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="FaceARC">
+              <PropertyRef Name="RId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Faces_Users">
+          <End Type="Damocles2Model.User" Role="User" Multiplicity="1" />
+          <End Type="Damocles2Model.Face" Role="Face" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Face">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hashes_ProcessingResults">
+          <End Type="Damocles2Model.ProcessingResult" Role="ProcessingResult" Multiplicity="1" />
+          <End Type="Damocles2Model.Hash" Role="Hash" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcessingResult">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="Hash">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matedata_ProcessingResults">
+          <End Type="Damocles2Model.ProcessingResult" Role="ProcessingResult" Multiplicity="1" />
+          <End Type="Damocles2Model.Matedata" Role="Matedata" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcessingResult">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="Matedata">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1065,6 +1409,59 @@
                 <ScalarProperty Name="LoggedOnAt" ColumnName="LoggedOnAt" />
                 <ScalarProperty Name="loggedOffAt" ColumnName="loggedOffAt" />
                 <ScalarProperty Name="SessionSeconds" ColumnName="SessionSeconds" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FaceARCs">
+            <EntityTypeMapping TypeName="Damocles2Model.FaceARC">
+              <MappingFragment StoreEntitySet="FaceARCs">
+                <ScalarProperty Name="FaceId" ColumnName="FaceId" />
+                <ScalarProperty Name="CId" ColumnName="CId" />
+                <ScalarProperty Name="RId" ColumnName="RId" />
+                <ScalarProperty Name="AId" ColumnName="AId" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Faces">
+            <EntityTypeMapping TypeName="Damocles2Model.Face">
+              <MappingFragment StoreEntitySet="Faces">
+                <ScalarProperty Name="Ethnicity" ColumnName="Ethnicity" />
+                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+                <ScalarProperty Name="WrittenLanguage" ColumnName="WrittenLanguage" />
+                <ScalarProperty Name="SpokenLanguage" ColumnName="SpokenLanguage" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="FaceData" ColumnName="FaceData" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hashes">
+            <EntityTypeMapping TypeName="Damocles2Model.Hash">
+              <MappingFragment StoreEntitySet="Hashes">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="HashValue" ColumnName="HashValue" />
+                <ScalarProperty Name="HashType" ColumnName="HashType" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Matedatas">
+            <EntityTypeMapping TypeName="Damocles2Model.Matedata">
+              <MappingFragment StoreEntitySet="Matedata">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

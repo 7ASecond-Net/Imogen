@@ -12,27 +12,29 @@ namespace Imogen.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class A
+    public partial class Face
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public A()
+        public Face()
         {
-            this.ProcessingResults = new HashSet<ProcessingResult>();
-            this.ProcessingResults1 = new HashSet<ProcessingResult>();
             this.FaceARCs = new HashSet<FaceARC>();
         }
     
-        public int pid { get; set; }
-        public int ResultCount { get; set; }
-        public bool IsAllowed { get; set; }
+        public int id { get; set; }
+        public string FaceData { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime UpdatedOn { get; set; }
+        public int CreatedBy { get; set; }
+        public string Name { get; set; }
+        public Nullable<int> Age { get; set; }
+        public string Sex { get; set; }
+        public string SpokenLanguage { get; set; }
+        public string WrittenLanguage { get; set; }
+        public string Nationality { get; set; }
+        public string Ethnicity { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProcessingResult> ProcessingResults { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProcessingResult> ProcessingResults1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FaceARC> FaceARCs { get; set; }
+        public virtual User User { get; set; }
     }
 }

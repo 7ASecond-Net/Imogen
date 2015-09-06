@@ -18,6 +18,8 @@ namespace Imogen.Model
         public ProcessingResult()
         {
             this.EUReporteds = new HashSet<EUReported>();
+            this.Hashes = new HashSet<Hash>();
+            this.Matedatas = new HashSet<Matedata>();
         }
     
         public int pid { get; set; }
@@ -43,5 +45,9 @@ namespace Imogen.Model
         public virtual R R { get; set; }
         public virtual R R1 { get; set; }
         public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Hash> Hashes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Matedata> Matedatas { get; set; }
     }
 }
