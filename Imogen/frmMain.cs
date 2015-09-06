@@ -36,6 +36,7 @@ namespace Imogen
         private FrmRestrictedWebBrowser frmRWB = new FrmRestrictedWebBrowser();
         private FrmMetaData frmMetadata = new FrmMetaData();
         private FrmUser frmYourAccount = new FrmUser();
+        FrmIndividualsIdentificationExtraction frmId = new FrmIndividualsIdentificationExtraction();
 
         enum LogType
         {
@@ -115,6 +116,11 @@ namespace Imogen
             {
                 yourAccountToolStripMenuItem.Checked = true;
                 return frmYourAccount;
+            }
+            else if (persistString == typeof(FrmIndividualsIdentificationExtraction).ToString())
+            {
+                identifyIndividualsToolStripMenuItem.Checked = true;
+                return frmId;
             }
 
             return null;
@@ -229,6 +235,7 @@ namespace Imogen
                 Log("Download Completed", LogType.Success);
                 frmProfileImage.ShowImage(imgPath);
                 currentFilePath = imgPath;
+                Properties.Settings.Default.ImagePath = imgPath;
             }
             else
                 Log("Download Failed", LogType.Error);
@@ -395,6 +402,36 @@ namespace Imogen
             }
             restrictedBrowserToolStripMenuItem.Checked = !restrictedBrowserToolStripMenuItem.Checked; // Toggle the check state in the menu on click
         }
+
+        private void identifyIndividualsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (identifyIndividualsToolStripMenuItem.Checked)
+            {
+                Log("Closing Individual's Identification Window");
+                frmId.Close();
+            }
+            else
+            {
+                Log("Opening Individual's Identification");
+                if (frmId == null || frmId.IsDisposed) frmId = new FrmIndividualsIdentificationExtraction();
+                frmId.LoadImage(Properties.Settings.Default.ImagePath);
+                frmId.Show(dockPanel, DockState.Float);
+            }
+            identifyIndividualsToolStripMenuItem.Checked = !identifyIndividualsToolStripMenuItem.Checked; // Toggle the check state in the menu on click
+
+
+            // Get the Investigator to extract the faces from the file and add basic identification information with supporting evidence where required
+            
+           
+        }
+
+        private void videoLinkTesterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Log("Opening Video Link Tester");
+            FrmVideoLinkTester frmVideo = new FrmVideoLinkTester();
+            frmVideo.ShowDialog();
+        }
+
         #endregion
 
         #endregion
@@ -427,14 +464,14 @@ namespace Imogen
 
         private void timerFiveMinuteUpdate_Tick(object sender, EventArgs e)
         {
+            Log("Updating Pending Reports");
             lblPendingReports.Text = DBHelper.GetPendingReportCount();
+            Log("Updating Users Online");
             lblUsersOnline.Text = DBHelper.GetUsersOnlineCount();
         }
 
-        private void videoLinkTesterToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FrmVideoLinkTester frmVideo = new FrmVideoLinkTester();
-            frmVideo.ShowDialog();
-        }
+   
+
+       
     }
 }
