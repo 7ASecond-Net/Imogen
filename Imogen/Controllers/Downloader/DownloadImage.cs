@@ -32,19 +32,14 @@ namespace Imogen.Controllers.Downloader
             try
             {
                 WebClient wc = new WebClient();
-                result = utils.GetNewFilename();
-                wc.DownloadFile(srcUrl, result); //TODO> Ensure when finished this file is Moved to Damocles2 FileStore and this copy is DELETED
-              
-                
+                result = utils.GetNewSrcFilename();
+                wc.DownloadFile(srcUrl, result); //TODO: Ensure when finished this file is Moved to Damocles2 FileStore and this copy is DELETED
             }
             catch (Exception)
-            {
-                
+            {              
                 throw;
-            }
-
-            
-            return result;
+            }          
+            return result; // Path to the image
         }
 
     }
