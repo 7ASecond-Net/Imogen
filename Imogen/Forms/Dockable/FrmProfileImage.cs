@@ -14,10 +14,26 @@ using Imogen.Controllers.Utils;
 
 namespace Imogen.Forms.Dockable
 {
-    public partial class FrmProfileImage : DockContent
+    public partial class lblSrcUrl : DockContent
     {
 
         private Utils utils = new Utils();
+
+        private delegate void UpdateTextBoxTextDelegate(TextBox tb, string txt);
+        private void UpdateTextBoxText(TextBox tb, string txt)
+        {
+            if (tb.InvokeRequired)
+            {
+                // This is a worker thread so delegate the task.
+                tb.Invoke(new UpdateTextBoxTextDelegate(this.UpdateTextBoxText), tb, txt);
+            }
+            else
+            {
+                // This is the UI thread so perform the task.
+
+                tb.Text = txt.ToString();
+            }
+        }
 
         private delegate void UpdateLabelTextDelegate(Label lbl, string txt);
         private void UpdateLabelText(Label lbl, string txt)
@@ -50,13 +66,10 @@ namespace Imogen.Forms.Dockable
             }
         }
 
-        public FrmProfileImage()
+        public lblSrcUrl()
         {
             InitializeComponent();
-            Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
-
-
-
+            Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;            
         }
 
         private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -65,6 +78,12 @@ namespace Imogen.Forms.Dockable
                 UpdateLabelText(lblUrlHash, Properties.Settings.Default.ProfileUrlHash);
             else if (e.PropertyName == "ProfileSrcUrlHash")
                 UpdateLabelText(lblSrcUrlHash, Properties.Settings.Default.ProfileSrcUrlHash);
+            else if (e.PropertyName == "ProfileUrl")
+                UpdateTextBoxText(lblUrl, Properties.Settings.Default.ProfileUrl);
+            else if (e.PropertyName == "ProfileSrcUrl")
+                UpdateTextBoxText(tbSrcUrl, Properties.Settings.Default.ProfileSrcUrl);
+            else if (e.PropertyName == "ProfileLinkUrl")
+                UpdateTextBoxText(tbLinkUrl, Properties.Settings.Default.ProfileLinkUrl);
             else if (e.PropertyName == "ProfileLinkUrlHash")
                 UpdateLabelText(lblLinkUrlHash, Properties.Settings.Default.ProfileLinkUrlHash);
             else if (e.PropertyName == "ProfileReportedOn")

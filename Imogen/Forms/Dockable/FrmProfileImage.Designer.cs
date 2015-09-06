@@ -1,6 +1,6 @@
 ﻿namespace Imogen.Forms.Dockable
 {
-    partial class FrmProfileImage
+    partial class lblSrcUrl
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmProfileImage));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(lblSrcUrl));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnLinkUrlNoLongerAvailable = new System.Windows.Forms.Button();
-            this.btnSrcUrlNoLongerAvailable = new System.Windows.Forms.Button();
             this.btnLinkSubmit = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -42,7 +40,6 @@
             this.btnRestricted = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.btnAllowed = new System.Windows.Forms.Button();
-            this.pbOriginal = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -55,9 +52,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.lblLinkUrl = new System.Windows.Forms.Label();
-            this.lblSrcUrl = new System.Windows.Forms.Label();
-            this.lblUrl = new System.Windows.Forms.Label();
             this.lblLinkUrlARCRating = new System.Windows.Forms.Label();
             this.lblPossibleFileName2 = new System.Windows.Forms.Label();
             this.lblPossibleFileName1 = new System.Windows.Forms.Label();
@@ -66,6 +60,12 @@
             this.lblLinkUrlHash = new System.Windows.Forms.Label();
             this.lblSrcUrlHash = new System.Windows.Forms.Label();
             this.lblUrlHash = new System.Windows.Forms.Label();
+            this.btnLinkUrlNoLongerAvailable = new System.Windows.Forms.Button();
+            this.btnSrcUrlNoLongerAvailable = new System.Windows.Forms.Button();
+            this.pbOriginal = new System.Windows.Forms.PictureBox();
+            this.lblUrl = new System.Windows.Forms.TextBox();
+            this.tbSrcUrl = new System.Windows.Forms.TextBox();
+            this.tbLinkUrl = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbOriginal)).BeginInit();
             this.SuspendLayout();
@@ -92,34 +92,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(345, 301);
             this.panel1.TabIndex = 0;
-            // 
-            // btnLinkUrlNoLongerAvailable
-            // 
-            this.btnLinkUrlNoLongerAvailable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnLinkUrlNoLongerAvailable.BackColor = System.Drawing.Color.Transparent;
-            this.btnLinkUrlNoLongerAvailable.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnLinkUrlNoLongerAvailable.BackgroundImage")));
-            this.btnLinkUrlNoLongerAvailable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnLinkUrlNoLongerAvailable.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnLinkUrlNoLongerAvailable.Location = new System.Drawing.Point(211, 264);
-            this.btnLinkUrlNoLongerAvailable.Name = "btnLinkUrlNoLongerAvailable";
-            this.btnLinkUrlNoLongerAvailable.Size = new System.Drawing.Size(17, 23);
-            this.btnLinkUrlNoLongerAvailable.TabIndex = 29;
-            this.btnLinkUrlNoLongerAvailable.UseVisualStyleBackColor = false;
-            this.btnLinkUrlNoLongerAvailable.Click += new System.EventHandler(this.btnLinkUrlNoLongerAvailable_Click);
-            // 
-            // btnSrcUrlNoLongerAvailable
-            // 
-            this.btnSrcUrlNoLongerAvailable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSrcUrlNoLongerAvailable.BackColor = System.Drawing.Color.Transparent;
-            this.btnSrcUrlNoLongerAvailable.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnSrcUrlNoLongerAvailable.BackgroundImage")));
-            this.btnSrcUrlNoLongerAvailable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnSrcUrlNoLongerAvailable.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnSrcUrlNoLongerAvailable.Location = new System.Drawing.Point(211, 233);
-            this.btnSrcUrlNoLongerAvailable.Name = "btnSrcUrlNoLongerAvailable";
-            this.btnSrcUrlNoLongerAvailable.Size = new System.Drawing.Size(16, 23);
-            this.btnSrcUrlNoLongerAvailable.TabIndex = 28;
-            this.btnSrcUrlNoLongerAvailable.UseVisualStyleBackColor = false;
-            this.btnSrcUrlNoLongerAvailable.Click += new System.EventHandler(this.btnSrcUrlNoLongerAvailable_Click);
             // 
             // btnLinkSubmit
             // 
@@ -244,19 +216,6 @@
             this.btnAllowed.Text = "A";
             this.btnAllowed.UseVisualStyleBackColor = false;
             this.btnAllowed.Click += new System.EventHandler(this.btnAllowed_Click);
-            // 
-            // pbOriginal
-            // 
-            this.pbOriginal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbOriginal.BackColor = System.Drawing.Color.Black;
-            this.pbOriginal.Location = new System.Drawing.Point(19, 12);
-            this.pbOriginal.Name = "pbOriginal";
-            this.pbOriginal.Size = new System.Drawing.Size(289, 215);
-            this.pbOriginal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbOriginal.TabIndex = 0;
-            this.pbOriginal.TabStop = false;
             // 
             // label1
             // 
@@ -385,45 +344,6 @@
             this.label16.TabIndex = 26;
             this.label16.Text = "Url:";
             // 
-            // lblLinkUrl
-            // 
-            this.lblLinkUrl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblLinkUrl.AutoSize = true;
-            this.lblLinkUrl.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Imogen.Properties.Settings.Default, "ProfileLinkUrl", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.lblLinkUrl.Font = new System.Drawing.Font("Arial Unicode MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLinkUrl.ForeColor = System.Drawing.Color.Gold;
-            this.lblLinkUrl.Location = new System.Drawing.Point(450, 226);
-            this.lblLinkUrl.Name = "lblLinkUrl";
-            this.lblLinkUrl.Size = new System.Drawing.Size(19, 15);
-            this.lblLinkUrl.TabIndex = 31;
-            this.lblLinkUrl.Text = global::Imogen.Properties.Settings.Default.ProfileLinkUrl;
-            // 
-            // lblSrcUrl
-            // 
-            this.lblSrcUrl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblSrcUrl.AutoSize = true;
-            this.lblSrcUrl.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Imogen.Properties.Settings.Default, "ProfileSrcUrl", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.lblSrcUrl.Font = new System.Drawing.Font("Arial Unicode MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSrcUrl.ForeColor = System.Drawing.Color.Gold;
-            this.lblSrcUrl.Location = new System.Drawing.Point(450, 211);
-            this.lblSrcUrl.Name = "lblSrcUrl";
-            this.lblSrcUrl.Size = new System.Drawing.Size(19, 15);
-            this.lblSrcUrl.TabIndex = 29;
-            this.lblSrcUrl.Text = global::Imogen.Properties.Settings.Default.ProfileSrcUrl;
-            // 
-            // lblUrl
-            // 
-            this.lblUrl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblUrl.AutoSize = true;
-            this.lblUrl.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Imogen.Properties.Settings.Default, "ProfileUrl", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.lblUrl.Font = new System.Drawing.Font("Arial Unicode MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUrl.ForeColor = System.Drawing.Color.Gold;
-            this.lblUrl.Location = new System.Drawing.Point(450, 196);
-            this.lblUrl.Name = "lblUrl";
-            this.lblUrl.Size = new System.Drawing.Size(19, 15);
-            this.lblUrl.TabIndex = 27;
-            this.lblUrl.Text = global::Imogen.Properties.Settings.Default.ProfileUrl;
-            // 
             // lblLinkUrlARCRating
             // 
             this.lblLinkUrlARCRating.AutoSize = true;
@@ -523,17 +443,97 @@
             this.lblUrlHash.TabIndex = 2;
             this.lblUrlHash.Text = global::Imogen.Properties.Settings.Default.ProfileUrlHash;
             // 
-            // FrmProfileImage
+            // btnLinkUrlNoLongerAvailable
+            // 
+            this.btnLinkUrlNoLongerAvailable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnLinkUrlNoLongerAvailable.BackColor = System.Drawing.Color.Transparent;
+            this.btnLinkUrlNoLongerAvailable.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnLinkUrlNoLongerAvailable.BackgroundImage")));
+            this.btnLinkUrlNoLongerAvailable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnLinkUrlNoLongerAvailable.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnLinkUrlNoLongerAvailable.Location = new System.Drawing.Point(211, 264);
+            this.btnLinkUrlNoLongerAvailable.Name = "btnLinkUrlNoLongerAvailable";
+            this.btnLinkUrlNoLongerAvailable.Size = new System.Drawing.Size(17, 23);
+            this.btnLinkUrlNoLongerAvailable.TabIndex = 29;
+            this.btnLinkUrlNoLongerAvailable.UseVisualStyleBackColor = false;
+            this.btnLinkUrlNoLongerAvailable.Click += new System.EventHandler(this.btnLinkUrlNoLongerAvailable_Click);
+            // 
+            // btnSrcUrlNoLongerAvailable
+            // 
+            this.btnSrcUrlNoLongerAvailable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSrcUrlNoLongerAvailable.BackColor = System.Drawing.Color.Transparent;
+            this.btnSrcUrlNoLongerAvailable.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnSrcUrlNoLongerAvailable.BackgroundImage")));
+            this.btnSrcUrlNoLongerAvailable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnSrcUrlNoLongerAvailable.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSrcUrlNoLongerAvailable.Location = new System.Drawing.Point(211, 233);
+            this.btnSrcUrlNoLongerAvailable.Name = "btnSrcUrlNoLongerAvailable";
+            this.btnSrcUrlNoLongerAvailable.Size = new System.Drawing.Size(16, 23);
+            this.btnSrcUrlNoLongerAvailable.TabIndex = 28;
+            this.btnSrcUrlNoLongerAvailable.UseVisualStyleBackColor = false;
+            this.btnSrcUrlNoLongerAvailable.Click += new System.EventHandler(this.btnSrcUrlNoLongerAvailable_Click);
+            // 
+            // pbOriginal
+            // 
+            this.pbOriginal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbOriginal.BackColor = System.Drawing.Color.Black;
+            this.pbOriginal.Location = new System.Drawing.Point(19, 12);
+            this.pbOriginal.Name = "pbOriginal";
+            this.pbOriginal.Size = new System.Drawing.Size(289, 215);
+            this.pbOriginal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbOriginal.TabIndex = 0;
+            this.pbOriginal.TabStop = false;
+            // 
+            // lblUrl
+            // 
+            this.lblUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblUrl.BackColor = System.Drawing.Color.MidnightBlue;
+            this.lblUrl.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lblUrl.ForeColor = System.Drawing.Color.Yellow;
+            this.lblUrl.Location = new System.Drawing.Point(453, 194);
+            this.lblUrl.Name = "lblUrl";
+            this.lblUrl.ReadOnly = true;
+            this.lblUrl.Size = new System.Drawing.Size(1046, 15);
+            this.lblUrl.TabIndex = 32;
+            // 
+            // tbSrcUrl
+            // 
+            this.tbSrcUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbSrcUrl.BackColor = System.Drawing.Color.MidnightBlue;
+            this.tbSrcUrl.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbSrcUrl.ForeColor = System.Drawing.Color.Yellow;
+            this.tbSrcUrl.Location = new System.Drawing.Point(453, 211);
+            this.tbSrcUrl.Name = "tbSrcUrl";
+            this.tbSrcUrl.ReadOnly = true;
+            this.tbSrcUrl.Size = new System.Drawing.Size(1046, 15);
+            this.tbSrcUrl.TabIndex = 33;
+            // 
+            // tbLinkUrl
+            // 
+            this.tbLinkUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbLinkUrl.BackColor = System.Drawing.Color.MidnightBlue;
+            this.tbLinkUrl.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbLinkUrl.ForeColor = System.Drawing.Color.Yellow;
+            this.tbLinkUrl.Location = new System.Drawing.Point(453, 228);
+            this.tbLinkUrl.Name = "tbLinkUrl";
+            this.tbLinkUrl.ReadOnly = true;
+            this.tbLinkUrl.Size = new System.Drawing.Size(1046, 15);
+            this.tbLinkUrl.TabIndex = 34;
+            // 
+            // lblSrcUrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MidnightBlue;
             this.ClientSize = new System.Drawing.Size(1511, 301);
-            this.Controls.Add(this.lblLinkUrl);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.lblSrcUrl);
-            this.Controls.Add(this.label14);
+            this.Controls.Add(this.tbLinkUrl);
+            this.Controls.Add(this.tbSrcUrl);
             this.Controls.Add(this.lblUrl);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.lblLinkUrlARCRating);
             this.Controls.Add(this.label9);
@@ -556,7 +556,7 @@
             this.Font = new System.Drawing.Font("Arial Unicode MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(16, 282);
-            this.Name = "FrmProfileImage";
+            this.Name = "lblSrcUrl";
             this.Text = "Report in Progress";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -599,11 +599,11 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button btnLinkUrlNoLongerAvailable;
         private System.Windows.Forms.Button btnSrcUrlNoLongerAvailable;
-        private System.Windows.Forms.Label lblLinkUrl;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label lblSrcUrl;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label lblUrl;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox lblUrl;
+        private System.Windows.Forms.TextBox tbSrcUrl;
+        private System.Windows.Forms.TextBox tbLinkUrl;
     }
 }
