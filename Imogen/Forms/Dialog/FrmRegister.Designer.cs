@@ -189,6 +189,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Register";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.FrmRegister_Load);
             ((System.ComponentModel.ISupportInitialize)(this.eUReportedBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

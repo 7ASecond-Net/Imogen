@@ -72,6 +72,7 @@ namespace Imogen.Forms.Dockable
 
         internal void GetMetaData(string srcPath)
         {
+            SuspendLayout();
             lastSrcFilePath = srcPath;
             exif = new Exif();
             alResults = exif.GetExif(srcPath);
@@ -92,7 +93,7 @@ namespace Imogen.Forms.Dockable
                 string res = ex.Message;
                 throw;
             }
-
+            ResumeLayout();
         }
 
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)

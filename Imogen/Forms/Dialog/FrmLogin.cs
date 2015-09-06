@@ -20,14 +20,16 @@ namespace Imogen.Forms.Dialog
 
         public FrmLogin()
         {
-            InitializeComponent();
-            cbRememberMe.Checked = Properties.Settings.Default.LoginRememberMe;
-            Text = "Login " + sh.GetUser();
+            InitializeComponent();          
         }
 
         private void FrmLogin_Load(object sender, EventArgs e)
         {
+            SuspendLayout();
+            cbRememberMe.Checked = Properties.Settings.Default.LoginRememberMe;
+            Text = "Login " + sh.GetUser();
             tbUsername.Text = sh.GetUser();
+            ResumeLayout();
         }
 
         private void cbRememberMe_CheckedChanged(object sender, EventArgs e)

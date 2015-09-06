@@ -80,6 +80,7 @@
             this.restrictedBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.metaDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.yourAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.identifyIndividualsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.indexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -96,7 +97,8 @@
             this.dbStatusIcon = new System.Windows.Forms.ToolStripStatusLabel();
             this.timerDBConnect = new System.Windows.Forms.Timer(this.components);
             this.timerFiveMinuteUpdate = new System.Windows.Forms.Timer(this.components);
-            this.identifyIndividualsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.layoutsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -349,7 +351,7 @@
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.videoLinkTesterToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(130, 22);
             this.toolStripMenuItem1.Text = "Download";
             // 
             // videoLinkTesterToolStripMenuItem
@@ -363,24 +365,25 @@
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(127, 6);
             // 
             // customizeToolStripMenuItem
             // 
             this.customizeToolStripMenuItem.Name = "customizeToolStripMenuItem";
-            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.customizeToolStripMenuItem.Text = "&Customize";
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.optionsToolStripMenuItem.Text = "&Options";
             // 
             // windowsToolStripMenuItem
             // 
             this.windowsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toggleToolStripMenuItem});
+            this.toggleToolStripMenuItem,
+            this.layoutsToolStripMenuItem});
             this.windowsToolStripMenuItem.Name = "windowsToolStripMenuItem";
             this.windowsToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
             this.windowsToolStripMenuItem.Text = "Windows";
@@ -432,6 +435,13 @@
             this.yourAccountToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.yourAccountToolStripMenuItem.Text = "Your Account";
             this.yourAccountToolStripMenuItem.Click += new System.EventHandler(this.yourAccountToolStripMenuItem_Click);
+            // 
+            // identifyIndividualsToolStripMenuItem
+            // 
+            this.identifyIndividualsToolStripMenuItem.Name = "identifyIndividualsToolStripMenuItem";
+            this.identifyIndividualsToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.identifyIndividualsToolStripMenuItem.Text = "Identify Individuals";
+            this.identifyIndividualsToolStripMenuItem.Click += new System.EventHandler(this.identifyIndividualsToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -554,12 +564,19 @@
             this.timerFiveMinuteUpdate.Interval = 60000;
             this.timerFiveMinuteUpdate.Tick += new System.EventHandler(this.timerFiveMinuteUpdate_Tick);
             // 
-            // identifyIndividualsToolStripMenuItem
+            // layoutsToolStripMenuItem
             // 
-            this.identifyIndividualsToolStripMenuItem.Name = "identifyIndividualsToolStripMenuItem";
-            this.identifyIndividualsToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.identifyIndividualsToolStripMenuItem.Text = "Identify Individuals";
-            this.identifyIndividualsToolStripMenuItem.Click += new System.EventHandler(this.identifyIndividualsToolStripMenuItem_Click);
+            this.layoutsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.generalToolStripMenuItem});
+            this.layoutsToolStripMenuItem.Name = "layoutsToolStripMenuItem";
+            this.layoutsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.layoutsToolStripMenuItem.Text = "Layouts";
+            // 
+            // generalToolStripMenuItem
+            // 
+            this.generalToolStripMenuItem.Name = "generalToolStripMenuItem";
+            this.generalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.generalToolStripMenuItem.Text = "General";
             // 
             // frmMain
             // 
@@ -640,6 +657,8 @@
         private System.Windows.Forms.ToolStripMenuItem videoLinkTesterToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem identifyIndividualsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem layoutsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem generalToolStripMenuItem;
     }
 }
 

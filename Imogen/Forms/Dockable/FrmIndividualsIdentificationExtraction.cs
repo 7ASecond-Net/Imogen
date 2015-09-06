@@ -13,6 +13,7 @@ using WeifenLuo.WinFormsUI.Docking;
 using Accord.Imaging;
 using AForge.Imaging.Filters;
 using System.Drawing.Imaging;
+using Imogen.Controllers.Database;
 
 namespace Imogen.Forms.Dialog
 {
@@ -78,7 +79,7 @@ namespace Imogen.Forms.Dialog
 
         private void FrmIndividualsIdentificationExtraction_Load(object sender, EventArgs e)
         {
-            
+            SuspendLayout();   
             if (!string.IsNullOrEmpty(Properties.Settings.Default.ImagePath))
                 LoadImage(Properties.Settings.Default.ImagePath);
             Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
@@ -110,6 +111,7 @@ namespace Imogen.Forms.Dialog
             {
                 cbSex.Items.Add(sex);
             }
+            ResumeLayout();
         }
 
         private void btnReload_Click(object sender, EventArgs e)
@@ -176,6 +178,17 @@ namespace Imogen.Forms.Dialog
             tmpImage.RotateFlip(RotateFlipType.RotateNoneFlipY);
             pbFace.Image = tmpImage;
             FitFaceImage();
+        }
+
+       
+        private void SaveChanges()
+        {
+            DBHelper.SaveIndividualsBasicInformation(tbName.Text, tbAge.Text, cbSex.SelectedText, cbSpokenLanguage.SelectedText, cbWrittenLanguage.SelectedText, cbNationality.SelectedText, cbEthnicityCodes.SelectedText, pbFace.Image);
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            SaveChanges();
         }
     }
 }

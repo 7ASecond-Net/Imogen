@@ -32,8 +32,8 @@
             this.pbOriginal = new Tpsc.Controls.PictureBoxEx();
             this.pbFace = new Tpsc.Controls.PictureBoxEx();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tbName = new System.Windows.Forms.TextBox();
+            this.tbAge = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -41,7 +41,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.cbSpokenLanguage = new System.Windows.Forms.ComboBox();
             this.cbWrittenLanguage = new System.Windows.Forms.ComboBox();
-            this.btnDone = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
             this.btnReload = new System.Windows.Forms.Button();
             this.tbRotate = new System.Windows.Forms.TrackBar();
@@ -88,21 +87,21 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Name";
             // 
-            // textBox1
+            // tbName
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(574, 10);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(174, 20);
-            this.textBox1.TabIndex = 3;
+            this.tbName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbName.Location = new System.Drawing.Point(574, 10);
+            this.tbName.Name = "tbName";
+            this.tbName.Size = new System.Drawing.Size(174, 20);
+            this.tbName.TabIndex = 3;
             // 
-            // textBox2
+            // tbAge
             // 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.Location = new System.Drawing.Point(574, 36);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(174, 20);
-            this.textBox2.TabIndex = 5;
+            this.tbAge.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbAge.Location = new System.Drawing.Point(574, 36);
+            this.tbAge.Name = "tbAge";
+            this.tbAge.Size = new System.Drawing.Size(174, 20);
+            this.tbAge.TabIndex = 5;
             // 
             // label2
             // 
@@ -172,25 +171,16 @@
             this.cbWrittenLanguage.Size = new System.Drawing.Size(174, 21);
             this.cbWrittenLanguage.TabIndex = 15;
             // 
-            // btnDone
-            // 
-            this.btnDone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDone.Location = new System.Drawing.Point(655, 308);
-            this.btnDone.Name = "btnDone";
-            this.btnDone.Size = new System.Drawing.Size(93, 23);
-            this.btnDone.TabIndex = 16;
-            this.btnDone.Text = "Save and Exit";
-            this.btnDone.UseVisualStyleBackColor = true;
-            // 
             // btnNext
             // 
             this.btnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNext.Location = new System.Drawing.Point(574, 308);
+            this.btnNext.Location = new System.Drawing.Point(673, 308);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(75, 23);
             this.btnNext.TabIndex = 17;
-            this.btnNext.Text = "Next";
+            this.btnNext.Text = "Save";
             this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // btnReload
             // 
@@ -292,7 +282,7 @@
             // 
             // btnAdvanced
             // 
-            this.btnAdvanced.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAdvanced.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAdvanced.Location = new System.Drawing.Point(673, 195);
             this.btnAdvanced.Name = "btnAdvanced";
             this.btnAdvanced.Size = new System.Drawing.Size(75, 23);
@@ -317,16 +307,15 @@
             this.Controls.Add(this.tbRotate);
             this.Controls.Add(this.btnReload);
             this.Controls.Add(this.btnNext);
-            this.Controls.Add(this.btnDone);
             this.Controls.Add(this.cbWrittenLanguage);
             this.Controls.Add(this.cbSpokenLanguage);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.tbAge);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tbName);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pbFace);
             this.Controls.Add(this.pbOriginal);
@@ -348,8 +337,8 @@
         private Tpsc.Controls.PictureBoxEx pbOriginal;
         private Tpsc.Controls.PictureBoxEx pbFace;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tbName;
+        private System.Windows.Forms.TextBox tbAge;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
@@ -357,7 +346,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cbSpokenLanguage;
         private System.Windows.Forms.ComboBox cbWrittenLanguage;
-        private System.Windows.Forms.Button btnDone;
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnReload;
         private System.Windows.Forms.TrackBar tbRotate;

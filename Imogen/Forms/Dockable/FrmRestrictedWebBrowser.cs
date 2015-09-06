@@ -127,6 +127,7 @@ namespace Imogen.Forms.Dockable
 
         internal void ShowSrcUrl(string srcUrl)
         {
+            SuspendLayout();
             try
             {
                 currentSrcUrl = srcUrl;
@@ -134,24 +135,23 @@ namespace Imogen.Forms.Dockable
             }
             catch (Exception)
             {
-
                 throw;
             }
-
+            ResumeLayout();
         }
 
         internal void ShowLinkUrl(string linkUrl)
         {
+            SuspendLayout();
             try
             {
                 cwb.Load(linkUrl);
             }
             catch (Exception)
             {
-
                 throw;
             }
-
+            ResumeLayout();
         }
 
         private void showSrcUrlToolStripMenuItem_Click(object sender, EventArgs e)

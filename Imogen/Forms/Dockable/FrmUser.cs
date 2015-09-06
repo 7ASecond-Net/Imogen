@@ -58,8 +58,10 @@ namespace Imogen.Forms.Dockable
 
         private void FrmUser_Load(object sender, EventArgs e)
         {
+            SuspendLayout();
             lblUserName.Text = Properties.Settings.Default.UserUsername;
             UpdateUserSessionTime();
+            ResumeLayout();
         }
     }
 }

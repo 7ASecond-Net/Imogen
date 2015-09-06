@@ -75,6 +75,7 @@ namespace Imogen.Forms.Dockable
 
         private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            SuspendLayout();
             if (e.PropertyName == "ProfileUrlHash")
                 UpdateLabelText(lblUrlHash, Properties.Settings.Default.ProfileUrlHash);
             else if (e.PropertyName == "ProfileSrcUrlHash")
@@ -101,7 +102,7 @@ namespace Imogen.Forms.Dockable
                     string r = Properties.Settings.Default.ProfileReportNumber.Replace(",", "").Trim();
                     int reportId = Convert.ToInt32(r); //convert the report Id string to int for the DBHelper
                     string srcUrlARCRating = DBHelper.GetSrcARCRating(reportId);
-                    Properties.Settings.Default.ProfileLinkUrlARCRating = DBHelper.GetLinkARCRating(reportId);
+                    Properties.Settings.Default.ProfileLinkUrlARCRating = DBHelper.GetLinkARCValue(reportId);
                
             }
             else if (e.PropertyName == "ProfilePossibleFileName1")
@@ -110,13 +111,15 @@ namespace Imogen.Forms.Dockable
                 UpdateLabelText(lblPossibleFileName2, Properties.Settings.Default.ProfilePossibleFileName2);
             else if (e.PropertyName == "ProfileLinkUrlARCRating")
                 UpdateLabelText(lblLinkUrlARCRating, Properties.Settings.Default.ProfileLinkUrlARCRating);
-
+            ResumeLayout();
         }
 
         internal void SetImage(string imgPath)
         {
+            SuspendLayout();
             UpdatePbOriginalImage(pbOriginal, Image.FromFile(imgPath));
             Properties.Settings.Default.ImagePath = imgPath;
+            ResumeLayout();
         }
 
         internal void ShowImage(string imgPath)

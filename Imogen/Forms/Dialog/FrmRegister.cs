@@ -18,7 +18,7 @@ namespace Imogen.Forms.Dialog
         public FrmRegister()
         {
             InitializeComponent();
-            usernameTextBox.Text = Properties.Settings.Default.UserUsername;
+           
         }
 
         private void btnRegister_Click(object sender, EventArgs e)
@@ -55,6 +55,13 @@ namespace Imogen.Forms.Dialog
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void FrmRegister_Load(object sender, EventArgs e)
+        {
+            SuspendLayout();
+            usernameTextBox.Text = Properties.Settings.Default.UserUsername;
+            ResumeLayout();
         }
     }
 }
