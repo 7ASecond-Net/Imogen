@@ -21,9 +21,12 @@ namespace Imogen.Controllers.Utils
         /// <returns>
         /// string: The New File name - with path.
         /// </returns>       
-        internal string GetNewFilename(string ext = "jpg")
+        internal string GetNewSrcFilename(string ext = "jpg")
         {
-            return Path.Combine(Properties.Settings.Default.FileSavePath, Path.ChangeExtension(Guid.NewGuid().ToString().Replace("-","").ToLowerInvariant(), ext));
+            string[] parts = Properties.Settings.Default.ProfilePossibleFileName1.Split('.');
+            if (parts.Count() == 2) // try and get the real extension
+                ext = Properties.Settings.Default.ProfilePossibleFileName1.Split('.')[1];
+            return Path.Combine(Properties.Settings.Default.FileSavePath, Path.ChangeExtension(Guid.NewGuid().ToString().Replace("-", "").ToLowerInvariant(), ext));
         }
 
         /// <summary>
@@ -41,7 +44,7 @@ namespace Imogen.Controllers.Utils
             // http://myemogirl.com/out.php?t=1.0.0.3448&url=http://myemogirl.com/g.php?g=aHR0cDovL3ZpZGVhcm4uY29tL3ZpZGVvLnBocD9pZD0zNDY5ODU= Destination Link
 
             string[] parts = Url.Split('/');
-            return parts[parts.Length-1].ToString();
+            return parts[parts.Length - 1].ToString();
 
         }
 
@@ -58,7 +61,7 @@ namespace Imogen.Controllers.Utils
         {
             return hh.GetSHA512(password);
         }
-        
+
         internal string BytesToString(byte[] reportedImage)
         {
             return Encoding.UTF8.GetString(reportedImage, 0, reportedImage.Length);
