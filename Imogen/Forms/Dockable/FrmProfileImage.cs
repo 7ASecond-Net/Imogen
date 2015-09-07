@@ -198,11 +198,12 @@ namespace Imogen.Forms.Dockable
 
         private void btnSrcSubmit_Click(object sender, EventArgs e)
         {
+            Properties.Settings.Default.SrcSaved = true;
             btnSrcSubmit.Visible = false;
             DBHelper dbHelper = new DBHelper();
             switch ((string)btnSrcSubmit.Tag)
             {
-                case "404":
+                case "404":                    
                     dbHelper.SetSrcToGoneButNotForgotten(Properties.Settings.Default.ProfileSrcUrl);
                     break;
                 case "A":
@@ -218,6 +219,20 @@ namespace Imogen.Forms.Dockable
                     break;
             }
 
+            HashingHelper hh = new HashingHelper();
+           string fMd5 = hh.GetFileMD5(Properties.Settings.Default.FileSavePath);
+            dbHelper.SaveMD5Hash(fMd5);
+
+            string fSha1 = hh.GetFileSha1(Properties.Settings.Default.FileSavePath);
+            dbHelper.SaveSha1Hash(fSha1);
+
+            string fSha256 = hh.GetFileSha256(Properties.Settings.Default.FileSavePath);
+            dbHelper.SaveSha256Hash(fSha256);
+
+            string fSha512 = hh.GetFileSha512(Properties.Settings.Default.FileSavePath);
+            dbHelper.SaveSha512Hash(fSha512);
+
+            btnSrcSubmit.Tag = null;
             //TODO: Make Disposable?
             dbHelper = null;
         }
