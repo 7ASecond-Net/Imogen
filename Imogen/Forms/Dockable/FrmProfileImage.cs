@@ -70,7 +70,7 @@ namespace Imogen.Forms.Dockable
         public FrmProfileImage()
         {
             InitializeComponent();
-            Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;            
+            Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
         }
 
         private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -95,15 +95,15 @@ namespace Imogen.Forms.Dockable
             }
             else if (e.PropertyName == "ProfileReportNumber")
             {
-               
+
                 UpdateLabelText(lblReportNumber, Properties.Settings.Default.ProfileReportNumber);
-              
-                    // Check to see if any of the ARC settings have already been produced by other contributors
-                    string r = Properties.Settings.Default.ProfileReportNumber.Replace(",", "").Trim();
-                    int reportId = Convert.ToInt32(r); //convert the report Id string to int for the DBHelper
-                    string srcUrlARCRating = DBHelper.GetSrcARCRating(reportId);
-                    Properties.Settings.Default.ProfileLinkUrlARCRating = DBHelper.GetLinkARCValue(reportId);
-               
+
+                // Check to see if any of the ARC settings have already been produced by other contributors
+                string r = Properties.Settings.Default.ProfileReportNumber.Replace(",", "").Trim();
+                int reportId = Convert.ToInt32(r); //convert the report Id string to int for the DBHelper
+                string srcUrlARCRating = DBHelper.GetSrcARCRating(reportId);
+                Properties.Settings.Default.ProfileLinkUrlARCRating = DBHelper.GetLinkARCValue(reportId);
+
             }
             else if (e.PropertyName == "ProfilePossibleFileName1")
                 UpdateLabelText(lblPossibleFileName1, Properties.Settings.Default.ProfilePossibleFileName1);
@@ -138,7 +138,7 @@ namespace Imogen.Forms.Dockable
         private void btnRestricted_Click(object sender, EventArgs e)
         {
             // Because restricted files can be miss-defined as criminal we need to do more processing than in the case of allowed files.
-           
+
 
             //TODO: Who is this restricted to?
             btnSrcSubmit.Visible = true;
@@ -157,7 +157,7 @@ namespace Imogen.Forms.Dockable
 
         private void btnSrcUrlNoLongerAvailable_Click(object sender, EventArgs e)
         {
-            btnSrcSubmit.Tag = "404";
+            btnSrcSubmit.Tag = "X";
             btnSrcSubmit.Visible = true;
             lblSrcUrlARCRating.ForeColor = Color.Yellow;
             lblSrcUrlARCRating.Text = "Source is no longer Available";
@@ -168,7 +168,7 @@ namespace Imogen.Forms.Dockable
             lblLinkUrlARCRating.ForeColor = Color.Yellow;
             lblLinkUrlARCRating.Text = "Link is no longer Available";
             btnLinkSubmit.Visible = true;
-            btnLinkSubmit.Tag = "404";
+            btnLinkSubmit.Tag = "X";
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -203,7 +203,7 @@ namespace Imogen.Forms.Dockable
             DBHelper dbHelper = new DBHelper();
             switch ((string)btnSrcSubmit.Tag)
             {
-                case "404":                    
+                case "X":
                     dbHelper.SetSrcToGoneButNotForgotten(Properties.Settings.Default.ProfileSrcUrl);
                     break;
                 case "A":
@@ -219,8 +219,10 @@ namespace Imogen.Forms.Dockable
                     break;
             }
 
+            // Save the Hashes
+
             HashingHelper hh = new HashingHelper();
-           string fMd5 = hh.GetFileMD5(Properties.Settings.Default.ImagePath);
+            string fMd5 = hh.GetFileMD5(Properties.Settings.Default.ImagePath);
             dbHelper.SaveMD5Hash(fMd5);
 
             string fSha1 = hh.GetFileSha1(Properties.Settings.Default.ImagePath);
@@ -231,6 +233,10 @@ namespace Imogen.Forms.Dockable
 
             string fSha512 = hh.GetFileSha512(Properties.Settings.Default.ImagePath);
             dbHelper.SaveSha512Hash(fSha512);
+
+            // Now we need to save the Metadata!
+
+
 
             btnSrcSubmit.Tag = null;
             //TODO: Make Disposable?
@@ -243,7 +249,7 @@ namespace Imogen.Forms.Dockable
             DBHelper dbHelper = new DBHelper();
             switch ((string)btnLinkSubmit.Tag)
             {
-                case "404":
+                case "X":
                     dbHelper.SetLinkToGoneButNotForgotten(Properties.Settings.Default.ProfileLinkUrl);
                     break;
                 case "A":
