@@ -100,7 +100,7 @@ namespace Imogen.Forms.Dockable
 
                 // Check to see if any of the ARC settings have already been produced by other contributors
                 string r = Properties.Settings.Default.ProfileReportNumber.Replace(",", "").Trim();
-                int reportId = Convert.ToInt32(r); //convert the report Id string to int for the DBHelper
+                int reportId = Convert.ToInt32(r); //convert the report Id string to integer for the DBHelper
                 string srcUrlARCRating = DBHelper.GetSrcARCRating(reportId);
                 Properties.Settings.Default.ProfileLinkUrlARCRating = DBHelper.GetLinkARCValue(reportId);
 
