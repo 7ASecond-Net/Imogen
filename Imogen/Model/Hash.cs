@@ -21,6 +21,6 @@ namespace Imogen.Model
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime UpdatedOn { get; set; }
     
-        public virtual ProcessingResult ProcessingResult { get; set; }
+        public virtual EUReported EUReported { get; set; }
     }
 }

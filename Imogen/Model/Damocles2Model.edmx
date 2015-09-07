@@ -307,12 +307,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Hashes_ProcessingResults">
-          <End Role="ProcessingResults" Type="Self.ProcessingResults" Multiplicity="1" />
+        <Association Name="FK_Hashes_EUReported">
+          <End Role="EUReported" Type="Self.EUReported" Multiplicity="1" />
           <End Role="Hashes" Type="Self.Hashes" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ProcessingResults">
-              <PropertyRef Name="pid" />
+            <Principal Role="EUReported">
+              <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Hashes">
               <PropertyRef Name="id" />
@@ -540,8 +540,8 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="GoneButNotForgottenLinks" EntitySet="GoneButNotForgottenLinks" />
           </AssociationSet>
-          <AssociationSet Name="FK_Hashes_ProcessingResults" Association="Self.FK_Hashes_ProcessingResults">
-            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
+          <AssociationSet Name="FK_Hashes_EUReported" Association="Self.FK_Hashes_EUReported">
+            <End Role="EUReported" EntitySet="EUReported" />
             <End Role="Hashes" EntitySet="Hashes" />
           </AssociationSet>
           <AssociationSet Name="FK_Matedata_ProcessingResults" Association="Self.FK_Matedata_ProcessingResults">
@@ -649,6 +649,7 @@
           <NavigationProperty Name="ProcessingResult" Relationship="Self.FK_EUReported_ProcessingResults" FromRole="EUReported" ToRole="ProcessingResults" />
           <NavigationProperty Name="User" Relationship="Self.FK_EUReported_Users" FromRole="EUReported" ToRole="Users" />
           <NavigationProperty Name="GoneButNotForgottenLinks" Relationship="Self.FK_GoneButNotForgottenLinks_EUReported" FromRole="EUReported" ToRole="GoneButNotForgottenLinks" />
+          <NavigationProperty Name="Hashes" Relationship="Damocles2Model.FK_Hashes_EUReported" FromRole="EUReported" ToRole="Hash" />
         </EntityType>
         <EntityType Name="GoneButNotForgottenLink">
           <Key>
@@ -702,7 +703,6 @@
           <NavigationProperty Name="R" Relationship="Self.FK_ProcessingResults_R" FromRole="ProcessingResults" ToRole="R" />
           <NavigationProperty Name="R1" Relationship="Self.FK_ProcessingResults_R1" FromRole="ProcessingResults" ToRole="R" />
           <NavigationProperty Name="User" Relationship="Self.FK_ProcessingResults_Users" FromRole="ProcessingResults" ToRole="Users" />
-          <NavigationProperty Name="Hashes" Relationship="Damocles2Model.FK_Hashes_ProcessingResults" FromRole="ProcessingResult" ToRole="Hash" />
           <NavigationProperty Name="Matedatas" Relationship="Damocles2Model.FK_Matedata_ProcessingResults" FromRole="ProcessingResult" ToRole="Matedata" />
         </EntityType>
         <EntityType Name="R">
@@ -1099,13 +1099,13 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Face" EntitySet="Faces" />
           </AssociationSet>
-          <AssociationSet Name="FK_Hashes_ProcessingResults" Association="Damocles2Model.FK_Hashes_ProcessingResults">
-            <End Role="ProcessingResult" EntitySet="ProcessingResults" />
-            <End Role="Hash" EntitySet="Hashes" />
-          </AssociationSet>
           <AssociationSet Name="FK_Matedata_ProcessingResults" Association="Damocles2Model.FK_Matedata_ProcessingResults">
             <End Role="ProcessingResult" EntitySet="ProcessingResults" />
             <End Role="Matedata" EntitySet="Matedatas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hashes_EUReported" Association="Damocles2Model.FK_Hashes_EUReported">
+            <End Role="EUReported" EntitySet="EUReporteds" />
+            <End Role="Hash" EntitySet="Hashes" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="FaceARC">
@@ -1151,7 +1151,7 @@
           <Property Name="HashValue" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="ProcessingResult" Relationship="Damocles2Model.FK_Hashes_ProcessingResults" FromRole="Hash" ToRole="ProcessingResult" />
+          <NavigationProperty Name="EUReported" Relationship="Damocles2Model.FK_Hashes_EUReported" FromRole="Hash" ToRole="EUReported" />
         </EntityType>
         <EntityType Name="Matedata">
           <Key>
@@ -1225,18 +1225,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Hashes_ProcessingResults">
-          <End Type="Damocles2Model.ProcessingResult" Role="ProcessingResult" Multiplicity="1" />
-          <End Type="Damocles2Model.Hash" Role="Hash" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProcessingResult">
-              <PropertyRef Name="pid" />
-            </Principal>
-            <Dependent Role="Hash">
-              <PropertyRef Name="id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Matedata_ProcessingResults">
           <End Type="Damocles2Model.ProcessingResult" Role="ProcessingResult" Multiplicity="1" />
           <End Type="Damocles2Model.Matedata" Role="Matedata" Multiplicity="*" />
@@ -1245,6 +1233,18 @@
               <PropertyRef Name="pid" />
             </Principal>
             <Dependent Role="Matedata">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hashes_EUReported">
+          <End Type="Damocles2Model.EUReported" Role="EUReported" Multiplicity="1" />
+          <End Type="Damocles2Model.Hash" Role="Hash" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EUReported">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Hash">
               <PropertyRef Name="id" />
             </Dependent>
           </ReferentialConstraint>

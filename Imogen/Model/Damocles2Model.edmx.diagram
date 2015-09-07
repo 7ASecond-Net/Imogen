@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2645ecf076874e328005134ea2ae056e" Name="Diagram1" ZoomLevel="124">
+      <Diagram DiagramId="2645ecf076874e328005134ea2ae056e" Name="Diagram1" ZoomLevel="32">
         <EntityTypeShape EntityType="Damocles2Model.A" Width="1.5" PointX="3.625" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.C" Width="1.5" PointX="3.5" PointY="14.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Damocles2Model.EUReported" Width="1.5" PointX="18.125" PointY="14.375" IsExpanded="true" />
@@ -36,15 +36,15 @@
         <AssociationConnector Association="Damocles2Model.FK_UsersSessions_Users" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Damocles2Model.FaceARC" Width="1.5" PointX="0.875" PointY="8.75" />
         <EntityTypeShape EntityType="Damocles2Model.Face" Width="1.5" PointX="5.75" PointY="21.375" />
-        <EntityTypeShape EntityType="Damocles2Model.Hash" Width="1.5" PointX="18.125" PointY="8.75" />
+        <EntityTypeShape EntityType="Damocles2Model.Hash" Width="1.5" PointX="23.25" PointY="13.875" />
         <EntityTypeShape EntityType="Damocles2Model.Matedata" Width="1.5" PointX="5.75" PointY="17.125" />
         <AssociationConnector Association="Damocles2Model.FK_FaceARCs_A" />
         <AssociationConnector Association="Damocles2Model.FK_FaceARCs_C" />
         <AssociationConnector Association="Damocles2Model.FK_FaceARCs_Faces" />
         <AssociationConnector Association="Damocles2Model.FK_FaceARCs_R" />
         <AssociationConnector Association="Damocles2Model.FK_Faces_Users" />
-        <AssociationConnector Association="Damocles2Model.FK_Hashes_ProcessingResults" />
         <AssociationConnector Association="Damocles2Model.FK_Matedata_ProcessingResults" />
+        <AssociationConnector Association="Damocles2Model.FK_Hashes_EUReported" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
