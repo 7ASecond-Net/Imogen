@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -125,11 +126,35 @@ namespace Imogen.Controllers.Utils
         }
 
         //Source: http://stackoverflow.com/questions/17352061/fastest-way-to-convert-image-to-byte-array
+        //TODO: Need to use the correct encoder for the file extension
         public byte[] imageToByteArray(System.Drawing.Image imageIn)
         {
+            ImageCodecInfo myImageCodecInfo;
+            myImageCodecInfo = GetEncoderInfo("image/jpeg");
+            EncoderParameter myEncoderParameter;
+            EncoderParameters myEncoderParameters;
+            System.Drawing.Imaging.Encoder myEncoder;
+            myEncoder = System.Drawing.Imaging.Encoder.Quality;
+            myEncoderParameters = new EncoderParameters(1);
+            myEncoderParameter = new EncoderParameter(myEncoder, 100L);
+            myEncoderParameters.Param[0] = myEncoderParameter;
+
             MemoryStream ms = new MemoryStream();
-            imageIn.Save(ms, imageIn.RawFormat);
+            imageIn.Save(ms, myImageCodecInfo, myEncoderParameters);
             return ms.ToArray();
+        }
+
+        private static ImageCodecInfo GetEncoderInfo(String mimeType)
+        {
+            int j;
+            ImageCodecInfo[] encoders;
+            encoders = ImageCodecInfo.GetImageEncoders();
+            for (j = 0; j < encoders.Length; ++j)
+            {
+                if (encoders[j].MimeType == mimeType)
+                    return encoders[j];
+            }
+            return null;
         }
     }
 }
