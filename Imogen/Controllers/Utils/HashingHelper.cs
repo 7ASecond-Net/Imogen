@@ -37,7 +37,7 @@ namespace Imogen.Controllers.Utils
 
             return string.Empty;
         }
-        
+
         internal string GetMD5(string idata)
         {
             if (!string.IsNullOrEmpty(idata))
@@ -128,7 +128,8 @@ namespace Imogen.Controllers.Utils
             FileStream fs = new FileStream(fileSavePath, FileMode.Open, FileAccess.Read);
             byte[] hash = ha.ComputeHash(fs);
             fs.Close();
-            return utils.BytesToString(hash);
+            string h2 = utils.HexDump(hash);
+            return h2.Replace(" ", "").Replace("\r\n", "");
         }
 
         internal string GetFileSha1(string fileSavePath)
@@ -138,7 +139,8 @@ namespace Imogen.Controllers.Utils
             FileStream fs = new FileStream(fileSavePath, FileMode.Open, FileAccess.Read);
             byte[] hash = ha.ComputeHash(fs);
             fs.Close();
-            return utils.BytesToString(hash);
+            string h2 = utils.HexDump(hash);
+            return h2.Replace(" ", "").Replace("\r\n", "");
         }
 
         internal string GetFileSha256(string fileSavePath)
@@ -148,7 +150,8 @@ namespace Imogen.Controllers.Utils
             FileStream fs = new FileStream(fileSavePath, FileMode.Open, FileAccess.Read);
             byte[] hash = ha.ComputeHash(fs);
             fs.Close();
-            return utils.BytesToString(hash);
+            string h2 = utils.HexDump(hash);
+            return h2.Replace(" ", "").Replace("\r\n", "");
         }
 
         internal string GetFileSha512(string fileSavePath)
@@ -158,7 +161,8 @@ namespace Imogen.Controllers.Utils
             FileStream fs = new FileStream(fileSavePath, FileMode.Open, FileAccess.Read);
             byte[] hash = ha.ComputeHash(fs);
             fs.Close();
-            return utils.BytesToString(hash);
+            string h2 = utils.HexDump(hash);
+            return h2.Replace(" ", "").Replace("\r\n","");
         }
     }
 }
