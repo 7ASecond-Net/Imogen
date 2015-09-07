@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -118,6 +119,46 @@ namespace Imogen.Controllers.Utils
         {
 
             return string.Empty;
+        }
+
+        internal string GetFileMD5(string fileSavePath)
+        {
+            Utils utils = new Utils();
+            System.Security.Cryptography.HashAlgorithm ha = System.Security.Cryptography.MD5.Create();
+            FileStream fs = new FileStream(fileSavePath, FileMode.Open, FileAccess.Read);
+            byte[] hash = ha.ComputeHash(fs);
+            fs.Close();
+            return utils.BytesToString(hash);
+        }
+
+        internal string GetFileSha1(string fileSavePath)
+        {
+            Utils utils = new Utils();
+            System.Security.Cryptography.HashAlgorithm ha = System.Security.Cryptography.SHA1.Create();
+            FileStream fs = new FileStream(fileSavePath, FileMode.Open, FileAccess.Read);
+            byte[] hash = ha.ComputeHash(fs);
+            fs.Close();
+            return utils.BytesToString(hash);
+        }
+
+        internal string GetFileSha256(string fileSavePath)
+        {
+            Utils utils = new Utils();
+            System.Security.Cryptography.HashAlgorithm ha = System.Security.Cryptography.SHA256.Create();
+            FileStream fs = new FileStream(fileSavePath, FileMode.Open, FileAccess.Read);
+            byte[] hash = ha.ComputeHash(fs);
+            fs.Close();
+            return utils.BytesToString(hash);
+        }
+
+        internal string GetFileSha512(string fileSavePath)
+        {
+            Utils utils = new Utils();
+            System.Security.Cryptography.HashAlgorithm ha = System.Security.Cryptography.SHA512.Create();
+            FileStream fs = new FileStream(fileSavePath, FileMode.Open, FileAccess.Read);
+            byte[] hash = ha.ComputeHash(fs);
+            fs.Close();
+            return utils.BytesToString(hash);
         }
     }
 }
