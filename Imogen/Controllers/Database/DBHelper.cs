@@ -30,7 +30,7 @@ namespace Imogen.Controllers.Database
             SetConnectionStatus();
         }
 
-       
+
 
 
 
@@ -156,6 +156,20 @@ namespace Imogen.Controllers.Database
             return string.Empty;
         }
 
+        //TODO: Not completed Yet
+        // LinkARCRating will be in either - the GoneButNotForgotten table (files that are no longer available)
+        // or ... Processing Results
+        internal static string GetSrcARCRating(int reportId)
+        {
+            Damocles2Entities de = new Damocles2Entities();
+            var gbResult = de.GoneButNotForgottenLinks.Where(gid => gid.Id == reportId).FirstOrDefault();
+            // If it exists
+            //TODO: Really need the error code saved in GoneButNotForgotten
+            if (gbResult != null)
+                return "Src Url Contents Not Available " + gbResult.LastCheckedOn;
+            return string.Empty;
+        }
+
         /// <summary>
         /// Tells us if the Report was of a A R C or X type
         /// </summary>
@@ -204,35 +218,105 @@ namespace Imogen.Controllers.Database
             Damocles2Entities de = new Damocles2Entities();
             FaceARC farc = new FaceARC();
             Face face = new Face();
-            
+
             // Possible Return Values = X, A, R, C, String.Empty
-            var pr = GeProcessingResultById(Convert.ToInt32(Properties.Settings.Default.ProfileReportNumber));
+            var pr = GeProcessingResultById(Convert.ToInt32(Properties.Settings.Default.ProfileReportNumber.Replace(",", "")));
+            if (pr != null)
+            {
+                if (pr.CSrcResultId != null)    // Theoretically the most common result
+                    farc.CId = pr.CSrcResultId;
 
-            if (pr.CSrcResultId != null)    // Theoretically the most common result
-                farc.CId = pr.CSrcResultId;
+                if (pr.RSrcResultId != null)
+                    farc.RId = pr.RSrcResultId;
 
-            if (pr.RSrcResultId != null)
-                farc.RId = pr.RSrcResultId;
+                if (pr.ASrcResultId != null) // Theoretically the least common result
+                    farc.AId = pr.ASrcResultId;
 
-            if (pr.ASrcResultId != null) // Theoretically the least common result
-                farc.AId = pr.ASrcResultId;
+                farc.FaceId = face.id;
+                face.FaceData = utils.BytesToString(utils.imageToByteArray(image));
+                face.CreatedOn = DateTime.UtcNow;
+                face.UpdatedOn = DateTime.UtcNow;
+                face.CreatedBy = Properties.Settings.Default.UserId;
+                if (!string.IsNullOrEmpty(Name))
+                    face.Name = Name;
+                if (!string.IsNullOrEmpty(Age))
+                    face.Age = Convert.ToInt32(Age);
+                if (!string.IsNullOrEmpty(Sex))
+                    face.Sex = Sex;
+                if (!string.IsNullOrEmpty(SpokenLanguage))
+                    face.SpokenLanguage = SpokenLanguage;
+                if (!string.IsNullOrEmpty(WrittenLanguage))
+                    face.WrittenLanguage = WrittenLanguage;
+                if (!string.IsNullOrEmpty(Nationality))
+                    face.Nationality = Nationality;
+                if (!string.IsNullOrEmpty(Ethnicity))
+                    face.Ethnicity = Ethnicity;
 
-            farc.FaceId = face.id;
-            face.FaceData = utils.BytesToString(utils.imageToByteArray(image));
-            face.CreatedOn = DateTime.UtcNow;
-            face.UpdatedOn = DateTime.UtcNow;
-            face.CreatedBy = Properties.Settings.Default.UserId;
-            face.Name = Name;
-            face.Age = Convert.ToInt32(Age);
-            face.Sex = Sex;
-            face.SpokenLanguage = SpokenLanguage;
-            face.WrittenLanguage = WrittenLanguage;
-            face.Nationality = Nationality;
-            face.Ethnicity = Ethnicity;
+                de.Faces.Add(face);
+                de.FaceARCs.Add(farc);
+                de.SaveChanges();
+            }
+            else
+            {
+                // Need to save the Profile results before trying to get them from ProcessingResults.
+            }
+        }
 
-            de.Faces.Add(face);
-            de.FaceARCs.Add(farc);
+        internal void SaveSha512Hash(string fSha512)
+        {
+            Damocles2Entities de = new Damocles2Entities();
+            Hash h = new Hash();
+            h.CreatedOn = DateTime.UtcNow;
+            h.HashType = "SHA512";
+            h.HashValue = fSha512;
+            h.id = GetRecordId();
+            h.UpdatedOn = DateTime.UtcNow;
+            de.Hashes.Add(h);
             de.SaveChanges();
+        }
+
+        internal void SaveSha256Hash(string fSha256)
+        {
+            Damocles2Entities de = new Damocles2Entities();
+            Hash h = new Hash();
+            h.CreatedOn = DateTime.UtcNow;
+            h.HashType = "SHA256";
+            h.HashValue = fSha256;
+            h.id = GetRecordId();
+            h.UpdatedOn = DateTime.UtcNow;
+            de.Hashes.Add(h);
+            de.SaveChanges();
+        }
+
+        internal void SaveSha1Hash(string fSha1)
+        {
+            Damocles2Entities de = new Damocles2Entities();
+            Hash h = new Hash();
+            h.CreatedOn = DateTime.UtcNow;
+            h.HashType = "SHA1";
+            h.HashValue = fSha1;
+            h.id = GetRecordId();
+            h.UpdatedOn = DateTime.UtcNow;
+            de.Hashes.Add(h);
+            de.SaveChanges();
+        }
+
+        internal void SaveMD5Hash(string fMd5)
+        {
+            Damocles2Entities de = new Damocles2Entities();
+            Hash h = new Hash();
+            h.CreatedOn = DateTime.UtcNow;
+            h.HashType = "MD5";
+            h.HashValue = fMd5;
+            h.id = GetRecordId();
+            h.UpdatedOn = DateTime.UtcNow;
+            de.Hashes.Add(h);
+            de.SaveChanges();
+        }
+
+        private int GetRecordId()
+        {
+            return Convert.ToInt32(Properties.Settings.Default.ProfileReportNumber.Replace(",", ""));
         }
 
         private void ConnectToDamocles()
