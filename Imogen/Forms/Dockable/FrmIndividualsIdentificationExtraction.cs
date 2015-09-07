@@ -79,7 +79,7 @@ namespace Imogen.Forms.Dialog
 
         private void FrmIndividualsIdentificationExtraction_Load(object sender, EventArgs e)
         {
-            SuspendLayout();   
+            SuspendLayout();
             if (!string.IsNullOrEmpty(Properties.Settings.Default.ImagePath))
                 LoadImage(Properties.Settings.Default.ImagePath);
             Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
@@ -97,7 +97,7 @@ namespace Imogen.Forms.Dialog
                 cbWrittenLanguage.Items.Add(lang);
             }
 
-            foreach(string lang in langs.GetAvailableLanguages())
+            foreach (string lang in langs.GetAvailableLanguages())
             {
                 cbNationality.Items.Add(lang);
             }
@@ -153,7 +153,7 @@ namespace Imogen.Forms.Dialog
         {
             if (pbFace.Image == null)
                 return;
-            
+
             Bitmap tmpImage = new Bitmap(pbFace.Image);
             tmpImage.RotateFlip(RotateFlipType.Rotate90FlipNone);
             pbFace.Image = tmpImage;
@@ -180,10 +180,32 @@ namespace Imogen.Forms.Dialog
             FitFaceImage();
         }
 
-       
+
         private void SaveChanges()
         {
-            DBHelper.SaveIndividualsBasicInformation(tbName.Text, tbAge.Text, cbSex.SelectedText, cbSpokenLanguage.SelectedText, cbWrittenLanguage.SelectedText, cbNationality.SelectedText, cbEthnicityCodes.SelectedText, pbFace.Image);
+            if (Properties.Settings.Default.SrcSaved)
+            {
+                string s = "";
+                string sl = "";
+                string wl = "";
+                string n = "";
+                string ec = "";
+
+                if (cbSex.SelectedItem != null)
+                    s = cbSex.SelectedItem.ToString();
+                if(cbSpokenLanguage.SelectedItem != null)
+                    sl = cbSpokenLanguage.SelectedItem.ToString();
+                if (cbWrittenLanguage.SelectedItem != null)
+                    wl = cbWrittenLanguage.SelectedItem.ToString();
+                if (cbNationality.SelectedItem != null)
+                    n = cbNationality.SelectedItem.ToString();
+                if (cbEthnicityCodes.SelectedItem != null)
+                    ec = cbEthnicityCodes.SelectedItem.ToString();
+
+                DBHelper.SaveIndividualsBasicInformation(tbName.Text, tbAge.Text, s, sl, wl, n, ec, pbFace.Image);
+            }
+            else
+                MessageBox.Show("The SrcUrl information has not been submitted in the profile window yet.");
         }
 
         private void btnNext_Click(object sender, EventArgs e)
