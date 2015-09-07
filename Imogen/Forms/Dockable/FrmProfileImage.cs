@@ -220,16 +220,16 @@ namespace Imogen.Forms.Dockable
             }
 
             HashingHelper hh = new HashingHelper();
-           string fMd5 = hh.GetFileMD5(Properties.Settings.Default.FileSavePath);
+           string fMd5 = hh.GetFileMD5(Properties.Settings.Default.ImagePath);
             dbHelper.SaveMD5Hash(fMd5);
 
-            string fSha1 = hh.GetFileSha1(Properties.Settings.Default.FileSavePath);
+            string fSha1 = hh.GetFileSha1(Properties.Settings.Default.ImagePath);
             dbHelper.SaveSha1Hash(fSha1);
 
-            string fSha256 = hh.GetFileSha256(Properties.Settings.Default.FileSavePath);
+            string fSha256 = hh.GetFileSha256(Properties.Settings.Default.ImagePath);
             dbHelper.SaveSha256Hash(fSha256);
 
-            string fSha512 = hh.GetFileSha512(Properties.Settings.Default.FileSavePath);
+            string fSha512 = hh.GetFileSha512(Properties.Settings.Default.ImagePath);
             dbHelper.SaveSha512Hash(fSha512);
 
             btnSrcSubmit.Tag = null;
