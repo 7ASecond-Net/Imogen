@@ -242,5 +242,6 @@ namespace Imogen.Properties {
 
         public string ImagePath { get; internal set; }
         public int UserId { get; internal set; }
+        public bool SrcSaved { get; internal set; }
     }
 }
