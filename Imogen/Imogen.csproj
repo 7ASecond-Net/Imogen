@@ -134,6 +134,7 @@
     <Compile Include="Controllers\Database\DBHelper.cs" />
     <Compile Include="Controllers\Database\UnProcessedContent.cs" />
     <Compile Include="Controllers\Downloader\DownloadImage.cs" />
+    <Compile Include="Controllers\Reporting\CurrentReport.cs" />
     <Compile Include="Controllers\Security\SecurityHelper.cs" />
     <Compile Include="Controllers\Utils\Ethnicities.cs" />
     <Compile Include="Controllers\Utils\Exif.cs" />
@@ -205,6 +206,9 @@
       <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\C.cs">
+      <DependentUpon>Damocles2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CurrentReport.cs">
       <DependentUpon>Damocles2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Damocles2Model.Context.cs">

@@ -1,4 +1,5 @@
 ﻿using Imogen.Controllers.Database;
+using Imogen.Controllers.Reporting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -50,7 +51,7 @@ namespace Imogen.Forms.Dockable
             lblSessionTime.Text = sessionDuration.ToString();
             lblTotalWorkTime.Text = totalDuration.ToString();
 
-            Properties.Settings.Default.SessionSeconds = TotalSessionSeconds;
+            CurrentUser.SessionSecondsTotal = TotalSessionSeconds;
 
             TotalSecondsPassed++;
             TotalSessionSeconds++;
@@ -59,7 +60,7 @@ namespace Imogen.Forms.Dockable
         private void FrmUser_Load(object sender, EventArgs e)
         {
             SuspendLayout();
-            lblUserName.Text = Properties.Settings.Default.UserUsername;
+            lblUserName.Text = CurrentUser.Username;
             UpdateUserSessionTime();
             ResumeLayout();
         }

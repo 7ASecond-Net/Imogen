@@ -12,6 +12,7 @@ using WeifenLuo.WinFormsUI.Docking;
 using Imogen.Controllers.Database;
 using Imogen.Controllers.Utils;
 using Imogen.Forms.Dialog;
+using Imogen.Controllers.Reporting;
 
 namespace Imogen.Forms.Dockable
 {
@@ -70,55 +71,14 @@ namespace Imogen.Forms.Dockable
         public FrmProfileImage()
         {
             InitializeComponent();
-            Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
         }
 
-        private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            SuspendLayout();
-            if (e.PropertyName == "ProfileUrlHash")
-                UpdateLabelText(lblUrlHash, Properties.Settings.Default.ProfileUrlHash);
-            else if (e.PropertyName == "ProfileSrcUrlHash")
-                UpdateLabelText(lblSrcUrlHash, Properties.Settings.Default.ProfileSrcUrlHash);
-            else if (e.PropertyName == "ProfileUrl")
-                UpdateTextBoxText(lblUrl, Properties.Settings.Default.ProfileUrl);
-            else if (e.PropertyName == "ProfileSrcUrl")
-                UpdateTextBoxText(tbSrcUrl, Properties.Settings.Default.ProfileSrcUrl);
-            else if (e.PropertyName == "ProfileLinkUrl")
-                UpdateTextBoxText(tbLinkUrl, Properties.Settings.Default.ProfileLinkUrl);
-            else if (e.PropertyName == "ProfileLinkUrlHash")
-                UpdateLabelText(lblLinkUrlHash, Properties.Settings.Default.ProfileLinkUrlHash);
-            else if (e.PropertyName == "ProfileReportedOn")
-            {
-                DateTime dtn = Convert.ToDateTime(Properties.Settings.Default.ProfileReportedOn);
-                UpdateLabelText(lblReportedon, Properties.Settings.Default.ProfileReportedOn + " (" + utils.HowLongAgo(dtn) + ")");
-            }
-            else if (e.PropertyName == "ProfileReportNumber")
-            {
-
-                UpdateLabelText(lblReportNumber, Properties.Settings.Default.ProfileReportNumber);
-
-                // Check to see if any of the ARC settings have already been produced by other contributors
-                string r = Properties.Settings.Default.ProfileReportNumber.Replace(",", "").Trim();
-                int reportId = Convert.ToInt32(r); //convert the report Id string to integer for the DBHelper
-                string srcUrlARCRating = DBHelper.GetSrcARCRating(reportId);
-                Properties.Settings.Default.ProfileLinkUrlARCRating = DBHelper.GetLinkARCValue(reportId);
-
-            }
-            else if (e.PropertyName == "ProfilePossibleFileName1")
-                UpdateLabelText(lblPossibleFileName1, Properties.Settings.Default.ProfilePossibleFileName1);
-            else if (e.PropertyName == "ProfilePossibleFileName2")
-                UpdateLabelText(lblPossibleFileName2, Properties.Settings.Default.ProfilePossibleFileName2);
-            else if (e.PropertyName == "ProfileLinkUrlARCRating")
-                UpdateLabelText(lblLinkUrlARCRating, Properties.Settings.Default.ProfileLinkUrlARCRating);
-            ResumeLayout();
-        }
-
+    
         internal void SetImage(string imgPath)
         {
             SuspendLayout();
             UpdatePbOriginalImage(pbOriginal, Image.FromFile(imgPath));
-            Properties.Settings.Default.ImagePath = imgPath;
+            CurrentInternalReport.ImagePath = imgPath;
             ResumeLayout();
         }
 
@@ -198,22 +158,22 @@ namespace Imogen.Forms.Dockable
 
         private void btnSrcSubmit_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.SrcSaved = true;
+            CurrentInternalReport.SrcSaved = true;
             btnSrcSubmit.Visible = false;
             DBHelper dbHelper = new DBHelper();
             switch ((string)btnSrcSubmit.Tag)
             {
                 case "X":
-                    dbHelper.SetSrcToGoneButNotForgotten(Properties.Settings.Default.ProfileSrcUrl);
+                    dbHelper.SetSrcToGoneButNotForgotten(CurrentInternalReport.SrcUrl);
                     break;
                 case "A":
-                    dbHelper.SetSrcToAllowed(Properties.Settings.Default.ProfileSrcUrl);
+                    dbHelper.SetSrcToAllowed(CurrentInternalReport.SrcUrl);
                     break;
                 case "R":
-                    dbHelper.SetSrcToRestricted(Properties.Settings.Default.ProfileSrcUrl);
+                    dbHelper.SetSrcToRestricted(CurrentInternalReport.SrcUrl);
                     break;
                 case "C":
-                    dbHelper.SetSrcToCriminal(Properties.Settings.Default.ProfileSrcUrl);
+                    dbHelper.SetSrcToCriminal(CurrentInternalReport.SrcUrl);
                     break;
                 default:
                     break;
@@ -222,16 +182,16 @@ namespace Imogen.Forms.Dockable
             // Save the Hashes
 
             HashingHelper hh = new HashingHelper();
-            string fMd5 = hh.GetFileMD5(Properties.Settings.Default.ImagePath);
+            string fMd5 = hh.GetFileMD5(CurrentInternalReport.ImagePath);
             dbHelper.SaveMD5Hash(fMd5);
 
-            string fSha1 = hh.GetFileSha1(Properties.Settings.Default.ImagePath);
+            string fSha1 = hh.GetFileSha1(CurrentInternalReport.ImagePath);
             dbHelper.SaveSha1Hash(fSha1);
 
-            string fSha256 = hh.GetFileSha256(Properties.Settings.Default.ImagePath);
+            string fSha256 = hh.GetFileSha256(CurrentInternalReport.ImagePath);
             dbHelper.SaveSha256Hash(fSha256);
 
-            string fSha512 = hh.GetFileSha512(Properties.Settings.Default.ImagePath);
+            string fSha512 = hh.GetFileSha512(CurrentInternalReport.ImagePath);
             dbHelper.SaveSha512Hash(fSha512);
 
             // Now we need to save the Metadata!
@@ -245,21 +205,30 @@ namespace Imogen.Forms.Dockable
 
         private void btnLinkSubmit_Click(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(tbTrueDestinationLinkUrl.Text))
+            {
+                HashingHelper hh = new HashingHelper();
+                CurrentInternalReport.TrueLinkUrl = tbTrueDestinationLinkUrl.Text;
+                CurrentInternalReport.TrueLinkUrlHash = hh.GetSHA512(tbTrueDestinationLinkUrl.Text);
+                hh = null;
+            }
+
+
             btnLinkSubmit.Visible = false;
             DBHelper dbHelper = new DBHelper();
             switch ((string)btnLinkSubmit.Tag)
             {
                 case "X":
-                    dbHelper.SetLinkToGoneButNotForgotten(Properties.Settings.Default.ProfileLinkUrl);
+                    dbHelper.SetLinkToGoneButNotForgotten(CurrentInternalReport.LinkUrl);
                     break;
                 case "A":
-                    dbHelper.SetLinkToAllowed(Properties.Settings.Default.ProfileLinkUrl);
+                    dbHelper.SetLinkToAllowed(CurrentInternalReport.LinkUrl);
                     break;
                 case "R":
-                    dbHelper.SetLinkToRestricted(Properties.Settings.Default.ProfileLinkUrl);
+                    dbHelper.SetLinkToRestricted(CurrentInternalReport.LinkUrl);
                     break;
                 case "C":
-                    dbHelper.SetLinkToCriminal(Properties.Settings.Default.ProfileLinkUrl);
+                    dbHelper.SetLinkToCriminal(CurrentInternalReport.LinkUrl);
                     break;
                 default:
                     break;

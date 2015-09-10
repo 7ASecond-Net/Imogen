@@ -1,4 +1,5 @@
 ﻿using Imogen.Controllers.Database;
+using Imogen.Controllers.Reporting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,8 +34,8 @@ namespace Imogen.Forms.Dialog
                     }
                     else // Successfully Registered
                     {
-                        Properties.Settings.Default.UserUsername = userDisplayNameTextBox.Text;
-                        Properties.Settings.Default.UserPassword = userPasswordTextBox.Text;
+                        CurrentUser.Username = userDisplayNameTextBox.Text;
+                        CurrentUser.UserPassword = userPasswordTextBox.Text;
                         this.DialogResult = DialogResult.OK;
                         this.Close();
                     }
@@ -60,7 +61,7 @@ namespace Imogen.Forms.Dialog
         private void FrmRegister_Load(object sender, EventArgs e)
         {
             SuspendLayout();
-            usernameTextBox.Text = Properties.Settings.Default.UserUsername;
+            usernameTextBox.Text = CurrentUser.Username;
             ResumeLayout();
         }
     }

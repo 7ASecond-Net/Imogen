@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using CefSharp.WinForms;
 using CefSharp;
+using Imogen.Controllers.Reporting;
 
 namespace Imogen.Forms.Dockable
 {
@@ -29,37 +30,37 @@ namespace Imogen.Forms.Dockable
             InitializeComponent();
             try
             {
-  //webBrowser.StatusTextChanged += WebBrowser_StatusTextChanged;
-            //webBrowser.ProgressChanged += WebBrowser_ProgressChanged;
-            cwb.Dock = DockStyle.Fill;
-            cwb.ContextMenu = null;
+                //webBrowser.StatusTextChanged += WebBrowser_StatusTextChanged;
+                //webBrowser.ProgressChanged += WebBrowser_ProgressChanged;
+                cwb.Dock = DockStyle.Fill;
+                cwb.ContextMenu = null;
 
-            cwb.ConsoleMessage += Cwb_ConsoleMessage;
-            cwb.StatusMessage += Cwb_StatusMessage;
-            cwb.NavStateChanged += Cwb_NavStateChanged;
-            cwb.LoadError += Cwb_LoadError;
+                cwb.ConsoleMessage += Cwb_ConsoleMessage;
+                cwb.StatusMessage += Cwb_StatusMessage;
+                cwb.NavStateChanged += Cwb_NavStateChanged;
+                cwb.LoadError += Cwb_LoadError;
 
-            CefSharp.BrowserSettings cbs = new CefSharp.BrowserSettings();
-            cbs.ApplicationCacheDisabled = true;
-            cbs.FileAccessFromFileUrlsAllowed = false;
-            cbs.JavaScriptCloseWindowsDisabled = true;
-            cbs.PluginsDisabled = true;
-            cbs.WebSecurityDisabled = false;
-            cwb.BrowserSettings = cbs;
+                CefSharp.BrowserSettings cbs = new CefSharp.BrowserSettings();
+                cbs.ApplicationCacheDisabled = true;
+                cbs.FileAccessFromFileUrlsAllowed = false;
+                cbs.JavaScriptCloseWindowsDisabled = true;
+                cbs.PluginsDisabled = true;
+                cbs.WebSecurityDisabled = false;
+                cwb.BrowserSettings = cbs;
 
-            CefSharp.CefSettings cs = new CefSharp.CefSettings();
-            cs.IgnoreCertificateErrors = true;
-            cs.UserAgent = Imogen.Properties.Settings.Default.RestrictedBrowserUserAgent;
-            cwb.AllowDrop = false;
+                CefSharp.CefSettings cs = new CefSharp.CefSettings();
+                cs.IgnoreCertificateErrors = true;
+                cs.UserAgent = GlobalSettings.RestrictedBrowserUserAgent;
+                cwb.AllowDrop = false;
 
-            this.Controls.Add(cwb);
+                this.Controls.Add(cwb);
             }
             catch (Exception)
             {
 
                 throw;
             }
-          
+
 
         }
 
@@ -94,9 +95,13 @@ namespace Imogen.Forms.Dockable
 
         private void Cwb_StatusMessage(object sender, CefSharp.StatusMessageEventArgs e)
         {
+
+
             try
             {
                 lblStatusText.Text = e.Value.ToString();
+                ConsoleMessageEventArgs cmea = new ConsoleMessageEventArgs(e.Value.ToString(), "Internal", 0);
+                ConsoleMessageEvent(this, cmea);
             }
             catch (Exception)
             {
@@ -113,7 +118,7 @@ namespace Imogen.Forms.Dockable
                 if (ConsoleMessageEvent != null)
                 {
                     //TODO: Need to fix this so we can send a string and not the ConsoleMessageEventArgs
-                     ConsoleMessageEvent(this, e );
+                    ConsoleMessageEvent(this, e);
                 }
             }
             catch (Exception)
@@ -163,7 +168,7 @@ namespace Imogen.Forms.Dockable
         private void showLinkUrlToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Text = "Actual View of the Link Url";
-            ShowLinkUrl(Properties.Settings.Default.ProfileLinkUrl);
+            ShowLinkUrl(CurrentInternalReport.LinkUrl);
         }
     }
 }

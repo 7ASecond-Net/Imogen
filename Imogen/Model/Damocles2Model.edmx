@@ -25,6 +25,37 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="CurrentReport">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReportNumber" Type="int" Nullable="false" />
+          <Property Name="ReportStartedOn" Type="datetime" Nullable="false" />
+          <Property Name="ReportEndedOn" Type="datetime" Nullable="false" />
+          <Property Name="ReportedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ReportedBy" Type="int" Nullable="false" />
+          <Property Name="ProcessingBy" Type="int" Nullable="false" />
+          <Property Name="PageUrl" Type="nvarchar(max)" />
+          <Property Name="PageUrlHash" Type="nchar" MaxLength="128" />
+          <Property Name="SrcUrl" Type="nvarchar(max)" />
+          <Property Name="SrcUrlHash" Type="nchar" MaxLength="10" />
+          <Property Name="LinkUrl" Type="nvarchar(max)" />
+          <Property Name="LinkUrlHash" Type="nchar" MaxLength="10" />
+          <Property Name="TrueLinkUrl" Type="nvarchar(max)" />
+          <Property Name="TrueLinkUrlHash" Type="nchar" MaxLength="10" />
+          <Property Name="PageUrlFilename" Type="nvarchar(max)" />
+          <Property Name="SrcUrlFilename" Type="nvarchar(max)" />
+          <Property Name="LinkUrlFilename" Type="nvarchar(max)" />
+          <Property Name="TrueLinkUrlFilename" Type="nvarchar(max)" />
+          <Property Name="SrcUrlARCXRating" Type="int" />
+          <Property Name="LinkUrlARCXRating" Type="int" />
+          <Property Name="ImagePath" Type="nvarchar(max)" />
+          <Property Name="ReportSessionTime" Type="float" Nullable="false" />
+          <Property Name="ReportOverDue" Type="bit" />
+          <Property Name="ReportProcessed" Type="bit" />
+        </EntityType>
         <EntityType Name="EUReported">
           <Key>
             <PropertyRef Name="id" />
@@ -39,7 +70,11 @@
           <Property Name="SrcUrlHash" Type="nchar" MaxLength="128" />
           <Property Name="LinkUrl" Type="nvarchar(max)" />
           <Property Name="LinkUrlHash" Type="nchar" MaxLength="128" />
+          <Property Name="TrueLinkUrl" Type="nvarchar(max)" />
+          <Property Name="TrueLinkUrlHash" Type="nchar" MaxLength="128" />
           <Property Name="UserId" Type="int" />
+          <Property Name="BGProcessed" Type="bit" />
+          <Property Name="ReportProcessingCount" Type="int" />
         </EntityType>
         <EntityType Name="FaceARCs">
           <Key>
@@ -79,6 +114,7 @@
           <Property Name="ReportedBy" Type="int" Nullable="false" />
           <Property Name="SrcUrlHash" Type="nchar" MaxLength="128" />
           <Property Name="LinkUrlHash" Type="nchar" MaxLength="128" />
+          <Property Name="TrueLinkUrlHash" Type="nchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="Hashes">
           <Key>
@@ -199,15 +235,39 @@
           <Property Name="loggedOffAt" Type="datetime" />
           <Property Name="SessionSeconds" Type="float" Nullable="false" />
         </EntityType>
-        <Association Name="FK_EUReported_ProcessingResults">
-          <End Role="ProcessingResults" Type="Self.ProcessingResults" Multiplicity="0..1" />
-          <End Role="EUReported" Type="Self.EUReported" Multiplicity="*" />
+        <Association Name="FK_CurrentReport_EUReported">
+          <End Role="EUReported" Type="Self.EUReported" Multiplicity="1" />
+          <End Role="CurrentReport" Type="Self.CurrentReport" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ProcessingResults">
-              <PropertyRef Name="pid" />
+            <Principal Role="EUReported">
+              <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="EUReported">
-              <PropertyRef Name="UserId" />
+            <Dependent Role="CurrentReport">
+              <PropertyRef Name="ReportNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CurrentReport_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="CurrentReport" Type="Self.CurrentReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CurrentReport">
+              <PropertyRef Name="ReportedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CurrentReport_Users1">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="CurrentReport" Type="Self.CurrentReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CurrentReport">
+              <PropertyRef Name="ProcessingBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -379,6 +439,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProcessingResults_EUReported">
+          <End Role="EUReported" Type="Self.EUReported" Multiplicity="1" />
+          <End Role="ProcessingResults" Type="Self.ProcessingResults" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EUReported">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProcessingResults">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProcessingResults_Jurisidctions">
           <End Role="Jurisidctions" Type="Self.Jurisidctions" Multiplicity="1" />
           <End Role="ProcessingResults" Type="Self.ProcessingResults" Multiplicity="*" />
@@ -490,6 +562,7 @@
         <EntityContainer Name="Damocles2ModelStoreContainer">
           <EntitySet Name="A" EntityType="Self.A" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="C" EntityType="Self.C" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CurrentReport" EntityType="Self.CurrentReport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EUReported" EntityType="Self.EUReported" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FaceARCs" EntityType="Self.FaceARCs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Faces" EntityType="Self.Faces" Schema="dbo" store:Type="Tables" />
@@ -504,9 +577,17 @@
           <EntitySet Name="UserRanks" EntityType="Self.UserRanks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersSessions" EntityType="Self.UsersSessions" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_EUReported_ProcessingResults" Association="Self.FK_EUReported_ProcessingResults">
-            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
+          <AssociationSet Name="FK_CurrentReport_EUReported" Association="Self.FK_CurrentReport_EUReported">
             <End Role="EUReported" EntitySet="EUReported" />
+            <End Role="CurrentReport" EntitySet="CurrentReport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CurrentReport_Users" Association="Self.FK_CurrentReport_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="CurrentReport" EntitySet="CurrentReport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CurrentReport_Users1" Association="Self.FK_CurrentReport_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="CurrentReport" EntitySet="CurrentReport" />
           </AssociationSet>
           <AssociationSet Name="FK_EUReported_Users" Association="Self.FK_EUReported_Users">
             <End Role="Users" EntitySet="Users" />
@@ -562,6 +643,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_ProcessingResults_C1" Association="Self.FK_ProcessingResults_C1">
             <End Role="C" EntitySet="C" />
+            <End Role="ProcessingResults" EntitySet="ProcessingResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcessingResults_EUReported" Association="Self.FK_ProcessingResults_EUReported">
+            <End Role="EUReported" EntitySet="EUReported" />
             <End Role="ProcessingResults" EntitySet="ProcessingResults" />
           </AssociationSet>
           <AssociationSet Name="FK_ProcessingResults_Jurisidctions" Association="Self.FK_ProcessingResults_Jurisidctions">
@@ -650,6 +735,12 @@
           <NavigationProperty Name="User" Relationship="Self.FK_EUReported_Users" FromRole="EUReported" ToRole="Users" />
           <NavigationProperty Name="GoneButNotForgottenLinks" Relationship="Self.FK_GoneButNotForgottenLinks_EUReported" FromRole="EUReported" ToRole="GoneButNotForgottenLinks" />
           <NavigationProperty Name="Hashes" Relationship="Damocles2Model.FK_Hashes_EUReported" FromRole="EUReported" ToRole="Hash" />
+          <Property Name="TrueLinkUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TrueLinkUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="BGProcessed" Type="Boolean" />
+          <NavigationProperty Name="ProcessingResults" Relationship="Damocles2Model.FK_ProcessingResults_EUReported" FromRole="EUReported" ToRole="ProcessingResult" />
+          <NavigationProperty Name="CurrentReports" Relationship="Damocles2Model.FK_CurrentReport_EUReported" FromRole="EUReported" ToRole="CurrentReport" />
+          <Property Name="ReportProcessingCount" Type="Int32" />
         </EntityType>
         <EntityType Name="GoneButNotForgottenLink">
           <Key>
@@ -664,6 +755,7 @@
           <Property Name="LinkUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="EUReported" Relationship="Self.FK_GoneButNotForgottenLinks_EUReported" FromRole="GoneButNotForgottenLinks" ToRole="EUReported" />
           <NavigationProperty Name="User" Relationship="Self.FK_GoneButNotForgottenLinks_Users" FromRole="GoneButNotForgottenLinks" ToRole="Users" />
+          <Property Name="TrueLinkUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="Jurisidction">
           <Key>
@@ -704,6 +796,7 @@
           <NavigationProperty Name="R1" Relationship="Self.FK_ProcessingResults_R1" FromRole="ProcessingResults" ToRole="R" />
           <NavigationProperty Name="User" Relationship="Self.FK_ProcessingResults_Users" FromRole="ProcessingResults" ToRole="Users" />
           <NavigationProperty Name="Matedatas" Relationship="Damocles2Model.FK_Matedata_ProcessingResults" FromRole="ProcessingResult" ToRole="Matedata" />
+          <NavigationProperty Name="EUReported" Relationship="Damocles2Model.FK_ProcessingResults_EUReported" FromRole="ProcessingResult" ToRole="EUReported" />
         </EntityType>
         <EntityType Name="R">
           <Key>
@@ -778,6 +871,8 @@
           <NavigationProperty Name="UserRanks" Relationship="Self.FK_UserRanks_Users" FromRole="Users" ToRole="UserRanks" />
           <NavigationProperty Name="UsersSessions" Relationship="Self.FK_UsersSessions_Users" FromRole="Users" ToRole="UsersSessions" />
           <NavigationProperty Name="Faces" Relationship="Damocles2Model.FK_Faces_Users" FromRole="User" ToRole="Face" />
+          <NavigationProperty Name="CurrentReports" Relationship="Damocles2Model.FK_CurrentReport_Users" FromRole="User" ToRole="CurrentReport" />
+          <NavigationProperty Name="CurrentReports1" Relationship="Damocles2Model.FK_CurrentReport_Users1" FromRole="User" ToRole="CurrentReport" />
         </EntityType>
         <EntityType Name="UsersSession">
           <Key>
@@ -1107,6 +1202,23 @@
             <End Role="EUReported" EntitySet="EUReporteds" />
             <End Role="Hash" EntitySet="Hashes" />
           </AssociationSet>
+          <EntitySet Name="CurrentReports" EntityType="Damocles2Model.CurrentReport" />
+          <AssociationSet Name="FK_CurrentReport_Users" Association="Damocles2Model.FK_CurrentReport_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="CurrentReport" EntitySet="CurrentReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CurrentReport_Users1" Association="Damocles2Model.FK_CurrentReport_Users1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="CurrentReport" EntitySet="CurrentReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcessingResults_EUReported" Association="Damocles2Model.FK_ProcessingResults_EUReported">
+            <End Role="EUReported" EntitySet="EUReporteds" />
+            <End Role="ProcessingResult" EntitySet="ProcessingResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CurrentReport_EUReported" Association="Damocles2Model.FK_CurrentReport_EUReported">
+            <End Role="EUReported" EntitySet="EUReporteds" />
+            <End Role="CurrentReport" EntitySet="CurrentReports" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="FaceARC">
           <Key>
@@ -1249,6 +1361,88 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CurrentReport">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReportNumber" Type="Int32" Nullable="false" />
+          <Property Name="ReportStartedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ReportEndedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ReportedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ReportedBy" Type="Int32" Nullable="false" />
+          <Property Name="ProcessingBy" Type="Int32" Nullable="false" />
+          <Property Name="PageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PageUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="SrcUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SrcUrlHash" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="LinkUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LinkUrlHash" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="TrueLinkUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TrueLinkUrlHash" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="PageUrlFilename" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SrcUrlFilename" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LinkUrlFilename" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TrueLinkUrlFilename" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SrcUrlARCXRating" Type="Int32" />
+          <Property Name="LinkUrlARCXRating" Type="Int32" />
+          <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReportSessionTime" Type="Double" Nullable="false" />
+          <Property Name="ReportOverDue" Type="Boolean" />
+          <Property Name="ReportProcessed" Type="Boolean" />
+          <NavigationProperty Name="User" Relationship="Damocles2Model.FK_CurrentReport_Users" FromRole="CurrentReport" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="Damocles2Model.FK_CurrentReport_Users1" FromRole="CurrentReport" ToRole="User" />
+          <NavigationProperty Name="EUReported" Relationship="Damocles2Model.FK_CurrentReport_EUReported" FromRole="CurrentReport" ToRole="EUReported" />
+        </EntityType>
+        <Association Name="FK_CurrentReport_Users">
+          <End Type="Damocles2Model.User" Role="User" Multiplicity="1" />
+          <End Type="Damocles2Model.CurrentReport" Role="CurrentReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CurrentReport">
+              <PropertyRef Name="ReportedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CurrentReport_Users1">
+          <End Type="Damocles2Model.User" Role="User" Multiplicity="1" />
+          <End Type="Damocles2Model.CurrentReport" Role="CurrentReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CurrentReport">
+              <PropertyRef Name="ProcessingBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcessingResults_EUReported">
+          <End Type="Damocles2Model.EUReported" Role="EUReported" Multiplicity="1" />
+          <End Type="Damocles2Model.ProcessingResult" Role="ProcessingResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EUReported">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProcessingResult">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CurrentReport_EUReported">
+          <End Type="Damocles2Model.EUReported" Role="EUReported" Multiplicity="1" />
+          <End Type="Damocles2Model.CurrentReport" Role="CurrentReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EUReported">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CurrentReport">
+              <PropertyRef Name="ReportNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1280,6 +1474,10 @@
           <EntitySetMapping Name="EUReporteds">
             <EntityTypeMapping TypeName="Damocles2Model.EUReported">
               <MappingFragment StoreEntitySet="EUReported">
+                <ScalarProperty Name="ReportProcessingCount" ColumnName="ReportProcessingCount" />
+                <ScalarProperty Name="BGProcessed" ColumnName="BGProcessed" />
+                <ScalarProperty Name="TrueLinkUrlHash" ColumnName="TrueLinkUrlHash" />
+                <ScalarProperty Name="TrueLinkUrl" ColumnName="TrueLinkUrl" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
@@ -1297,6 +1495,7 @@
           <EntitySetMapping Name="GoneButNotForgottenLinks">
             <EntityTypeMapping TypeName="Damocles2Model.GoneButNotForgottenLink">
               <MappingFragment StoreEntitySet="GoneButNotForgottenLinks">
+                <ScalarProperty Name="TrueLinkUrlHash" ColumnName="TrueLinkUrlHash" />
                 <ScalarProperty Name="pid" ColumnName="pid" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
@@ -1461,6 +1660,38 @@
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CurrentReports">
+            <EntityTypeMapping TypeName="Damocles2Model.CurrentReport">
+              <MappingFragment StoreEntitySet="CurrentReport">
+                <ScalarProperty Name="ReportProcessed" ColumnName="ReportProcessed" />
+                <ScalarProperty Name="ReportOverDue" ColumnName="ReportOverDue" />
+                <ScalarProperty Name="ReportSessionTime" ColumnName="ReportSessionTime" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="LinkUrlARCXRating" ColumnName="LinkUrlARCXRating" />
+                <ScalarProperty Name="SrcUrlARCXRating" ColumnName="SrcUrlARCXRating" />
+                <ScalarProperty Name="TrueLinkUrlFilename" ColumnName="TrueLinkUrlFilename" />
+                <ScalarProperty Name="LinkUrlFilename" ColumnName="LinkUrlFilename" />
+                <ScalarProperty Name="SrcUrlFilename" ColumnName="SrcUrlFilename" />
+                <ScalarProperty Name="PageUrlFilename" ColumnName="PageUrlFilename" />
+                <ScalarProperty Name="TrueLinkUrlHash" ColumnName="TrueLinkUrlHash" />
+                <ScalarProperty Name="TrueLinkUrl" ColumnName="TrueLinkUrl" />
+                <ScalarProperty Name="LinkUrlHash" ColumnName="LinkUrlHash" />
+                <ScalarProperty Name="LinkUrl" ColumnName="LinkUrl" />
+                <ScalarProperty Name="SrcUrlHash" ColumnName="SrcUrlHash" />
+                <ScalarProperty Name="SrcUrl" ColumnName="SrcUrl" />
+                <ScalarProperty Name="PageUrlHash" ColumnName="PageUrlHash" />
+                <ScalarProperty Name="PageUrl" ColumnName="PageUrl" />
+                <ScalarProperty Name="ProcessingBy" ColumnName="ProcessingBy" />
+                <ScalarProperty Name="ReportedBy" ColumnName="ReportedBy" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="ReportedOn" ColumnName="ReportedOn" />
+                <ScalarProperty Name="ReportEndedOn" ColumnName="ReportEndedOn" />
+                <ScalarProperty Name="ReportStartedOn" ColumnName="ReportStartedOn" />
+                <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
                 <ScalarProperty Name="pid" ColumnName="pid" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Imogen.Controllers.Reporting;
+using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
@@ -24,10 +25,10 @@ namespace Imogen.Controllers.Utils
         /// </returns>       
         internal string GetNewSrcFilename(string ext = "jpg")
         {
-            string[] parts = Properties.Settings.Default.ProfilePossibleFileName1.Split('.');
+            string[] parts = CurrentInternalReport.SrcUrlFilename.Split('.');
             if (parts.Count() == 2) // try and get the real extension
-                ext = Properties.Settings.Default.ProfilePossibleFileName1.Split('.')[1];
-            return Path.Combine(Properties.Settings.Default.FileSavePath, Path.ChangeExtension(Guid.NewGuid().ToString().Replace("-", "").ToLowerInvariant(), ext));
+                ext = CurrentInternalReport.SrcUrlFilename.Split('.')[1];
+            return Path.Combine(GlobalSettings.FileSavePath, Path.ChangeExtension(Guid.NewGuid().ToString().Replace("-", "").ToLowerInvariant(), ext));
         }
 
         /// <summary>

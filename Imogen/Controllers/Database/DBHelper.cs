@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using Imogen.Controllers.Reporting;
 
 namespace Imogen.Controllers.Database
 {
@@ -45,8 +46,8 @@ namespace Imogen.Controllers.Database
         {
             Damocles2Entities de = new Damocles2Entities();
             HashingHelper hh = new HashingHelper();
-            string passwordHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
-            User u = de.Users.Where(usr => usr.Username == Properties.Settings.Default.UserUsername && usr.UserPassword == passwordHash).FirstOrDefault();
+            string passwordHash = hh.GetSHA512(CurrentUser.UserPassword);
+            User u = de.Users.Where(usr => usr.Username == CurrentUser.Username && usr.UserPassword == passwordHash).FirstOrDefault();
             var pr = de.ProcessingResults.Where(pi => pi.id == u.Id);
 
             int iCount = 0;
@@ -62,8 +63,8 @@ namespace Imogen.Controllers.Database
         {
             Damocles2Entities de = new Damocles2Entities();
             HashingHelper hh = new HashingHelper();
-            string passwordHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
-            User u = de.Users.Where(usr => usr.Username == Properties.Settings.Default.UserUsername && usr.UserPassword == passwordHash).FirstOrDefault();
+            string passwordHash = hh.GetSHA512(CurrentUser.UserPassword);
+            User u = de.Users.Where(usr => usr.Username == CurrentUser.Username && usr.UserPassword == passwordHash).FirstOrDefault();
             var pr = de.ProcessingResults.Where(pi => pi.id == u.Id);
 
             int iCount = 0;
@@ -75,12 +76,123 @@ namespace Imogen.Controllers.Database
             return iCount.ToString("N0");
         }
 
+        internal static void LoadCurrentReport()
+        {
+            Damocles2Entities de = new Damocles2Entities(); //TODO: Maybe this should be a Static?
+            CurrentReport ce = de.CurrentReports.Where(cr => cr.ReportProcessed == false).FirstOrDefault();
+            if (ce == null) // Generate New Report 
+                return;
+
+            if (!string.IsNullOrEmpty(ce.ImagePath))
+                Reporting.CurrentInternalReport.ImagePath = ce.ImagePath;
+            if (!string.IsNullOrEmpty(ce.LinkUrl))
+                Reporting.CurrentInternalReport.LinkUrl = ce.LinkUrl;
+            Reporting.CurrentInternalReport.LinkUrlARCXRating = (Reporting.CurrentInternalReport.ARCXRating)ce.LinkUrlARCXRating;
+            if (!string.IsNullOrEmpty(ce.LinkUrlFilename))
+                Reporting.CurrentInternalReport.LinkUrlFilename = ce.LinkUrlFilename;
+            if (!string.IsNullOrEmpty(ce.LinkUrl))
+                Reporting.CurrentInternalReport.LinkUrl = ce.LinkUrl;
+            Reporting.CurrentInternalReport.LinkUrlARCXRating = (Reporting.CurrentInternalReport.ARCXRating)ce.LinkUrlARCXRating;
+            if (!string.IsNullOrEmpty(ce.LinkUrlFilename))
+                Reporting.CurrentInternalReport.LinkUrlFilename = ce.LinkUrlFilename;
+            if (!string.IsNullOrEmpty(ce.LinkUrlHash))
+                Reporting.CurrentInternalReport.LinkUrlHash = ce.LinkUrlHash;
+            if (!string.IsNullOrEmpty(ce.PageUrl))
+                Reporting.CurrentInternalReport.PageUrl = ce.PageUrl;
+            if (!string.IsNullOrEmpty(ce.PageUrlFilename))
+                Reporting.CurrentInternalReport.PageUrlFilename = ce.PageUrlFilename;
+            if (!string.IsNullOrEmpty(ce.PageUrlHash))
+                Reporting.CurrentInternalReport.PageUrlHash = ce.PageUrlHash;
+            Reporting.CurrentUser.UserId = ce.ProcessingBy;
+            Reporting.CurrentInternalReport.ReportedBy = ce.ReportedBy;
+            Reporting.CurrentInternalReport.ReportedOn = ce.ReportedOn;
+            Reporting.CurrentInternalReport.ReportNumber = ce.ReportNumber;
+            Reporting.CurrentInternalReport.ReportSessionTime = ce.ReportSessionTime;
+            if (!string.IsNullOrEmpty(ce.SrcUrl))
+                Reporting.CurrentInternalReport.SrcUrl = ce.SrcUrl;
+             Reporting.CurrentInternalReport.SrcUrlARCXRating = (Reporting.CurrentInternalReport.ARCXRating)ce.SrcUrlARCXRating;
+            if (!string.IsNullOrEmpty(ce.SrcUrlFilename))
+                Reporting.CurrentInternalReport.SrcUrlFilename = ce.SrcUrlFilename;
+            if (!string.IsNullOrEmpty(ce.SrcUrlHash))
+                 Reporting.CurrentInternalReport.SrcUrlHash = ce.SrcUrlHash;
+            if (!string.IsNullOrEmpty(ce.TrueLinkUrl))
+                Reporting.CurrentInternalReport.TrueLinkUrl = ce.TrueLinkUrl;
+            if (!string.IsNullOrEmpty(ce.TrueLinkUrlFilename))
+                Reporting.CurrentInternalReport.TrueLinkUrlFilename = ce.TrueLinkUrlFilename;
+            if (!string.IsNullOrEmpty(ce.TrueLinkUrlHash))
+                Reporting.CurrentInternalReport.TrueLinkUrlHash = ce.TrueLinkUrlHash;
+        }
+
+        internal static void SaveCurrentReport()
+        {
+            bool update = false;
+            Damocles2Entities de = new Damocles2Entities(); //TODO: Maybe this should be a Static?
+            CurrentReport ce = de.CurrentReports.Where(cr => cr.ReportNumber == Reporting.CurrentInternalReport.ReportNumber).FirstOrDefault();
+            if (ce == null) // Generate New Report 
+            {
+                ce = new CurrentReport();
+                ce.ReportStartedOn = DateTime.UtcNow;
+            }
+            else
+            {
+                update = true;
+                ce.UpdatedOn = DateTime.UtcNow;
+            }
+
+            if (!string.IsNullOrEmpty(Reporting.CurrentInternalReport.ImagePath))
+                ce.ImagePath = Reporting.CurrentInternalReport.ImagePath;
+            if (!string.IsNullOrEmpty(Reporting.CurrentInternalReport.LinkUrl))
+                ce.LinkUrl = Reporting.CurrentInternalReport.LinkUrl;
+            ce.LinkUrlARCXRating = (int)Reporting.CurrentInternalReport.LinkUrlARCXRating;
+            if (!string.IsNullOrEmpty(Reporting.CurrentInternalReport.LinkUrlFilename))
+                ce.LinkUrlFilename = Reporting.CurrentInternalReport.LinkUrlFilename;
+            if (!string.IsNullOrEmpty(Reporting.CurrentInternalReport.LinkUrl))
+                ce.LinkUrl = Reporting.CurrentInternalReport.LinkUrl;
+            ce.LinkUrlARCXRating = (int)Reporting.CurrentInternalReport.LinkUrlARCXRating;
+            if (!string.IsNullOrEmpty(Reporting.CurrentInternalReport.LinkUrlFilename))
+                ce.LinkUrlFilename = Reporting.CurrentInternalReport.LinkUrlFilename;
+            if (!string.IsNullOrEmpty(Reporting.CurrentInternalReport.LinkUrlHash))
+                ce.LinkUrlHash = Reporting.CurrentInternalReport.LinkUrlHash;
+            if (!string.IsNullOrEmpty(Reporting.CurrentInternalReport.PageUrl))
+                ce.PageUrl = Reporting.CurrentInternalReport.PageUrl;
+            if (!string.IsNullOrEmpty(Reporting.CurrentInternalReport.PageUrlFilename))
+                ce.PageUrlFilename = Reporting.CurrentInternalReport.PageUrlFilename;
+            if (!string.IsNullOrEmpty(Reporting.CurrentInternalReport.PageUrlHash))
+                ce.PageUrlHash = Reporting.CurrentInternalReport.PageUrlHash;
+            ce.ProcessingBy = Reporting.CurrentUser.UserId;
+            ce.ReportedBy = Reporting.CurrentInternalReport.ReportedBy;
+            ce.ReportedOn = Reporting.CurrentInternalReport.ReportedOn;
+            if (Reporting.CurrentInternalReport.Completed)
+                ce.ReportEndedOn = DateTime.UtcNow;
+            ce.ReportNumber = Reporting.CurrentInternalReport.ReportNumber;
+            ce.ReportProcessed = Reporting.CurrentInternalReport.Completed;
+            ce.ReportSessionTime = Reporting.CurrentInternalReport.ReportSessionTime;
+            if (!string.IsNullOrEmpty(Reporting.CurrentInternalReport.SrcUrl))
+                ce.SrcUrl = Reporting.CurrentInternalReport.SrcUrl;
+            ce.SrcUrlARCXRating = (int)Reporting.CurrentInternalReport.SrcUrlARCXRating;
+            if (!string.IsNullOrEmpty(Reporting.CurrentInternalReport.SrcUrlFilename))
+                ce.SrcUrlFilename = Reporting.CurrentInternalReport.SrcUrlFilename;
+            if (!string.IsNullOrEmpty(Reporting.CurrentInternalReport.SrcUrlHash))
+                ce.SrcUrlHash = Reporting.CurrentInternalReport.SrcUrlHash;
+            if (!string.IsNullOrEmpty(Reporting.CurrentInternalReport.TrueLinkUrl))
+                ce.TrueLinkUrl = Reporting.CurrentInternalReport.TrueLinkUrl;
+            if (!string.IsNullOrEmpty(Reporting.CurrentInternalReport.TrueLinkUrlFilename))
+                ce.TrueLinkUrlFilename = Reporting.CurrentInternalReport.TrueLinkUrlFilename;
+            if (!string.IsNullOrEmpty(Reporting.CurrentInternalReport.TrueLinkUrlHash))
+                ce.TrueLinkUrlHash = Reporting.CurrentInternalReport.TrueLinkUrlHash;
+
+            if (!update)
+                de.CurrentReports.Add(ce);
+
+            de.SaveChanges(); //TODO: Probably should be using Asynchronous calls for all these
+        }
+
         internal static string GetVideosInvestigated()
         {
             Damocles2Entities de = new Damocles2Entities();
             HashingHelper hh = new HashingHelper();
-            string passwordHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
-            User u = de.Users.Where(usr => usr.Username == Properties.Settings.Default.UserUsername && usr.UserPassword == passwordHash).FirstOrDefault();
+            string passwordHash = hh.GetSHA512(CurrentUser.UserPassword);
+            User u = de.Users.Where(usr => usr.Username == CurrentUser.Username && usr.UserPassword == passwordHash).FirstOrDefault();
             var pr = de.ProcessingResults.Where(pi => pi.UserId == u.Id);
 
             int iCount = 0;
@@ -98,8 +210,8 @@ namespace Imogen.Controllers.Database
         {
             Damocles2Entities de = new Damocles2Entities();
             HashingHelper hh = new HashingHelper();
-            string passwordHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
-            User u = de.Users.Where(usr => usr.Username == Properties.Settings.Default.UserUsername && usr.UserPassword == passwordHash).FirstOrDefault();
+            string passwordHash = hh.GetSHA512(CurrentUser.UserPassword);
+            User u = de.Users.Where(usr => usr.Username == CurrentUser.Username && usr.UserPassword == passwordHash).FirstOrDefault();
             var pr = de.ProcessingResults.Where(pi => pi.UserId == u.Id);
 
             int iCount = 0;
@@ -201,8 +313,7 @@ namespace Imogen.Controllers.Database
             return string.Empty; // We May not have a Src - it may be the whole page that has been reported, or only a link!
         }
 
-
-        internal static ProcessingResult GeProcessingResultById(int reportId)
+        internal static ProcessingResult GetProcessingResultById(int reportId)
         {
             Damocles2Entities de = new Damocles2Entities();
             var gbResult = de.ProcessingResults.Where(gid => gid.id == reportId).FirstOrDefault();
@@ -220,7 +331,7 @@ namespace Imogen.Controllers.Database
             Face face = new Face();
 
             // Possible Return Values = X, A, R, C, String.Empty
-            var pr = GeProcessingResultById(Convert.ToInt32(Properties.Settings.Default.ProfileReportNumber.Replace(",", "")));
+            var pr = GetProcessingResultById(CurrentInternalReport.ReportNumber);
             if (pr != null)
             {
                 if (pr.CSrcResultId != null)    // Theoretically the most common result
@@ -236,7 +347,7 @@ namespace Imogen.Controllers.Database
                 face.FaceData = utils.BytesToString(utils.imageToByteArray(image));
                 face.CreatedOn = DateTime.UtcNow;
                 face.UpdatedOn = DateTime.UtcNow;
-                face.CreatedBy = Properties.Settings.Default.UserId;
+                face.CreatedBy = CurrentUser.UserId;
                 if (!string.IsNullOrEmpty(Name))
                     face.Name = Name;
                 if (!string.IsNullOrEmpty(Age))
@@ -316,7 +427,7 @@ namespace Imogen.Controllers.Database
 
         private int GetRecordId()
         {
-            return Convert.ToInt32(Properties.Settings.Default.ProfileReportNumber.Replace(",", ""));
+            return CurrentInternalReport.ReportNumber;
         }
 
         private void ConnectToDamocles()
@@ -333,11 +444,11 @@ namespace Imogen.Controllers.Database
 
         #region 
         //TODO: This should be retrieved from a Queue via API or Messaging.
-        //TODO: Convert the EUReported class to an internal class called - CurrentReport.
+        //TODO: ReportProcessingCount should be retrieved from a settings table on the server and not hard coded.
         internal static EUReported GetNextUnprocessedRecord()
         {
             Damocles2Entities de = new Damocles2Entities();
-            EUReported eur = de.EUReporteds.Where(r => r.Processed == false).FirstOrDefault();
+            EUReported eur = de.EUReporteds.Where(r => r.Processed == false && r.ReportProcessingCount < 11).FirstOrDefault();
             return eur;
 
         }
@@ -354,7 +465,7 @@ namespace Imogen.Controllers.Database
             if (user == null)
                 return false;
 
-            Properties.Settings.Default.UserId = user.Id;
+            CurrentUser.UserId = user.Id;
 
             //TODO: This is not functioning correctly - simply want the User's current rank.
             UserRank ur = de.UserRanks.Where(usr => usr.UserId == user.Id).FirstOrDefault();
@@ -377,7 +488,7 @@ namespace Imogen.Controllers.Database
 
             foreach (UsersSession userS in aus)
             {
-                Properties.Settings.Default.SessionSecondsTotal += userS.SessionSeconds;
+                CurrentUser.SessionSecondsTotal += userS.SessionSeconds;
             }
 
             UsersSession us = new UsersSession();
@@ -417,13 +528,13 @@ namespace Imogen.Controllers.Database
         internal void LogOff()
         {
             Damocles2Entities de = new Damocles2Entities();
-            string passwordHash = utils.HashPassword(Properties.Settings.Default.UserPassword);
-            User u = de.Users.Where(usr => usr.Username == Properties.Settings.Default.UserUsername && usr.UserPassword == passwordHash).FirstOrDefault();
+            string passwordHash = utils.HashPassword(CurrentUser.UserPassword);
+            User u = de.Users.Where(usr => usr.Username == CurrentUser.Username && usr.UserPassword == passwordHash).FirstOrDefault();
             // UsersSession us = de.UsersSessions.Where(uss => uss.id == u.Id && uss.loggedOffAt == null)
             // v1.OrderByDescending(rec => rec.Id).FirstOrDefault();
             UsersSession us = de.UsersSessions.Where(uss => uss.id == u.Id && uss.loggedOffAt == null).OrderByDescending(ob => ob.LoggedOnAt).FirstOrDefault();
             us.loggedOffAt = DateTime.UtcNow;
-            us.SessionSeconds = Properties.Settings.Default.SessionSeconds;
+            us.SessionSeconds = CurrentUser.ThisSessionSeconds;
             u.IsOnline = false;
             de.SaveChanges();
         }
@@ -444,7 +555,7 @@ namespace Imogen.Controllers.Database
             foreach (UsersSession userS in aus)
             {
                 TotalSessions++;
-                Properties.Settings.Default.SessionSecondsTotal += userS.SessionSeconds;
+                CurrentUser.SessionSecondsTotal += userS.SessionSeconds;
                 t += userS.SessionSeconds;
             }
 
@@ -460,8 +571,8 @@ namespace Imogen.Controllers.Database
         internal void SetSrcToAllowed(string url)
         {
             Damocles2Entities de = new Damocles2Entities();
-            string pHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
-            User usr = de.Users.Where(u => u.Username == Properties.Settings.Default.UserUsername && u.UserPassword == pHash).FirstOrDefault();
+
+            User usr = GetUser(de);
 
             EUReported eu = de.EUReporteds.Where(l => l.SrcUrl == url).FirstOrDefault();
 
@@ -539,8 +650,8 @@ namespace Imogen.Controllers.Database
         internal void SetSrcToRestricted(string url)
         {
             Damocles2Entities de = new Damocles2Entities();
-            string pHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
-            User usr = de.Users.Where(u => u.Username == Properties.Settings.Default.UserUsername && u.UserPassword == pHash).FirstOrDefault();
+
+            User usr = GetUser(de);
 
             EUReported eu = de.EUReporteds.Where(l => l.SrcUrl == url).FirstOrDefault();
 
@@ -621,8 +732,8 @@ namespace Imogen.Controllers.Database
         internal void SetSrcToCriminal(string url)
         {
             Damocles2Entities de = new Damocles2Entities();
-            string pHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
-            User usr = de.Users.Where(u => u.Username == Properties.Settings.Default.UserUsername && u.UserPassword == pHash).FirstOrDefault();
+
+            User usr = GetUser(de);
 
             EUReported eu = de.EUReporteds.Where(l => l.SrcUrl == url).FirstOrDefault();
 
@@ -704,8 +815,8 @@ namespace Imogen.Controllers.Database
         internal void SetLinkToRestricted(string url)
         {
             Damocles2Entities de = new Damocles2Entities();
-            string pHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
-            User usr = de.Users.Where(u => u.Username == Properties.Settings.Default.UserUsername && u.UserPassword == pHash).FirstOrDefault();
+            string pHash = hh.GetSHA512(CurrentUser.UserPassword);
+            User usr = de.Users.Where(u => u.Username == CurrentUser.Username && u.UserPassword == pHash).FirstOrDefault();
 
             EUReported eu = de.EUReporteds.Where(l => l.LinkUrl == url).FirstOrDefault();
 
@@ -775,6 +886,10 @@ namespace Imogen.Controllers.Database
                     eu.Processed = true;
             }
 
+            if (!string.IsNullOrEmpty(CurrentInternalReport.TrueLinkUrl))
+                eu.TrueLinkUrl = CurrentInternalReport.TrueLinkUrl;
+            if (!string.IsNullOrEmpty(CurrentInternalReport.TrueLinkUrlHash))
+                eu.TrueLinkUrlHash = CurrentInternalReport.TrueLinkUrlHash;
             eu.UpdatedOn = DateTime.UtcNow;
             de.SaveChanges();
 
@@ -786,8 +901,8 @@ namespace Imogen.Controllers.Database
         internal void SetLinkToCriminal(string url)
         {
             Damocles2Entities de = new Damocles2Entities();
-            string pHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
-            User usr = de.Users.Where(u => u.Username == Properties.Settings.Default.UserUsername && u.UserPassword == pHash).FirstOrDefault();
+            string pHash = hh.GetSHA512(CurrentUser.UserPassword);
+            User usr = de.Users.Where(u => u.Username == CurrentUser.Username && u.UserPassword == pHash).FirstOrDefault();
 
             EUReported eu = de.EUReporteds.Where(l => l.LinkUrl == url).FirstOrDefault();
 
@@ -856,7 +971,10 @@ namespace Imogen.Controllers.Database
                 if (pr.ASrcResultId != null || pr.RSrcResultId != null || pr.CSrcResultId != null)
                     eu.Processed = true;
             }
-
+            if (!string.IsNullOrEmpty(CurrentInternalReport.TrueLinkUrl))
+                eu.TrueLinkUrl = CurrentInternalReport.TrueLinkUrl;
+            if (!string.IsNullOrEmpty(CurrentInternalReport.TrueLinkUrlHash))
+                eu.TrueLinkUrlHash = CurrentInternalReport.TrueLinkUrlHash;
             eu.UpdatedOn = DateTime.UtcNow;
             de.SaveChanges();
 
@@ -868,8 +986,8 @@ namespace Imogen.Controllers.Database
         internal void SetLinkToAllowed(string url)
         {
             Damocles2Entities de = new Damocles2Entities();
-            string pHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
-            User usr = de.Users.Where(u => u.Username == Properties.Settings.Default.UserUsername && u.UserPassword == pHash).FirstOrDefault();
+            string pHash = hh.GetSHA512(CurrentUser.UserPassword);
+            User usr = de.Users.Where(u => u.Username == CurrentUser.Username && u.UserPassword == pHash).FirstOrDefault();
 
             EUReported eu = de.EUReporteds.Where(l => l.LinkUrl == url).FirstOrDefault();
 
@@ -939,6 +1057,10 @@ namespace Imogen.Controllers.Database
                     eu.Processed = true;
             }
 
+            if (!string.IsNullOrEmpty(CurrentInternalReport.TrueLinkUrl))
+                eu.TrueLinkUrl = CurrentInternalReport.TrueLinkUrl;
+            if (!string.IsNullOrEmpty(CurrentInternalReport.TrueLinkUrlHash))
+                eu.TrueLinkUrlHash = CurrentInternalReport.TrueLinkUrlHash;
             eu.UpdatedOn = DateTime.UtcNow;
             de.SaveChanges();
 
@@ -953,10 +1075,14 @@ namespace Imogen.Controllers.Database
         {
             Damocles2Entities de = new Damocles2Entities();
 
-            string pHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
-            User usr = de.Users.Where(u => u.Username == Properties.Settings.Default.UserUsername && u.UserPassword == pHash).FirstOrDefault();
+            string pHash = hh.GetSHA512(CurrentUser.UserPassword);
+            User usr = de.Users.Where(u => u.Username == CurrentUser.Username && u.UserPassword == pHash).FirstOrDefault();
 
             EUReported eu = de.EUReporteds.Where(l => l.LinkUrl == url).FirstOrDefault();
+            if (!string.IsNullOrEmpty(CurrentInternalReport.TrueLinkUrl))
+                eu.TrueLinkUrl = CurrentInternalReport.TrueLinkUrl;
+            if (!string.IsNullOrEmpty(CurrentInternalReport.TrueLinkUrlHash))
+                eu.TrueLinkUrlHash = CurrentInternalReport.TrueLinkUrlHash;
             eu.UpdatedOn = DateTime.UtcNow;
 
             GoneButNotForgottenLink gb = new GoneButNotForgottenLink();
@@ -965,6 +1091,12 @@ namespace Imogen.Controllers.Database
             gb.LastCheckedOn = DateTime.UtcNow;
             gb.LinkUrlHash = eu.LinkUrlHash;
             gb.ReportedBy = usr.Id;
+
+            //TODO: This won't work - we don't know which link is GoneButNotForgotten - the redirection link or the TrueLink.
+            if (!string.IsNullOrEmpty(CurrentInternalReport.TrueLinkUrlHash))
+                eu.TrueLinkUrlHash = CurrentInternalReport.TrueLinkUrlHash;
+
+
             de.GoneButNotForgottenLinks.Add(gb);
             try
             {
@@ -986,9 +1118,7 @@ namespace Imogen.Controllers.Database
         internal void SetSrcToGoneButNotForgotten(string url)
         {
             Damocles2Entities de = new Damocles2Entities();
-
-            string pHash = hh.GetSHA512(Properties.Settings.Default.UserPassword);
-            User usr = de.Users.Where(u => u.Username == Properties.Settings.Default.UserUsername && u.UserPassword == pHash).FirstOrDefault();
+            User usr = GetUser(de);
 
             EUReported eu = de.EUReporteds.Where(l => l.SrcUrl == url).FirstOrDefault();
             eu.UpdatedOn = DateTime.UtcNow;
@@ -1006,6 +1136,13 @@ namespace Imogen.Controllers.Database
             gb = null;
             eu = null;
             usr = null;
+        }
+
+        private User GetUser(Damocles2Entities de)
+        {
+            string pHash = hh.GetSHA512(CurrentUser.UserPassword);
+            User usr = de.Users.Where(u => u.Username == CurrentUser.Username && u.UserPassword == pHash).FirstOrDefault();
+            return usr;
         }
 
         #region Statistics

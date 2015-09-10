@@ -19,6 +19,8 @@ namespace Imogen.Model
         {
             this.GoneButNotForgottenLinks = new HashSet<GoneButNotForgottenLink>();
             this.Hashes = new HashSet<Hash>();
+            this.ProcessingResults = new HashSet<ProcessingResult>();
+            this.CurrentReports = new HashSet<CurrentReport>();
         }
     
         public int id { get; set; }
@@ -32,6 +34,10 @@ namespace Imogen.Model
         public string LinkUrl { get; set; }
         public string LinkUrlHash { get; set; }
         public Nullable<int> UserId { get; set; }
+        public string TrueLinkUrl { get; set; }
+        public string TrueLinkUrlHash { get; set; }
+        public Nullable<bool> BGProcessed { get; set; }
+        public Nullable<int> ReportProcessingCount { get; set; }
     
         public virtual ProcessingResult ProcessingResult { get; set; }
         public virtual User User { get; set; }
@@ -39,5 +45,9 @@ namespace Imogen.Model
         public virtual ICollection<GoneButNotForgottenLink> GoneButNotForgottenLinks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Hash> Hashes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProcessingResult> ProcessingResults { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CurrentReport> CurrentReports { get; set; }
     }
 }

@@ -24,6 +24,8 @@ namespace Imogen.Model
             this.UserRanks = new HashSet<UserRank>();
             this.UsersSessions = new HashSet<UsersSession>();
             this.Faces = new HashSet<Face>();
+            this.CurrentReports = new HashSet<CurrentReport>();
+            this.CurrentReports1 = new HashSet<CurrentReport>();
         }
     
         public int Id { get; set; }
@@ -54,5 +56,9 @@ namespace Imogen.Model
         public virtual ICollection<UsersSession> UsersSessions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Face> Faces { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CurrentReport> CurrentReports { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CurrentReport> CurrentReports1 { get; set; }
     }
 }

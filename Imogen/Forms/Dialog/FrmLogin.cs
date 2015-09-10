@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 using Imogen.Controllers.Security;
 using Imogen.Controllers.Database;
+using Imogen.Controllers.Reporting;
 
 namespace Imogen.Forms.Dialog
 {
@@ -26,7 +27,7 @@ namespace Imogen.Forms.Dialog
         private void FrmLogin_Load(object sender, EventArgs e)
         {
             SuspendLayout();
-            cbRememberMe.Checked = Properties.Settings.Default.LoginRememberMe;
+            cbRememberMe.Checked = CurrentUser.RememberMe;
             Text = "Login " + sh.GetUser();
             tbUsername.Text = sh.GetUser();
             ResumeLayout();
@@ -36,12 +37,12 @@ namespace Imogen.Forms.Dialog
         {
             if (cbRememberMe.Checked)
             {
-                Properties.Settings.Default.LoginRememberMe = true;
-                Properties.Settings.Default.UserUsername = sh.GetUser();
-                Properties.Settings.Default.UserPassword = tbPassword.Text;
+                CurrentUser.RememberMe = true;
+                CurrentUser.Username = sh.GetUser();
+                CurrentUser.UserPassword = tbPassword.Text;
             }
             else
-                Properties.Settings.Default.LoginRememberMe = false;
+                CurrentUser.RememberMe = false;
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -62,10 +63,10 @@ namespace Imogen.Forms.Dialog
         {
             if (loginSuccessful())
             {
-                if (Properties.Settings.Default.LoginRememberMe)
+                if (CurrentUser.RememberMe)
                 {
-                    Properties.Settings.Default.UserUsername = sh.GetUser();
-                    Properties.Settings.Default.UserPassword = tbPassword.Text;
+                    CurrentUser.Username = sh.GetUser();
+                    CurrentUser.UserPassword = tbPassword.Text;
                 }
                 this.DialogResult = DialogResult.OK;
             }
@@ -77,10 +78,10 @@ namespace Imogen.Forms.Dialog
         {
             if (loginSuccessful())
             {
-                if (Properties.Settings.Default.LoginRememberMe)
+                if (CurrentUser.RememberMe)
                 {
-                    Properties.Settings.Default.UserUsername = sh.GetUser();
-                    Properties.Settings.Default.UserPassword = tbPassword.Text;
+                    CurrentUser.Username = sh.GetUser();
+                    CurrentUser.UserPassword = tbPassword.Text;
                 }
                 this.DialogResult = DialogResult.OK;
                 this.Close();
@@ -92,7 +93,7 @@ namespace Imogen.Forms.Dialog
 
         private bool loginSuccessful()
         {
-            return dbHelper.Login(Properties.Settings.Default.UserUsername, Properties.Settings.Default.UserPassword);
+            return dbHelper.Login(CurrentUser.Username, CurrentUser.UserPassword);
         }
 
         private void btnRegister_Click(object sender, EventArgs e)

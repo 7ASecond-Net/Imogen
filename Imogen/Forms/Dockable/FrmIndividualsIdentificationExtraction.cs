@@ -14,6 +14,7 @@ using Accord.Imaging;
 using AForge.Imaging.Filters;
 using System.Drawing.Imaging;
 using Imogen.Controllers.Database;
+using Imogen.Controllers.Reporting;
 
 namespace Imogen.Forms.Dialog
 {
@@ -32,7 +33,7 @@ namespace Imogen.Forms.Dialog
         private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "ImagePath")
-                LoadImage(Properties.Settings.Default.ImagePath);
+                LoadImage(CurrentInternalReport.ImagePath);
 
         }
 
@@ -80,8 +81,8 @@ namespace Imogen.Forms.Dialog
         private void FrmIndividualsIdentificationExtraction_Load(object sender, EventArgs e)
         {
             SuspendLayout();
-            if (!string.IsNullOrEmpty(Properties.Settings.Default.ImagePath))
-                LoadImage(Properties.Settings.Default.ImagePath);
+            if (!string.IsNullOrEmpty(CurrentInternalReport.ImagePath))
+                LoadImage(CurrentInternalReport.ImagePath);
             Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
             pbOriginal.ImagePortionCopied += PbOriginal_ImagePortionCopied;
 
@@ -116,7 +117,7 @@ namespace Imogen.Forms.Dialog
 
         private void btnReload_Click(object sender, EventArgs e)
         {
-            LoadImage(Properties.Settings.Default.ImagePath);
+            LoadImage(CurrentInternalReport.ImagePath);
         }
 
         private void tbRotate_Scroll(object sender, EventArgs e)
@@ -183,7 +184,7 @@ namespace Imogen.Forms.Dialog
 
         private void SaveChanges()
         {
-            if (Properties.Settings.Default.SrcSaved)
+            if (CurrentInternalReport.SrcSaved)
             {
                 string s = "";
                 string sl = "";

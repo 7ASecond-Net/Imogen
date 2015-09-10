@@ -119,7 +119,7 @@
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.Size = new System.Drawing.Size(292, 20);
             this.tbPassword.TabIndex = 1;
-            this.tbPassword.Text = global::Imogen.Properties.Settings.Default.UserPassword;
+            this.tbPassword.Text = "";
             this.tbPassword.UseSystemPasswordChar = true;
             // 
             // tbUsername
@@ -130,7 +130,7 @@
             this.tbUsername.ReadOnly = true;
             this.tbUsername.Size = new System.Drawing.Size(292, 20);
             this.tbUsername.TabIndex = 0;
-            this.tbUsername.Text = global::Imogen.Properties.Settings.Default.UserUsername;
+            this.tbUsername.Text = "";
             // 
             // cbRememberMe
             // 

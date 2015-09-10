@@ -21,6 +21,7 @@ namespace Imogen.Model
         public int ReportedBy { get; set; }
         public string SrcUrlHash { get; set; }
         public string LinkUrlHash { get; set; }
+        public string TrueLinkUrlHash { get; set; }
     
         public virtual EUReported EUReported { get; set; }
         public virtual User User { get; set; }

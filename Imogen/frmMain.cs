@@ -17,6 +17,7 @@ using Imogen.Controllers.Downloader;
 using Imogen.Controllers.Utils;
 using Imogen.Forms.Dialog;
 using System.Runtime.CompilerServices;
+using Imogen.Controllers.Reporting;
 
 namespace Imogen
 {
@@ -55,14 +56,14 @@ namespace Imogen
         {
             InitializeComponent();
 #if DEBUG
-            Properties.Settings.Default.LoginRememberMe = true;
-            Properties.Settings.Default.UserUsername = Environment.MachineName + "/" + Environment.UserName;
-            Properties.Settings.Default.UserPassword = "P@r1n@zK0k@b1";
+            CurrentUser.RememberMe = true;
+            CurrentUser.Username = Environment.MachineName + "/" + Environment.UserName;
+            CurrentUser.UserPassword = "P@r1n@zK0k@b1";
 #endif
             //TODO: Login
-            if (Properties.Settings.Default.LoginRememberMe)
+            if (CurrentUser.RememberMe)
             {
-                dbHelper.Login(Properties.Settings.Default.UserUsername, Properties.Settings.Default.UserPassword);
+                dbHelper.Login(CurrentUser.Username, CurrentUser.UserPassword);
                 m_deserializeDockContent = new DeserializeDockContent(GetContentFromPersistString);
             }
             else
@@ -128,6 +129,8 @@ namespace Imogen
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            CurrentInternalReport.Load();
+
             if (!ApplicationClosing)
             {
                 dockPanel.SuspendLayout();
@@ -156,7 +159,7 @@ namespace Imogen
             if (frmRWB != null)
             {
                 Log("Registering to Console Messaging event");
-                   frmRWB.ConsoleMessageEvent += FrmRWB_ConsoleMessageEvent;
+                frmRWB.ConsoleMessageEvent += FrmRWB_ConsoleMessageEvent;
             }
 
             try
@@ -214,20 +217,22 @@ namespace Imogen
         /// </param>        
         private void ProcessUnReported(EUReported eur)
         {
+            Imogen.Controllers.Reporting.CurrentInternalReport.Reset();
             DownloadImage di = new DownloadImage();
             Log("Loading Processing of New Report"); // This could be a partial report so check the other tables as well !!
-            Properties.Settings.Default.ProfileUrlHash = eur.PageUrlHash;
-            Properties.Settings.Default.ProfileUrl = eur.PageUrl;
-            Properties.Settings.Default.ProfileSrcUrlHash = eur.SrcUrlHash;
-            Properties.Settings.Default.ProfileSrcUrl = eur.SrcUrl;
+            CurrentInternalReport.PageUrlHash = eur.PageUrlHash;
+            CurrentInternalReport.PageUrl = eur.PageUrl;
+            CurrentInternalReport.SrcUrlHash = eur.SrcUrlHash;
+            CurrentInternalReport.SrcUrl = eur.SrcUrl;
 
 
-            Properties.Settings.Default.ProfileLinkUrlHash = eur.LinkUrlHash;
-            Properties.Settings.Default.ProfileLinkUrl = eur.LinkUrl;
-            Properties.Settings.Default.ProfileReportNumber = eur.id.ToString("N0");
-            Properties.Settings.Default.ProfileReportedOn = eur.CreatedOn.ToString();
-            Properties.Settings.Default.ProfilePossibleFileName1 = utils.GetPossibleFileName(eur.SrcUrl);
-            Properties.Settings.Default.ProfilePossibleFileName2 = utils.GetPossibleFileName(eur.LinkUrl);
+            CurrentInternalReport.LinkUrlHash = eur.LinkUrlHash;
+            CurrentInternalReport.LinkUrl = eur.LinkUrl;
+            CurrentInternalReport.ReportNumber = eur.id;
+            CurrentInternalReport.ReportedOn = eur.CreatedOn;
+            CurrentInternalReport.SrcUrlFilename = utils.GetPossibleFileName(eur.SrcUrl);
+            CurrentInternalReport.LinkUrlFilename = utils.GetPossibleFileName(eur.LinkUrl);
+
             Log("Downloading Image");
             string imgPath = di.Download(eur.SrcUrl);
             if (imgPath != null)
@@ -235,7 +240,7 @@ namespace Imogen
                 Log("Download Completed", LogType.Success);
                 frmProfileImage.ShowImage(imgPath);
                 currentFilePath = imgPath;
-                Properties.Settings.Default.ImagePath = imgPath;
+                CurrentInternalReport.ImagePath = imgPath;
             }
             else
                 Log("Download Failed", LogType.Error);
@@ -293,6 +298,9 @@ namespace Imogen
         #region Reports
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Save the last Image to the Database and then get the next
+
+
             Log("Getting Unprocessed Report");
             if (!frmYourAccount.IsDisposed)
                 frmYourAccount.UpdateUserStats();
@@ -414,15 +422,15 @@ namespace Imogen
             {
                 Log("Opening Individual's Identification");
                 if (frmId == null || frmId.IsDisposed) frmId = new FrmIndividualsIdentificationExtraction();
-                frmId.LoadImage(Properties.Settings.Default.ImagePath);
+                frmId.LoadImage(CurrentInternalReport.ImagePath);
                 frmId.Show(dockPanel, DockState.Float);
             }
             identifyIndividualsToolStripMenuItem.Checked = !identifyIndividualsToolStripMenuItem.Checked; // Toggle the check state in the menu on click
 
 
             // Get the Investigator to extract the faces from the file and add basic identification information with supporting evidence where required
-            
-           
+
+
         }
 
         private void videoLinkTesterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -439,7 +447,7 @@ namespace Imogen
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             dbHelper.LogOff();
-            Properties.Settings.Default.Save();
+            CurrentInternalReport.Save();
             string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
             if (bSaveLayout)
                 dockPanel.SaveAsXml(configFile);
@@ -470,8 +478,6 @@ namespace Imogen
             lblUsersOnline.Text = DBHelper.GetUsersOnlineCount();
         }
 
-   
 
-       
     }
 }

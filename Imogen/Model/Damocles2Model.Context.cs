@@ -41,5 +41,6 @@ namespace Imogen.Model
         public virtual DbSet<Face> Faces { get; set; }
         public virtual DbSet<Hash> Hashes { get; set; }
         public virtual DbSet<Matedata> Matedatas { get; set; }
+        public virtual DbSet<CurrentReport> CurrentReports { get; set; }
     }
 }
